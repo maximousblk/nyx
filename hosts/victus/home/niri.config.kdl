@@ -1,0 +1,149 @@
+// Input Devices
+input {
+    keyboard {
+        numlock
+        xkb {
+            layout "us"
+        }
+    }
+    touchpad {
+        tap
+        natural-scroll
+    }
+}
+
+
+// Display Outputs
+output "eDP-1" {
+}
+
+
+// Layout
+prefer-no-csd
+layout {
+    gaps 4
+    border {
+        off
+        width 0
+    }
+    focus-ring {
+        width 1
+    }
+    default-column-display "tabbed"
+    tab-indicator {
+        hide-when-single-tab
+        width 4
+        gap 1
+        gaps-between-tabs 24
+        length total-proportion=0.8
+        position "left"
+    }
+    default-column-width {
+        proportion 1.0
+    }
+    preset-column-widths {
+        proportion 0.33
+        proportion 0.5
+        proportion 0.67
+        proportion 1.0
+    }
+}
+
+cursor {
+    xcursor-theme "BreezeX-RoséPine"
+    xcursor-size 24
+}
+
+// Workspaces
+workspace "browser"
+workspace "chat"
+
+
+// Environment Variables
+environment {
+    ZED_WINDOW_DECORATIONS "server"
+    XCURSOR_PATH "~/.local/share/icons"
+}
+
+
+// Overview
+overview {
+    workspace-shadow {
+        off
+    }
+}
+
+
+// Window Rules
+window-rule {
+    geometry-corner-radius 6
+    clip-to-geometry true
+}
+
+window-rule {
+    match app-id=r#"^dev\.zed\.Zed$"#
+
+    open-fullscreen true
+}
+
+window-rule {
+    match app-id="discord"
+    match app-id=r#"^com\.rtosta\.zapzap$"#
+
+    open-on-workspace "chat"
+    open-focused true
+    open-maximized true
+    block-out-from "screen-capture"
+}
+
+window-rule {
+    match app-id="firefox$" title="^Picture-in-Picture$"
+
+    open-floating true
+    default-floating-position x=32 y=32 relative-to="bottom-right"
+}
+
+// Keybinds
+binds {
+    // Launchers
+    Mod+Space  { spawn "vicinae" "vicinae://toggle"; }                                   // Mod + Space        : Application launcher
+    Mod+V      { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }     // Mod + V            : Clipboard history
+    Mod+period { spawn "vicinae" "vicinae://extensions/vicinae/vicinae/search-emojis"; } // Mod + Period (.)   : Emoji picker
+    Mod+grave  { spawn "ghostty"; }                                                      // Mod + Backtick (`) : Launch Terminal
+    Mod+E      { spawn "dolphin"; }                                                         // Mod + E            : Launch File Explorer
+
+    // Essential Window Controls
+    Alt+F4      { close-window; }               // Alt + F4: Close the focused window
+    Mod+Shift+F { toggle-windowed-fullscreen; } // Mod + Shift + F : Set focused window as windowed fullscreen
+
+    // Window Focus
+    Mod+Left  { focus-column-left; }    // Mod + Left  : Focus column to the left
+    Mod+Right { focus-column-right; }   // Mod + Right : Focus column to the right
+    Mod+K { focus-window-up; }          // Mod + 'K'   : Focus window above in focused column
+    Mod+J { focus-window-down; }        // Mod + 'J'   : Focus window below in focused column
+
+    // Workspace Switching
+    Mod+Up   { focus-workspace-up; }     // Mod + Up   : Switch to the workspace above or below
+    Mod+Down { focus-workspace-down; }   // Mod + Down : Switch to the workspace below
+
+    // Window Management
+    Mod+Shift+Left  { move-column-left; }               // Mod + Shift + Left  : Move the focused column left
+    Mod+Shift+Right { move-column-right; }              // Mod + Shift + Right : Move the focused column right
+    Mod+Shift+Up    { move-column-to-workspace-up; }    // Mod + Shift + Up    : Move the focused column to the workspace above
+    Mod+Shift+Down  { move-column-to-workspace-down; }  // Mod + Shift + Down  : Move the focused column to the workspace below
+
+    // Window Resize
+    Mod+Q { switch-preset-column-width; }
+
+    // Session Controls
+    Mod+Shift+slash { show-hotkey-overlay; } // Mod + ?         : Help
+    Mod+Shift+Q     { quit; }                // Mod + Shift + E : Exit Niri
+    Mod+Tab         { toggle-overview; }     // Mod + Tab       : Show overview
+    Mod+L           { spawn "hyprlock"; }    // Mod + L         : Lock the screen
+
+    // Screencast
+    Mod+Shift+S { screenshot; }                 // Mod + Shift + S   : Upen screenshot ui
+    Mod+Ctrl+W  { set-dynamic-cast-window; }    // Mod + Control + W : Set focused window as dynamic cast target
+    Mod+Ctrl+D  { set-dynamic-cast-monitor; }   // Mod + Control + M : Set focused display as dynamic cast target
+    Mod+Ctrl+X  { clear-dynamic-cast-target; }  // Mod + Control + X : Clear dynamic cast target
+}

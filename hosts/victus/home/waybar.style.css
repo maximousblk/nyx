@@ -1,0 +1,33 @@
+* {
+    font-family: "JetBrainsMono Nerd Font Propo", FontAwesome;
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar > box > box > widget > label,
+window#waybar > box > box > widget > box {
+    padding: 0 8px;
+}
+
+window#waybar {
+    background: rgba(3, 7, 18, 0.9);
+    color: rgba(255, 255, 255, 1);
+    border-radius: 6px;
+}
+
+#workspaces button {
+    padding: 4px 6px;
+    margin: 0 2px;
+    background-color: transparent;
+}
+
+#workspaces button.active {
+    color: rgba(109, 103, 218, 0.8);
+    background: rgb(38, 33, 69);
+}
+
+#workspaces button:hover {
+    background: rgba(38, 33, 69, 0.8);
+}

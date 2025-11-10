@@ -1,0 +1,117 @@
+[
+  {
+    "height": 28,
+    "layer": "top",
+    "spacing": 8,
+    "position": "top",
+
+    "margin-bottom": 0,
+    "margin-left": 4,
+    "margin-right": 4,
+    "margin-top": 4,
+
+    "modules-left": ["niri/workspaces", "niri/window"],
+    "modules-center": [],
+    "modules-right": ["mpris", "privacy", "pulseaudio", "network", "clock"],
+
+    "clock": {
+      "format": "{:%H:%M %d %b}",
+      "tooltip-format": "<tt><small>{calendar}</small></tt>",
+
+      "calendar": {
+        "mode": "month",
+        "weeks-pos": "right",
+        "format": {
+          "months": "<span color='#ffead3'><b>{}</b></span>",
+          "weekdays": "<span color='#ffcc66'><b>{}</b></span>",
+          "weeks": "<span color='#99ffdd'><b>W{}</b></span>",
+          "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+        }
+      },
+
+      "actions": {
+        "on-click-right": "mode",
+        "on-scroll-up": "shift_up",
+        "on-scroll-down": "shift_down"
+      }
+    },
+
+    "mpris": {
+      "format": "{player_icon} {title}",
+      "format-paused": "{status_icon} {title}",
+      "format-stopped": "",
+      "max-length": 24,
+      "player-icons": {
+        "default": "▶",
+        "mpv": "🎵"
+      },
+      "status-icons": {
+        "paused": "⏸"
+      }
+    },
+
+    "network": {
+      "format-disconnected": "󰤮 None",
+      "format-ethernet": "󰈀 Wired",
+      "format-wifi": " {essid}"
+    },
+
+    "niri/window": {
+      "format": "{}",
+      "icon": true,
+      "icon-size": 18,
+      "rewrite": {
+        "(.*) - Mozilla Firefox": "🌎 $1",
+        "(.*) - zsh": "> [$1]"
+      },
+      "separate-outputs": true
+    },
+
+    "niri/workspaces": {
+      "format": "{icon}",
+      "format-icons": {
+        "browser": "",
+        "chat": "<b></b>",
+        "default": ""
+      }
+    },
+
+    "privacy": {
+      "icon-size": 14,
+      "icon-spacing": 8,
+      "ignore": [
+        {
+          "name": "cava",
+          "type": "audio-in"
+        }
+      ],
+      "ignore-monitor": true,
+      "modules": [
+        {
+          "tooltip": true,
+          "tooltip-icon-size": 24,
+          "type": "screenshare"
+        },
+        {
+          "tooltip": true,
+          "tooltip-icon-size": 24,
+          "type": "audio-in"
+        }
+      ],
+      "transition-duration": 250
+    },
+
+    "pulseaudio": {
+      "format": "{icon} {volume}%",
+      "format-bluetooth": "{icon} {volume}%",
+      "format-icons": {
+        "default": ["", "", ""],
+        "headphone": ""
+      },
+      "format-muted": "",
+      "ignored-sinks": ["Easy Effects Sink"],
+      "on-click": "pavucontrol",
+      "scroll-step": 1
+    }
+  }
+]
