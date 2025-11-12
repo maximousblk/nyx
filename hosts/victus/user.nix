@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgx,
   inputs,
   ...
 }:
@@ -10,9 +11,7 @@ let
   };
 in
 {
-  imports = [
-    inputs.home-manager.nixosModules.home-manager
-  ];
+  imports = [ inputs.home-manager.nixosModules.home-manager ];
 
   config = {
     users.users.maximousblk = {
@@ -41,7 +40,7 @@ in
       useGlobalPkgs = true;
       useUserPackages = true;
       users.maximousblk = import ./home/default.nix;
-      extraSpecialArgs = { inherit inputs; };
+      extraSpecialArgs = { inherit inputs pkgx; };
     };
   };
 }

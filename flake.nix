@@ -39,9 +39,21 @@
       deploy-rs,
       ...
     }@inputs:
+    let
+      supportedSystems = [
+        "x86_64-linux"
+        "aarch64-linux"
+      ];
+      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
+
+      pkgxFor = forAllSystems (system: (import ./pkgx) { pkgs = import nixpkgs { inherit system; }; });
+    in
     {
       nixosConfigurations.victus = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+          pkgx = pkgxFor."x86_64-linux";
+        };
         modules = [ ./hosts/victus/configuration.nix ];
       };
 
