@@ -4,7 +4,8 @@
     ./nix.nix
     ./ly.nix
     ./niri.nix
-    ./containers.nix
+    ./packages.nix
     ./services.nix
+    ./containers.nix
   ];
 }

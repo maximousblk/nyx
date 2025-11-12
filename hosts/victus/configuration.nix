@@ -51,20 +51,6 @@
 
   programs.firefox.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    deploy-rs
-    ghostty
-    helix
-
-    rose-pine-cursor
-
-    rar
-    unrar
-    ncdu
-
-    cudaPackages.cudatoolkit
-  ];
-
   networking.firewall = {
     enable = false;
     trustedInterfaces = [ "tailscale0" ];
