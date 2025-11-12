@@ -125,6 +125,11 @@ binds {
     // Workspace Switching
     Mod+Up   { focus-workspace-up; }     // Mod + Up   : Switch to the workspace above or below
     Mod+Down { focus-workspace-down; }   // Mod + Down : Switch to the workspace below
+    Mod+1    { focus-workspace 1; }      // Mod + '1'  : Switch to workspace at index 1
+    Mod+2    { focus-workspace 2; }      // Mod + '2'  : Switch to workspace at index 2
+    Mod+3    { focus-workspace 3; }      // Mod + '3'  : Switch to workspace at index 3
+    Mod+4    { focus-workspace 4; }      // Mod + '4'  : Switch to workspace at index 4
+    Mod+D    { focus-workspace 255; }    // Mod + 'D'  : Switch to the last workspace
 
     // Window Management
     Mod+Shift+Left  { move-column-left; }               // Mod + Shift + Left  : Move the focused column left
