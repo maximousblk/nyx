@@ -42,10 +42,9 @@
     let
       supportedSystems = [
         "x86_64-linux"
-        "aarch64-linux"
+        # "aarch64-linux"
       ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
-
       pkgxFor = forAllSystems (system: (import ./pkgx) { pkgs = import nixpkgs { inherit system; }; });
     in
     {
@@ -55,6 +54,20 @@
           pkgx = pkgxFor."x86_64-linux";
         };
         modules = [ ./hosts/victus/configuration.nix ];
+      };
+
+      homeConfigurations.zenbook = inputs.home-manager.lib.homeManagerConfiguration {
+        pkgs = import nixpkgs {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+
+        extraSpecialArgs = {
+          inherit inputs;
+          pkgx = pkgxFor."x86_64-linux";
+        };
+
+        modules = [ ./homes/zenbook/home.nix ];
       };
 
       deploy.nodes.victus = {
