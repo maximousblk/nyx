@@ -7,7 +7,6 @@
 {
 
   imports = [
-    inputs.zen-browser.homeModules.beta
     inputs.vicinae.homeManagerModules.default
 
     ./niri.nix
@@ -15,6 +14,7 @@
     ./ironbar.nix
     ./swww.nix
     ./cursor.nix
+    ./browser.nix
   ];
 
   home.stateVersion = "25.05";
@@ -118,26 +118,6 @@
 
       website.open_page = false;
       web.scroll_animator = true;
-    };
-  };
-
-  programs.zen-browser = {
-    enable = false;
-    policies = {
-      DisableAppUpdate = true;
-      DisableFeedbackCommands = true;
-      DisableFirefoxStudies = true;
-      DisablePocket = true;
-      DisableTelemetry = true;
-      DontCheckDefaultBrowser = true;
-      NoDefaultBookmarks = true;
-      OfferToSaveLogins = false;
-      EnableTrackingProtection = {
-        Value = true;
-        Locked = true;
-        Cryptomining = true;
-        Fingerprinting = true;
-      };
     };
   };
 

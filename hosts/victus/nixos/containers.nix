@@ -2,7 +2,7 @@
 {
   virtualisation.podman.enable = true;
 
-  virtualisation.oci-containers.containers.comfyui = {
+  virtualisation.oci-containers.containers.torproxy = {
     image = "zhaowde/rotating-tor-http-proxy";
 
     autoStart = true;
