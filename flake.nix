@@ -27,9 +27,13 @@
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
     vicinae.url = "github:vicinaehq/vicinae";
 
-    # nixos-hardware.url = "github:NixOS/nixos-hardware";
+    ironbar = {
+      url = "github:JakeStanger/ironbar";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =

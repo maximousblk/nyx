@@ -12,6 +12,7 @@
 
     ./niri.nix
     ./waybar.nix
+    ./ironbar.nix
     ./swww.nix
     ./cursor.nix
   ];
