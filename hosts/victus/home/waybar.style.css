@@ -31,3 +31,9 @@ window#waybar {
 #workspaces button:hover {
     background: rgba(38, 33, 69, 0.8);
 }
+
+#custom-polycat {
+    font-family: "polycat";
+    font-size: 18px; /* You can adjust this size */
+    padding: 0 8px;
+}

@@ -12,7 +12,19 @@
 
     "modules-left": ["niri/workspaces", "niri/window"],
     "modules-center": [],
-    "modules-right": ["mpris", "privacy", "pulseaudio", "network", "clock"],
+    "modules-right": [
+      "mpris",
+      "privacy",
+      "custom/polycat",
+      "pulseaudio",
+      "network",
+      "clock"
+    ],
+
+    "custom/polycat": {
+      "exec": "polycat",
+      "format": "{}"
+    },
 
     "clock": {
       "format": "{:%H:%M %d %b}",

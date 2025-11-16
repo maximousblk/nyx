@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgx,
   inputs,
   ...
 }:
@@ -18,6 +19,8 @@
   home.stateVersion = "25.05";
 
   home.packages = with pkgs; [
+    pkgx.polycat
+
     ncdu
     tree
     btop
