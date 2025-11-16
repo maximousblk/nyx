@@ -49,6 +49,8 @@
 
   services.flatpak.enable = true;
   systemd.services.flatpak-repo = {
+    after = [ "network-online.target" ];
+    wants = [ "network-online.target" ];
     wantedBy = [ "multi-user.target" ];
     path = [ pkgs.flatpak ];
     script = ''
