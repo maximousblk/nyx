@@ -16,7 +16,7 @@
       ExecStart =
         let
           script = pkgs.writeShellScript "wallpaper-changer" ''
-            WALLPAPER=$(${pkgs.fd}/bin/fd --type f ${pkgx.dharmx-walls} | ${pkgs.coreutils}/bin/shuf -n 1)
+            WALLPAPER=$(${pkgs.findutils}/bin/find ${pkgx.dharmx-walls} -type f | ${pkgs.coreutils}/bin/shuf -n 1)
 
             if [ -z "$WALLPAPER" ]; then
               echo "No wallpaper found. Exiting." >&2

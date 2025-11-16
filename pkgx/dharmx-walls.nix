@@ -16,6 +16,7 @@ pkgs.stdenv.mkDerivation {
     runHook preInstall
 
     mkdir -p $out
+
     ${pkgs.fd}/bin/fd . --type f \
       --extension jpg \
       --extension jpeg \
