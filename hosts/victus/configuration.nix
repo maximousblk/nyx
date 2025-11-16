@@ -62,8 +62,6 @@
     nerd-fonts.zed-mono
   ];
 
-  powerManagement.enable = true;
-
   services.xserver.videoDrivers = [ "nvidia" ];
 
 }

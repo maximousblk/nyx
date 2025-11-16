@@ -6,6 +6,7 @@
     ./bluetooth.nix
     ./pipewire.nix
     ./nvidia.nix
+    ./power.nix
   ];
 
   config = {
