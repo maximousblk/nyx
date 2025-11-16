@@ -26,12 +26,10 @@
     jq
     bitwarden-cli
     playerctl
+    pulseaudio
 
     gparted
     kdePackages.dolphin
-
-    discord
-    zapzap
 
     lutris
     protonup-qt
@@ -39,7 +37,34 @@
     winetricks
     uxplay
     exfatprogs
+
+    libappindicator-gtk3
+
+    adwaita-icon-theme
+    hicolor-icon-theme
   ];
+
+  gtk = {
+    enable = true;
+
+    iconTheme = {
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+
+    theme = {
+      name = "rose-pine";
+      package = pkgs.rose-pine-gtk-theme;
+    };
+
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
 
   programs.git = {
     enable = true;
@@ -54,6 +79,41 @@
       "*" = {
         identityFile = [ "~/.ssh/id_ed25519" ];
       };
+    };
+  };
+
+  programs.discord = {
+    enable = true;
+    settings = {
+      SKIP_HOST_UPDATE = true;
+      IS_MAXIMIZED = true;
+      enableHardwareAcceleration = true;
+    };
+  };
+
+  programs.zapzap = {
+    enable = true;
+    settings = {
+      notification = {
+        donation_message = true;
+      };
+
+      performance = {
+        in_process_gpu = true;
+        single_process = true;
+      };
+
+      system = {
+        scale = 100;
+        theme = "auto";
+        menubar = false;
+        sidebar = false;
+        wayland = true;
+        quit_in_close = true;
+      };
+
+      website.open_page = false;
+      web.scroll_animator = true;
     };
   };
 

@@ -37,10 +37,12 @@ in
     };
 
     home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
       users.maximousblk = import ./home/default.nix;
       extraSpecialArgs = { inherit inputs pkgx; };
+
+      useGlobalPkgs = true;
+      useUserPackages = true;
+      backupFileExtension = "hm_bak";
     };
   };
 }
