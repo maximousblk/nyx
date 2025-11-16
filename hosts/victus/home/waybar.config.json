@@ -70,8 +70,8 @@
     "niri/workspaces": {
       "format": "{icon}",
       "format-icons": {
-        "browser": "",
-        "chat": "<b></b>",
+        "home": "",
+        "chat": "",
         "default": ""
       }
     },

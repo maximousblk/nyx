@@ -55,7 +55,7 @@ cursor {
 }
 
 // Workspaces
-workspace "browser"
+workspace "home"
 workspace "chat"
 
 
