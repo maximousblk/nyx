@@ -1,7 +1,7 @@
 { pkgs }:
 pkgs.stdenv.mkDerivation rec {
   pname = "polycat";
-  version = "2.0.0";
+  version = "2.0.0+nix.${builtins.substring 0 8 src.rev}";
 
   src = pkgs.fetchFromGitHub {
     owner = "2IMT";
@@ -10,11 +10,9 @@ pkgs.stdenv.mkDerivation rec {
     hash = "sha256-wpDx6hmZe/dLv+F+kbo+YUIZ2A8XgnrZP0amkz6I5IQ=";
   };
 
-  nativeBuildInputs = [ pkgs.libgcc ];
-
   makeFlags = [
     "PREFIX=${placeholder "out"}"
-    "POLYCAT_VERSION=${version}+nix.${builtins.substring 0 8 src.rev}"
+    "POLYCAT_VERSION=${version}"
   ];
 
   installPhase = ''
@@ -28,8 +26,8 @@ pkgs.stdenv.mkDerivation rec {
   '';
 
   meta = with pkgs.lib; {
-    description = "runcat module for polybar and waybar";
-    homepage = "https://github.com/e-mcq/polycat";
+    description = "runcat module for polybar (or waybar) written in C++";
+    homepage = "https://github.com/2IMT/polycat";
     license = licenses.mit;
     platforms = platforms.linux;
   };
