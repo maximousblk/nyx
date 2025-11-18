@@ -89,22 +89,22 @@
           main = {
             id = 1;
             color = "purple";
-            icon = "fingerprint";
+            icon = "tree";
           };
           personal = {
             id = 2;
-            color = "purple";
+            color = "green";
             icon = "fingerprint";
           };
           work = {
             id = 3;
-            color = "purple";
-            icon = "fingerprint";
+            color = "blue";
+            icon = "briefcase";
           };
           shenanigans = {
             id = 4;
-            color = "purple";
-            icon = "fingerprint";
+            color = "red";
+            icon = "chill";
           };
         };
 
@@ -146,6 +146,7 @@
         };
 
         settings = {
+          "browser.tabs.inTitlebar" = 0;
           "browser.tabs.warnOnClose" = true;
           "browser.toolbars.bookmarks.visibility" = "newtab";
           "browser.search.separatePrivateDefault" = false;
@@ -153,6 +154,7 @@
           "browser.shell.checkDefaultBrowser" = false;
           "extensions.pictureinpicture.enable_picture_in_picture_overrides" = true;
           "sidebar.visibility" = "hide-sidebar";
+
           "zen.view.compact.enable-at-startup" = true;
           "zen.view.compact.hide-toolbar" = true;
           "zen.view.use-single-toolbar" = false;
