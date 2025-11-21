@@ -11,45 +11,77 @@
     jack.enable = true;
     wireplumber.enable = true;
 
-    extraConfig.pipewire."99-rnnoise" = {
-      "context.modules" = [
-        {
-          name = "libpipewire-module-filter-chain";
-          args = {
-            "media.name" = "Studio Voice Source";
-            "node.description" = "Studio Voice Source";
+    extraConfig.pipewire = {
+      "91-global-clock" = {
+        "context.properties" = {
+          "default.clock.quantum" = 1024;
+          "default.clock.min-quantum" = 1024;
+        };
+      };
 
-            "audio.rate" = 48000;
-            "audio.position" = "[ MONO ]";
+      "99-studio-voice" = {
+        "context.modules" = [
+          {
+            name = "libpipewire-module-filter-chain";
+            args = {
+              "media.name" = "Studio Voice Source";
+              "node.description" = "Studio Voice Source";
 
-            "playback.props" = {
-              "node.name" = "playback.studio_source";
-              "media.class" = "Audio/Source";
               "audio.rate" = 48000;
+              "audio.position" = "[ MONO ]";
+
+              "playback.props" = {
+                "node.name" = "playback.studio_source";
+                "media.class" = "Audio/Source";
+                "audio.rate" = 48000;
+                "node.latency" = "2048/48000";
+              };
+              "capture.props" = {
+                "node.name" = "capture.studio_sink";
+                "node.passive" = true;
+                "audio.rate" = 48000;
+                "node.latency" = "2048/48000";
+              };
+              "filter.graph" = {
+                nodes = [
+                  {
+                    type = "ladspa";
+                    name = "rnnoise";
+                    plugin = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
+                    label = "noise_suppressor_mono";
+                    control = {
+                      "VAD Threshold (%)" = 40.0;
+                      "VAD Grace Period (ms)" = 500;
+                      "Retroactive VAD Grace (ms)" = 100;
+                    };
+                  }
+                  {
+                    type = "ladspa";
+                    name = "deepfilter";
+                    plugin = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so";
+                    label = "deep_filter_mono";
+                    control = {
+                      "Attenuation Limit (dB)" = 80;
+                      "Min processing threshold (dB)" = -15;
+                      "Max ERB processing threshold (dB)" = 35;
+                      "Max DF processing threshold (dB)" = 35;
+                      "Post Filter Beta" = 0.01;
+                    };
+                  }
+                ];
+                inputs = [ "rnnoise:Input" ];
+                links = [
+                  {
+                    output = "rnnoise:Output";
+                    input = "deepfilter:Audio In";
+                  }
+                ];
+                outputs = [ "deepfilter:Audio Out" ];
+              };
             };
-            "capture.props" = {
-              "node.name" = "capture.studio_sink";
-              "node.passive" = true;
-              "audio.rate" = 48000;
-            };
-            "filter.graph" = {
-              nodes = [
-                {
-                  type = "ladspa";
-                  name = "rnnoise";
-                  plugin = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
-                  label = "noise_suppressor_mono";
-                  control = {
-                    "VAD Threshold (%)" = 20.0;
-                    "VAD Grace Period (ms)" = 500;
-                    "Retroactive VAD Grace (ms)" = 100;
-                  };
-                }
-              ];
-            };
-          };
-        }
-      ];
+          }
+        ];
+      };
     };
 
     wireplumber.extraConfig = {
