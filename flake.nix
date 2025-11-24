@@ -60,7 +60,7 @@
         modules = [ ./hosts/victus/configuration.nix ];
       };
 
-      homeConfigurations.zenbook = inputs.home-manager.lib.homeManagerConfiguration {
+      homeConfigurations.umbra = inputs.home-manager.lib.homeManagerConfiguration {
         pkgs = import nixpkgs {
           system = "x86_64-linux";
           config.allowUnfree = true;
@@ -71,7 +71,7 @@
           pkgx = pkgxFor."x86_64-linux";
         };
 
-        modules = [ ./homes/zenbook/home.nix ];
+        modules = [ ./homes/umbra/home.nix ];
       };
 
       deploy.nodes.victus = {

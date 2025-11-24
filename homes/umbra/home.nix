@@ -13,8 +13,11 @@
   ];
 
   config = {
+
+    # backupFileExtension = "hm_bak";
+
     home.username = "ashwin_y";
-    home.homeDirectory = "/home/ashwin_y/.local/share/distrobox/dev_home";
+    home.homeDirectory = "/home/ashwin_y/.local/share/distrobox/umbra_home";
     home.stateVersion = "25.05";
 
     programs.nix-index-database.comma.enable = true;
