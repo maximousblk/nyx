@@ -23,7 +23,7 @@
     bun
     go
     nodejs_20
-
+    libgcc
 
     (pkgs.python312.withPackages (
       pypkgs: with pypkgs; [
@@ -54,7 +54,7 @@
     terragrunt
 
     trufflehog
-    surrealist
+    # surrealist # Temporarily disabled due to hash mismatch
 
     exiftool
     exiv2
