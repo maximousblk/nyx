@@ -104,6 +104,39 @@
       acceleration = false;
     };
 
+    programs.opencode = {
+      enable = true;
+      settings = {
+        theme = "system";
+        model = "opencode/big-pickle"; # Current model - free stealth model
+        small_model = "opencode/big-pickle";
+
+        # Alternative free models (uncomment to use):
+        # model = "opencode/gpt-5-nano";     # Free unlimited, no data collection
+        # model = "opencode/grok-code";       # Free (limited time), collects data for improvement
+
+        autoupdate = false;
+        share = "disabled";
+
+        permission = {
+          # Destructive operations - always ask
+          bash = "ask";
+          edit = "ask";
+          write = "ask";
+          patch = "ask";
+          todowrite = "ask";
+
+          # Safe operations - always allow
+          read = "allow";
+          grep = "allow";
+          glob = "allow";
+          list = "allow";
+          todoread = "allow";
+          webfetch = "allow";
+        };
+      };
+    };
+
     fonts.fontconfig.enable = true;
   };
 }

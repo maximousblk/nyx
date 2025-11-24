@@ -73,6 +73,7 @@
     github-copilot-cli
 
     nixd
+    opencode
     nil
     nixfmt-rfc-style
 
