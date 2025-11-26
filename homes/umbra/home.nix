@@ -1,8 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}:
+{ pkgs, inputs, ... }:
 {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
@@ -13,17 +9,9 @@
   ];
 
   config = {
-
-    # backupFileExtension = "hm_bak";
-
     home.username = "ashwin_y";
-    home.homeDirectory = "/home/ashwin_y/.local/share/distrobox/umbra_home";
+    home.homeDirectory = "/home/ashwin_y/.local/share/distrobox/home/umbra";
     home.stateVersion = "25.05";
-
-    programs.nix-index-database.comma.enable = true;
-    programs.home-manager.enable = true;
-    programs.nix-index.enable = true;
-    programs.lazydocker.enable = true;
 
     home.sessionPath = [
       "$HOME/.local/bin"
@@ -34,6 +22,11 @@
       EDITOR = "nvim";
       LIBVA_DRIVERS_PATH = "${pkgs.intel-media-driver}/lib/dri";
     };
+
+    programs.nix-index-database.comma.enable = true;
+    programs.home-manager.enable = true;
+    programs.nix-index.enable = true;
+    programs.lazydocker.enable = true;
 
     programs.sesh = {
       enable = true;
