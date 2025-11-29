@@ -1,4 +1,9 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
 {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
@@ -25,6 +30,11 @@
       CONTAINER_HOST = "unix:///run/host/run/user/1000/podman/podman.sock";
     };
 
+    home.shell = {
+      enableBashIntegration = true;
+      enableFishIntegration = true;
+    };
+
     programs.nix-index-database.comma.enable = true;
     programs.home-manager.enable = true;
     programs.nix-index.enable = true;
@@ -40,6 +50,17 @@
       enableBashIntegration = true;
       enableFishIntegration = true;
       tmux.enableShellIntegration = true;
+    };
+
+    programs.fish = {
+      enable = true;
+      package = pkgs.fish;
+
+      functions = {
+        prompt_hostname = ''
+          string replace -r -- "\..*" "" $CONTAINER_ID
+        '';
+      };
     };
 
     programs.tmux = {
@@ -86,6 +107,14 @@
       profileExtra = ''
         if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
           . "$HOME/.nix-profile/etc/profile.d/nix.sh"
+        fi
+      '';
+
+      initExtra = ''
+        if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
+        then
+          shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
+          exec ${config.programs.fish.package}/bin/fish $LOGIN_OPTION
         fi
       '';
     };
