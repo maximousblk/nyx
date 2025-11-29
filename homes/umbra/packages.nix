@@ -22,6 +22,7 @@
 
     bun
     go
+    gopls
     nodejs_20
     libgcc
 
