@@ -65,7 +65,7 @@
 
     programs.tmux = {
       enable = true;
-      shell = "${pkgs.fish}/bin/fish";
+      shell = "${config.programs.fish.package}/bin/fish";
       terminal = "tmux-256color";
       historyLimit = 100000;
 
@@ -79,7 +79,7 @@
 
       extraConfig = ''
         set -s escape-time 0
-
+        setw -g mode-keys vi
         set-option -g mouse on
 
         bind-key "^k" display-popup -E -w 40% "sesh connect \"$(
