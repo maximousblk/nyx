@@ -21,6 +21,8 @@
     home.sessionVariables = {
       EDITOR = "nvim";
       LIBVA_DRIVERS_PATH = "${pkgs.intel-media-driver}/lib/dri";
+      DOCKER_HOST = "unix:///run/host/run/user/1000/podman/podman.sock";
+      CONTAINER_HOST = "unix:///run/host/run/user/1000/podman/podman.sock";
     };
 
     programs.nix-index-database.comma.enable = true;
