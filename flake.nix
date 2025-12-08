@@ -50,12 +50,14 @@
       ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
       pkgxFor = forAllSystems (system: (import ./pkgx) { pkgs = import nixpkgs { inherit system; }; });
+      modx = import ./modx;
     in
     {
       nixosConfigurations.victus = nixpkgs.lib.nixosSystem {
         specialArgs = {
           inherit inputs;
           pkgx = pkgxFor."x86_64-linux";
+          modx = modx;
         };
         modules = [ ./hosts/victus/configuration.nix ];
       };
@@ -69,6 +71,7 @@
         extraSpecialArgs = {
           inherit inputs;
           pkgx = pkgxFor."x86_64-linux";
+          modx = modx;
         };
 
         modules = [ ./homes/umbra/home.nix ];

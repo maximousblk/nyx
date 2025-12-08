@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgx,
+  modx,
   inputs,
   ...
 }:
@@ -38,7 +39,7 @@ in
 
     home-manager = {
       users.maximousblk = import ./home/default.nix;
-      extraSpecialArgs = { inherit inputs pkgx; };
+      extraSpecialArgs = { inherit inputs pkgx modx; };
 
       useGlobalPkgs = true;
       useUserPackages = true;
