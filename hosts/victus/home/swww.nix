@@ -1,38 +1,62 @@
-{ pkgs, pkgx, ... }:
 {
-  services.swww.enable = true;
+  lib,
+  pkgs,
+  pkgx,
+  modx,
+  config,
+  ...
+}:
+{
+  imports = [ modx.hm.wallpaper ];
 
-  systemd.user.services.wallpaper-changer = {
-    Unit = {
-      Description = "Randomly change wallpaper with swww";
-      After = [ "swww.service" ];
-      Requires = [ "swww.service" ];
+  config = {
+    optx.wallpapers = {
+      enable = true;
+      package = pkgx.dharmx-walls;
     };
 
-    Install.WantedBy = [ "niri-session.target" ];
+    services.swww.enable = true;
 
-    Service = {
-      Type = "oneshot";
-      ExecStart =
-        let
-          script = pkgs.writeShellScript "wallpaper-changer" ''
-            WALLPAPER=$(${pkgs.findutils}/bin/find ${pkgx.dharmx-walls} -type f | ${pkgs.coreutils}/bin/shuf -n 1)
+    systemd.user.services.wallpaper-changer = {
+      Unit = {
+        Description = "Randomly change wallpaper with swww";
+        After = [ "swww.service" ];
+        Requires = [ "swww.service" ];
+      };
 
-            if [ -z "$WALLPAPER" ]; then
-              echo "No wallpaper found. Exiting." >&2
-              exit 1
-            fi
+      Install.WantedBy = [ "niri-session.target" ];
 
-            ${pkgs.swww}/bin/swww img "$WALLPAPER" --transition-type any
-          '';
-        in
-        "${script}";
+      Service = {
+        Type = "oneshot";
+        ExecStart = lib.getExe (
+          pkgs.writeShellApplication {
+            name = "change-wallpaper";
+            runtimeInputs = [
+              pkgs.findutils
+              pkgs.coreutils
+              pkgs.swww
+            ];
+            text = ''
+              WALLPAPER=$(find -L "${config.optx.wallpapers.paths.collection}" -type f | shuf -n 1)
+
+              if [ -z "$WALLPAPER" ]; then
+                echo "No wallpapers found in ${config.optx.wallpapers.paths.collection}"
+                exit 1
+              fi
+
+              ln -sfn "$WALLPAPER" "${config.optx.wallpapers.paths.current}"
+
+              swww img "${config.optx.wallpapers.paths.current}" --transition-type any
+            '';
+          }
+        );
+      };
     };
-  };
 
-  systemd.user.timers.wallpaper-changer = {
-    Unit.Description = "Timer to randomly change the wallpaper";
-    Timer.OnUnitInactiveSec = "5m";
-    Install.WantedBy = [ "timers.target" ];
+    systemd.user.timers.wallpaper-changer = {
+      Unit.Description = "Timer to randomly change the wallpaper";
+      Timer.OnUnitInactiveSec = "5m";
+      Install.WantedBy = [ "timers.target" ];
+    };
   };
 }
