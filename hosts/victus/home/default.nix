@@ -31,14 +31,19 @@
     nvtopPackages.full
     jq
     bitwarden-cli
+    bitwarden-desktop
     playerctl
     pulseaudio
+    hyprpwcenter
 
     gparted
     kdePackages.dolphin
+    peazip
+    rar
 
     lutris
     protonup-qt
+    proton-cachyos_x86_64_v4
     wine
     winetricks
     uxplay
