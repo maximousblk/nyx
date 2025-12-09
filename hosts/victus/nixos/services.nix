@@ -12,6 +12,7 @@
   services.upower.enable = true;
   services.fstrim.enable = true;
   services.hdapsd.enable = false;
+  services.below.enable = true;
 
   services.tailscale = {
     enable = true;
