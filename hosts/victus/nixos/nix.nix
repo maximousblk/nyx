@@ -11,8 +11,8 @@ let
   };
 in
 {
-  config = {
-    nix.settings = {
+  config.nix = {
+    settings = {
       experimental-features = [
         "nix-command"
         "flakes"
@@ -21,6 +21,16 @@ in
       substituters = lib.attrNames subs;
       trusted-substituters = lib.attrNames subs;
       trusted-public-keys = lib.attrValues subs;
+      auto-optimise-store = true;
+      connect-timeout = 5;
+      commit-lockfile-summary = "nix: update flake";
+    };
+
+    optimise.automatic = true;
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 7d";
     };
   };
 }
