@@ -16,6 +16,7 @@
     ./cursor.nix
     ./browser.nix
     ./hyprlock.nix
+    ./hypridle.nix
   ];
 
   home.stateVersion = "25.05";

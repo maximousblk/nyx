@@ -22,10 +22,10 @@
         input-field = [
           {
             monitor = "";
-            size = "120, 50";
+            size = "176, 64";
             outline_thickness = 2;
             dots_size = 0.3;
-            dots_spacing = 0.5;
+            dots_spacing = 0.6;
             dots_center = true;
 
             outer_color = "rgba(0, 0, 0, 0)";
