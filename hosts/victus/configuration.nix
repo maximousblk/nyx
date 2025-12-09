@@ -59,8 +59,9 @@
   };
 
   fonts.packages = with pkgs; [
-    nerd-fonts.fira-code
+    jetbrains-mono
     nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
     nerd-fonts.zed-mono
   ];
 
