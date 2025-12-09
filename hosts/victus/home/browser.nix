@@ -84,6 +84,13 @@
       profiles.default = rec {
         isDefault = true;
 
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+          adnauseam
+          bitwarden
+          sponsorblock
+          youtube-high-definition
+        ];
+
         containersForce = true;
         containers = {
           main = {
@@ -146,18 +153,21 @@
         };
 
         settings = {
+          "browser.aboutConfig.showWarning" = false;
+          "browser.search.separatePrivateDefault" = false;
+          "browser.shell.checkDefaultBrowser" = false;
           "browser.tabs.inTitlebar" = 0;
           "browser.tabs.warnOnClose" = true;
-          "browser.toolbars.bookmarks.visibility" = "newtab";
-          "browser.search.separatePrivateDefault" = false;
-          "browser.aboutConfig.showWarning" = false;
-          "browser.shell.checkDefaultBrowser" = false;
-          "extensions.pictureinpicture.enable_picture_in_picture_overrides" = true;
-          "sidebar.visibility" = "hide-sidebar";
+          "browser.toolbars.bookmarks.visibility" = "never";
 
-          "zen.view.compact.enable-at-startup" = true;
-          "zen.view.compact.hide-toolbar" = true;
-          "zen.view.use-single-toolbar" = false;
+          "extensions.autoDisableScopes" = 0;
+          "extensions.pictureinpicture.enable_picture_in_picture_overrides" = true;
+          "extensions.update.autoUpdateDefault" = false;
+
+          "zen.view.compact.enable-at-startup" = true; # Enable compact mode
+          "zen.view.compact.hide-tabbar" = true; # Hide Sidebar
+          "zen.view.compact.hide-toolbar" = false; # Hide toolbar
+          "zen.view.use-single-toolbar" = false; # Combine sidebar and toolbar
           "zen.welcome-screen.seen" = true;
         };
       };
