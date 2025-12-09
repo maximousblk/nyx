@@ -130,6 +130,13 @@ window-rule {
     match app-id=r#"^com\.rtosta\.zapzap$"#
 
     open-on-workspace "chat"
+}
+
+window-rule {
+    match app-id="discord"
+    match app-id=r#"^com\.rtosta\.zapzap$"#
+    match app-id="^Bitwarden$"
+
     open-focused true
     open-maximized true
     block-out-from "screen-capture"
