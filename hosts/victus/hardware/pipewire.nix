@@ -50,9 +50,9 @@
                     plugin = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
                     label = "noise_suppressor_mono";
                     control = {
-                      "VAD Threshold (%)" = 40.0;
-                      "VAD Grace Period (ms)" = 500;
-                      "Retroactive VAD Grace (ms)" = 100;
+                      "VAD Threshold (%)" = 60.0;
+                      "VAD Grace Period (ms)" = 120;
+                      "Retroactive VAD Grace (ms)" = 90;
                     };
                   }
                   {
@@ -61,11 +61,11 @@
                     plugin = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so";
                     label = "deep_filter_mono";
                     control = {
-                      "Attenuation Limit (dB)" = 80;
+                      "Attenuation Limit (dB)" = 100;
                       "Min processing threshold (dB)" = -15;
                       "Max ERB processing threshold (dB)" = 35;
                       "Max DF processing threshold (dB)" = 35;
-                      "Post Filter Beta" = 0.01;
+                      "Post Filter Beta" = 0.02;
                     };
                   }
                 ];
