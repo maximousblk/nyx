@@ -14,6 +14,11 @@
   services.hdapsd.enable = false;
   services.below.enable = true;
 
+  services.scx = {
+    enable = true;
+    package = pkgs.scx.full;
+  };
+
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "both";
