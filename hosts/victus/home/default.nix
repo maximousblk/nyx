@@ -93,41 +93,6 @@
     };
   };
 
-  programs.discord = {
-    enable = true;
-    settings = {
-      SKIP_HOST_UPDATE = true;
-      IS_MAXIMIZED = true;
-      enableHardwareAcceleration = true;
-    };
-  };
-
-  programs.zapzap = {
-    enable = true;
-    settings = {
-      notification = {
-        donation_message = true;
-      };
-
-      performance = {
-        in_process_gpu = true;
-        single_process = true;
-      };
-
-      system = {
-        scale = 100;
-        theme = "auto";
-        menubar = false;
-        sidebar = false;
-        wayland = true;
-        quit_in_close = true;
-      };
-
-      website.open_page = false;
-      web.scroll_animator = true;
-    };
-  };
-
   programs.zed-editor = {
     enable = true;
 
