@@ -29,6 +29,11 @@ in
         aliases.pullauto = "pull --rebase --autostash";
 
         gpg.ssh.allowedSignersFile = "${signers}";
+        url = {
+          "git@github.com:aftershootco/aftershoot-cloud" = {
+            insteadOf = "https://github.com/aftershootco/aftershoot-cloud";
+          };
+        };
       };
     };
 
