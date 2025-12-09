@@ -47,6 +47,7 @@ layout {
         proportion 0.67
         proportion 1.0
     }
+    background-color "transparent"
 }
 
 cursor {
@@ -63,6 +64,11 @@ workspace "chat"
 environment {
     ZED_WINDOW_DECORATIONS "server"
     XCURSOR_PATH "~/.local/share/icons"
+    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    QT_QPA_PLATFORM "wayland"
+    QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
+    XDG_SESSION_TYPE "wayland"
+    XDG_CURRENT_DESKTOP "niri"
 }
 
 
@@ -71,8 +77,41 @@ overview {
     workspace-shadow {
         off
     }
+    backdrop-color "#FF00FF"
+    zoom 0.3
 }
 
+// Recent Window Switcher
+recent-windows {
+    // off
+    debounce-ms 750
+
+    open-delay-ms 250
+
+    highlight {
+        padding 30
+        corner-radius 5
+    }
+
+    previews {
+        max-height 250
+        max-scale 0.25
+    }
+
+    binds {
+        Alt+Tab         { next-window; }
+        Alt+Shift+Tab   { previous-window; }
+        Alt+grave       { next-window     filter="app-id"; }
+        Alt+Shift+grave { previous-window filter="app-id"; }
+    }
+}
+
+// Layer Rules
+layer-rule {
+    // Make the wallpaper stationary, rather than moving with workspaces.
+    match namespace="^swww-daemon$"
+    place-within-backdrop true
+}
 
 // Window Rules
 window-rule {
@@ -111,7 +150,7 @@ binds {
     Mod+V      { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }     // Mod + V            : Clipboard history
     Mod+period { spawn "vicinae" "vicinae://extensions/vicinae/vicinae/search-emojis"; } // Mod + Period (.)   : Emoji picker
     Mod+grave  { spawn "ghostty"; }                                                      // Mod + Backtick (`) : Launch Terminal
-    Mod+E      { spawn "dolphin"; }                                                         // Mod + E            : Launch File Explorer
+    Mod+E      { spawn "dolphin"; }                                                      // Mod + E            : Launch File Explorer
 
     // Essential Window Controls
     Alt+F4      { close-window; }               // Alt + F4: Close the focused window
