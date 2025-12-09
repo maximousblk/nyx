@@ -9,7 +9,8 @@
   boot.extraModulePackages = [ ];
 
   # Kernel
-  boot.kernelPackages = pkgs.linuxPackages_cachyos-lto; # .cachyOverride { mArch = "GENERIC_V4"; }
+  # boot.kernelPackages = pkgs.linuxPackages_cachyos-lto; # .cachyOverride { mArch = "GENERIC_V4"; };
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
   services.scx.enable = true;
 
   boot.kernelParams = [
@@ -26,5 +27,4 @@
     "usbhid"
     "xhci_pci"
   ];
-
 }
