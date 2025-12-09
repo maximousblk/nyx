@@ -16,8 +16,6 @@
   ];
 
   system.stateVersion = "25.05"; # I do not read comments
-  nixpkgs.hostPlatform = "x86_64-linux";
-  nixpkgs.config.allowUnfree = true;
 
   networking.hostName = "victus"; # Define your hostname.
 

@@ -1,5 +1,7 @@
 {
   inputs = {
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
@@ -46,57 +48,34 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      deploy-rs,
-      ...
-    }@inputs:
-    let
-      supportedSystems = [
-        "x86_64-linux"
-        # "aarch64-linux"
-      ];
-      forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
-      pkgxFor = forAllSystems (system: (import ./pkgx) { pkgs = import nixpkgs { inherit system; }; });
-      modx = import ./modx;
-    in
-    {
-      nixosConfigurations.victus = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-          pkgx = pkgxFor."x86_64-linux";
-          modx = modx;
-        };
-        modules = [ ./hosts/victus/configuration.nix ];
-      };
+  outputs = (
+    inputs@{ flake-parts, self, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { ... }:
+      {
 
-      homeConfigurations.umbra = inputs.home-manager.lib.homeManagerConfiguration {
-        pkgs = import nixpkgs {
-          system = "x86_64-linux";
-          config.allowUnfree = true;
-        };
+        imports = [
+          ./hosts/parts.nix
+          ./homes/parts.nix
+        ];
 
-        extraSpecialArgs = {
-          inherit inputs;
-          pkgx = pkgxFor."x86_64-linux";
-          modx = modx;
-        };
+        systems = [ "x86_64-linux" ];
 
-        modules = [ ./homes/umbra/home.nix ];
-      };
+        perSystem = (
+          { pkgs, system, ... }:
+          {
+            _module.args.pkgs = import inputs.nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
 
-      deploy.nodes.victus = {
-        hostname = "victus";
-        sshUser = "maximousblk";
-        fastConnection = true;
-        profiles.system = {
-          user = "root";
-          path = deploy-rs.lib.x86_64-linux.activate.nixos self.nixosConfigurations.victus;
-        };
-      };
+            _module.args.pkgx = import ./pkgx { inherit pkgs; };
+            _module.args.modx = import ./modx;
 
-      checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
-    };
+            checks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
+          }
+        );
+      }
+    )
+  );
 }

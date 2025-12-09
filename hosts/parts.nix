@@ -1,0 +1,6 @@
+{ ... }:
+{
+  imports = [
+    ./victus/parts.nix
+  ];
+}
