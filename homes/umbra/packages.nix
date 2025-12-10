@@ -52,13 +52,9 @@
     wineWowPackages.waylandFull
     yarn
     zoxide
-
     (ollama.override { acceleration = false; })
-
     (python312.withPackages (pypkgs: with pypkgs; [ exiv2 ]))
-
     nodejs_24
-
     (ruby.withPackages (ps: with ps; [ license_finder ]))
 
     (google-cloud-sdk.withExtraComponents [

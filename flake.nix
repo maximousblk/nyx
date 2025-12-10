@@ -5,6 +5,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
+    nixpkgs-gcloud-537.url = "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261";
+
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -67,6 +69,13 @@
             _module.args.pkgs = import inputs.nixpkgs {
               inherit system;
               config.allowUnfree = true;
+
+              overlays = [
+                (final: prev: {
+                  # https://github.com/NixOS/nixpkgs/issues/468388
+                  google-cloud-sdk = inputs.nixpkgs-gcloud-537.legacyPackages.${system}.google-cloud-sdk;
+                })
+              ];
             };
 
             _module.args.pkgx = import ./pkgx { inherit pkgs; };
