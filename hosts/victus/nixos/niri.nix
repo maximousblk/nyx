@@ -1,6 +1,6 @@
 { pkgs, ... }:
 {
-  services.displayManager.sessionPackages = [ pkgs.niri_git ];
+  services.displayManager.sessionPackages = [ pkgs.niri ];
   programs.xwayland.enable = true;
 
   services.xserver = {
@@ -12,7 +12,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    niri_git
+    niri
     xwayland-satellite
     gnome-keyring
     nautilus

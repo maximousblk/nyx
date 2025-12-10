@@ -5,7 +5,6 @@
 }:
 {
   imports = [
-    inputs.chaotic.nixosModules.default
     inputs.nix-index-database.nixosModules.nix-index
     inputs.sops-nix.nixosModules.sops
     inputs.nur.modules.nixos.default

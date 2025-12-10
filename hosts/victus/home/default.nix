@@ -43,7 +43,6 @@
 
     lutris
     protonup-qt
-    proton-cachyos_x86_64_v4
     wine
     winetricks
     uxplay
