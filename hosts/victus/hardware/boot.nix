@@ -9,8 +9,8 @@
   boot.extraModulePackages = [ ];
 
   # Kernel
-  # boot.kernelPackages = pkgs.linuxPackages_cachyos-lto; # .cachyOverride { mArch = "GENERIC_V4"; };
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto;
 
   boot.kernelParams = [
     "intel_idle.max_cstate=4"

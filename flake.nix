@@ -65,7 +65,6 @@
 
     nix-cachyos-kernel = {
       url = "github:xddxdd/nix-cachyos-kernel";
-      inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
       inputs.flake-compat.follows = "flake-compat";
     };
@@ -103,6 +102,7 @@
               config.allowUnfree = true;
 
               overlays = [
+                inputs.nix-cachyos-kernel.overlay
                 (final: prev: {
                   # https://github.com/NixOS/nixpkgs/issues/468388
                   google-cloud-sdk = inputs.nixpkgs-gcloud-537.legacyPackages.${system}.google-cloud-sdk;
