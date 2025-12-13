@@ -164,6 +164,8 @@
           "extensions.pictureinpicture.enable_picture_in_picture_overrides" = true;
           "extensions.update.autoUpdateDefault" = false;
 
+          "privacy.exposeContentTitleInWindow.pbm" = false;
+
           "zen.view.compact.enable-at-startup" = true; # Enable compact mode
           "zen.view.compact.hide-tabbar" = true; # Hide Sidebar
           "zen.view.compact.hide-toolbar" = false; # Hide toolbar

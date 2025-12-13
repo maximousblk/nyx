@@ -133,6 +133,7 @@ window-rule {
     match app-id="discord"
     match app-id=r#"^com\.rtosta\.zapzap$"#
     match app-id="^Bitwarden$"
+    match app-id="zen-beta" title="Zen Browser Private Browsing"
 
     block-out-from "screen-capture"
 }
