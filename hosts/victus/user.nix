@@ -2,6 +2,7 @@
   pkgs,
   pkgx,
   modx,
+  self,
   inputs,
   ...
 }:
@@ -29,16 +30,12 @@ in
       ];
 
       openssh.authorizedKeys.keyFiles = [ github_keys ];
-
-      packages = with pkgs; [
-        nil
-        nixd
-        zed-editor
-      ];
     };
 
     home-manager = {
-      users.maximousblk = import ./home/default.nix;
+      users.maximousblk = {
+        imports = [ self.homeProfiles.victus ];
+      };
       extraSpecialArgs = { inherit inputs pkgx modx; };
 
       useGlobalPkgs = true;

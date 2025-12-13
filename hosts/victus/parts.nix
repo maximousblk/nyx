@@ -17,7 +17,10 @@
 
       nixosConfigurations.victus = inputs.nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs pkgx modx; };
+        specialArgs = {
+          inherit inputs self;
+          inherit pkgx modx;
+        };
         modules = [
           ./configuration.nix
           {

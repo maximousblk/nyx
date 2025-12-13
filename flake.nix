@@ -103,6 +103,8 @@
 
               overlays = [
                 inputs.nix-cachyos-kernel.overlay
+                inputs.nur.overlays.default
+
                 (final: prev: {
                   # https://github.com/NixOS/nixpkgs/issues/468388
                   google-cloud-sdk = inputs.nixpkgs-gcloud-537.legacyPackages.${system}.google-cloud-sdk;
