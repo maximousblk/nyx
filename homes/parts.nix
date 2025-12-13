@@ -1,4 +1,9 @@
-{ lib, ... }:
+{
+  lib,
+  inputs,
+  withSystem,
+  ...
+}:
 {
   imports = [
     ./umbra/parts.nix
@@ -11,6 +16,40 @@
         type = lib.types.lazyAttrsOf lib.types.raw;
         default = { };
       };
+      homeProfiles = lib.mkOption {
+        type = lib.types.lazyAttrsOf lib.types.raw;
+        default = { };
+      };
     };
+  };
+  config = {
+    _module.args.mkHome = (
+      {
+        modules,
+        system,
+        username ? null,
+        homeDirectory ? null,
+      }:
+      withSystem system (
+        {
+          pkgs,
+          pkgx,
+          modx,
+          ...
+        }:
+        inputs.home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+
+          extraSpecialArgs = { inherit inputs pkgx modx; };
+
+          modules =
+            modules
+            ++ lib.optional (username != null) {
+              home.username = username;
+              home.homeDirectory = homeDirectory;
+            };
+        }
+      )
+    );
   };
 }

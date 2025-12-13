@@ -1,20 +1,21 @@
-{ inputs, withSystem, ... }:
+{
+  self,
+  mkHome,
+  withSystem,
+  ...
+}:
 {
   flake = withSystem "x86_64-linux" (
+    { ... }:
     {
-      pkgs,
-      pkgx,
-      modx,
-      ...
-    }:
-    {
-
-      homeConfigurations.umbra = inputs.home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = { inherit inputs pkgx modx; };
-        modules = [ ./home.nix ];
+      homeConfigurations.umbra = mkHome {
+        inherit withSystem;
+        username = "ashwin_y";
+        homeDirectory = "/home/ashwin_y/.local/share/distrobox/home/umbra";
+        modules = [
+          self.homeManagerModules.umbra
+        ];
       };
-
     }
   );
 }

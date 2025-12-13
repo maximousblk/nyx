@@ -1,33 +1,17 @@
 {
   self,
   inputs,
+  mkNixos,
   withSystem,
   ...
 }:
 {
   flake = withSystem "x86_64-linux" (
+    { system, ... }:
     {
-      system,
-      pkgs,
-      pkgx,
-      modx,
-      ...
-    }:
-    {
-
-      nixosConfigurations.victus = inputs.nixpkgs.lib.nixosSystem {
+      nixosConfigurations.victus = mkNixos {
         inherit system;
-        specialArgs = {
-          inherit inputs self;
-          inherit pkgx modx;
-        };
-        modules = [
-          ./configuration.nix
-          {
-            nixpkgs.hostPlatform = system;
-            nixpkgs.pkgs = pkgs;
-          }
-        ];
+        modules = [ ./configuration.nix ];
       };
 
       deploy.nodes.victus = {

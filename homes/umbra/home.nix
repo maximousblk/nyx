@@ -16,8 +16,6 @@
   ];
 
   config = {
-    home.username = "ashwin_y";
-    home.homeDirectory = "/home/ashwin_y/.local/share/distrobox/home/umbra";
     home.stateVersion = "25.05";
 
     home.sessionPath = [
