@@ -112,6 +112,12 @@
     userSettings = {
       vim_mode = true;
       buffer_font_family = "JetBrainsMono Nerd Font Propo";
+      languages.Nix.language_servers = [
+        "nil"
+        "!nixd"
+      ];
+
+      lsp.nil.initialization_options.formatting.command = [ "return" ];
     };
   };
 
