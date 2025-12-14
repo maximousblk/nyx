@@ -1,7 +1,6 @@
 { ... }:
 {
   imports = [
-    ./nix.nix
     ./ly.nix
     ./niri.nix
     ./packages.nix

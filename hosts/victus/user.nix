@@ -13,8 +13,6 @@ let
   };
 in
 {
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
-
   config = {
     users.users.maximousblk = {
       description = "Maximous Black";
@@ -36,11 +34,6 @@ in
       users.maximousblk = {
         imports = [ self.homeProfiles.victus ];
       };
-      extraSpecialArgs = { inherit inputs pkgx modx; };
-
-      useGlobalPkgs = true;
-      useUserPackages = true;
-      backupFileExtension = "hm_bak";
     };
   };
 }

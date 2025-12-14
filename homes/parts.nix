@@ -35,6 +35,7 @@
           pkgs,
           pkgx,
           modx,
+          homeManagerModules,
           ...
         }:
         inputs.home-manager.lib.homeManagerConfiguration {
@@ -42,12 +43,15 @@
 
           extraSpecialArgs = { inherit inputs pkgx modx; };
 
-          modules =
-            modules
-            ++ lib.optional (username != null) {
-              home.username = username;
-              home.homeDirectory = homeDirectory;
-            };
+          modules = [
+
+          ]
+          ++ homeManagerModules
+          ++ modules
+          ++ lib.optional (username != null) {
+            home.username = username;
+            home.homeDirectory = homeDirectory;
+          };
         }
       )
     );

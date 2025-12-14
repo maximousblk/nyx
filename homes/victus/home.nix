@@ -1,16 +1,11 @@
 {
   pkgs,
   pkgx,
-  inputs,
   ...
 }:
 {
 
   imports = [
-    inputs.vicinae.homeManagerModules.default
-    inputs.nix-index-database.homeModules.nix-index
-    inputs.sops-nix.homeManagerModules.sops
-
     ./niri.nix
     ./waybar.nix
     ./ironbar.nix

@@ -107,6 +107,21 @@
             _module.args.pkgx = import ./pkgx { inherit pkgs; };
             _module.args.modx = import ./modx;
 
+            _module.args.homeManagerModules = [
+              inputs.sops-nix.homeManagerModules.sops
+              inputs.vicinae.homeManagerModules.default
+              inputs.nix-index-database.homeModules.nix-index
+              inputs.impermanence.homeManagerModules.impermanence
+            ];
+            _module.args.nixosModules = [
+              inputs.disko.nixosModules.disko
+              inputs.sops-nix.nixosModules.sops
+              inputs.home-manager.nixosModules.home-manager
+              inputs.impermanence.nixosModules.impermanence
+              inputs.nixos-facter-modules.nixosModules.facter
+              inputs.nix-index-database.nixosModules.nix-index
+            ];
+
             checks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
 
             treefmt.programs.nixfmt = {
