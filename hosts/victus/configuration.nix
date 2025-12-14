@@ -39,11 +39,9 @@
   programs.partition-manager.enable = true;
   programs.ssh = {
     startAgent = false;
-    enableAskPassword = true;
   };
 
   environment.variables = {
-    SSH_ASKPASS_REQUIRE = "prefer";
     ZED_WINDOW_DECORATIONS = "server";
   };
 
