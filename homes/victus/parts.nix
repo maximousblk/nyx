@@ -15,9 +15,7 @@
       homeConfigurations.victus = mkHome {
         username = "maximousblk";
         homeDirectory = "/home/maximousblk";
-        modules = [
-          self.homeProfiles.victus
-        ];
+        modules = [ self.homeProfiles.victus ];
       };
     }
   );

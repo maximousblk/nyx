@@ -11,9 +11,7 @@
   # Kernel
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-  boot.kernelParams = [
-    "intel_idle.max_cstate=4"
-  ];
+  boot.kernelParams = [ "intel_idle.max_cstate=4" ];
 
   boot.kernelModules = [ ];
   boot.initrd.kernelModules = [ ];

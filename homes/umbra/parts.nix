@@ -12,9 +12,7 @@
         inherit withSystem;
         username = "ashwin_y";
         homeDirectory = "/home/ashwin_y/.local/share/distrobox/home/umbra";
-        modules = [
-          self.homeManagerModules.umbra
-        ];
+        modules = [ self.homeManagerModules.umbra ];
       };
     }
   );

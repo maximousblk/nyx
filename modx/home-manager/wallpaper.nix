@@ -28,7 +28,5 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    xdg.dataFile."wallpapers".source = cfg.package;
-  };
+  config = lib.mkIf cfg.enable { xdg.dataFile."wallpapers".source = cfg.package; };
 }

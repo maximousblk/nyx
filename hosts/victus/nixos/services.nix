@@ -43,9 +43,7 @@
     capSysAdmin = true;
     openFirewall = true;
 
-    package = pkgs.sunshine.override {
-      cudaSupport = false;
-    };
+    package = pkgs.sunshine.override { cudaSupport = false; };
   };
   systemd.user.services.sunshine = {
     after = [ "niri-session.target" ];

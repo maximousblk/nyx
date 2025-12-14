@@ -108,9 +108,7 @@
               inherit system;
               config.allowUnfree = true;
 
-              overlays = [
-                inputs.nur.overlays.default
-              ];
+              overlays = [ inputs.nur.overlays.default ];
             };
 
             _module.args.pkgx = import ./pkgx { inherit pkgs; };
@@ -135,7 +133,8 @@
 
             treefmt.programs.nixfmt = {
               enable = true;
-              width = 120;
+              strict = true;
+              width = 160;
             };
           }
         );

@@ -1,11 +1,9 @@
 {
-  nixos = {
-  };
+  nixos = { };
 
   hm = {
     wallpaper = ./home-manager/wallpaper.nix;
   };
 
-  common = {
-  };
+  common = { };
 }

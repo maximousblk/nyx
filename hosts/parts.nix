@@ -32,10 +32,7 @@ in
 
   config = {
     _module.args.mkNixos = (
-      {
-        modules,
-        system,
-      }:
+      { modules, system }:
       withSystem system (
         {
           pkgs,

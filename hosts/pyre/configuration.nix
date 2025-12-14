@@ -1,8 +1,6 @@
-{ pkgs, ... }:
+{ ... }:
 {
-  imports = [
-    ./disko.nix
-  ];
+  imports = [ ./disko.nix ];
 
   system.stateVersion = "25.05";
 
@@ -41,17 +39,13 @@
   };
 
   # Users
-  users.users.root.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCoRsI0EOags5LP+Iy8/qfwKBzVzG+rlb1nszrJsaew"
-  ];
+  users.users.root.openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCoRsI0EOags5LP+Iy8/qfwKBzVzG+rlb1nszrJsaew" ];
 
   users.users.maximousblk = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
     hashedPassword = "$y$j9T$SoBGPt7DQ4HZUvUl/EfPg/$zQlWUcr34xNtVNVNMhdmwB02tfCBkClvgZChP/qc7..";
-    openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCoRsI0EOags5LP+Iy8/qfwKBzVzG+rlb1nszrJsaew"
-    ];
+    openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCoRsI0EOags5LP+Iy8/qfwKBzVzG+rlb1nszrJsaew" ];
   };
 
   services.openssh = {

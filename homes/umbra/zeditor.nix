@@ -40,13 +40,7 @@
         ssh_connections = [
           {
             host = "editing-metrics-server-gpu";
-            projects = [
-              {
-                paths = [
-                  "/home/aftershoot/editing-metrics-server"
-                ];
-              }
-            ];
+            projects = [ { paths = [ "/home/aftershoot/editing-metrics-server" ]; } ];
           }
         ];
 
