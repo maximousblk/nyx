@@ -14,7 +14,6 @@
     };
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    nixpkgs-gcloud-537.url = "github:NixOS/nixpkgs/ee09932cedcef15aaf476f9343d1dea2cb77e261";
 
     nur = {
       url = "github:nix-community/NUR";
@@ -63,12 +62,6 @@
       inputs.nix-systems.follows = "systems";
     };
 
-    nix-cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.flake-compat.follows = "flake-compat";
-    };
-
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -102,13 +95,7 @@
               config.allowUnfree = true;
 
               overlays = [
-                inputs.nix-cachyos-kernel.overlay
                 inputs.nur.overlays.default
-
-                (final: prev: {
-                  # https://github.com/NixOS/nixpkgs/issues/468388
-                  google-cloud-sdk = inputs.nixpkgs-gcloud-537.legacyPackages.${system}.google-cloud-sdk;
-                })
               ];
             };
 
