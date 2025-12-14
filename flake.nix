@@ -72,6 +72,9 @@
       url = "github:musnix/musnix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    treefmt-nix.url = "github:numtide/treefmt-nix";
+
   };
 
   outputs = (
@@ -81,6 +84,8 @@
       {
 
         imports = [
+          inputs.treefmt-nix.flakeModule
+
           ./hosts/parts.nix
           ./homes/parts.nix
         ];
@@ -103,6 +108,11 @@
             _module.args.modx = import ./modx;
 
             checks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
+
+            treefmt.programs.nixfmt = {
+              enable = true;
+              width = 120;
+            };
           }
         );
       }
