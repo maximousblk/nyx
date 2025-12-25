@@ -71,6 +71,10 @@
       inputs.nix-systems.follows = "systems";
     };
 
+    quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
+
+    stylix.url = "github:danth/stylix";
+
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -115,6 +119,7 @@
             _module.args.modx = import ./modx;
 
             _module.args.homeManagerModules = [
+              inputs.stylix.homeModules.stylix
               inputs.sops-nix.homeManagerModules.sops
               inputs.vicinae.homeManagerModules.default
               inputs.nix-index-database.homeModules.nix-index
@@ -123,6 +128,8 @@
             _module.args.nixosModules = [
               inputs.disko.nixosModules.disko
               inputs.sops-nix.nixosModules.sops
+              inputs.stylix.nixosModules.stylix
+              inputs.quadlet-nix.nixosModules.quadlet
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
               inputs.nixos-facter-modules.nixosModules.facter
