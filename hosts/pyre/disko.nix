@@ -2,7 +2,7 @@
   disko.devices = {
     disk.main = {
       type = "disk";
-      device = "/dev/disk/by-id/nvme-eui.2c3ebf39323934350000000000000000";
+      device = "/dev/disk/by-id/ata-CONSISTENT_M.2_S7_128GB_09162225J0926";
       content = {
         type = "gpt";
         partitions = {
@@ -25,32 +25,55 @@
               type = "btrfs";
               extraArgs = [ "-f" ];
               subvolumes = {
-                "/root" = {
+                "@" = {
                   mountpoint = "/";
                   mountOptions = [
                     "compress=zstd"
                     "noatime"
                   ];
                 };
-                "/nix" = {
+                "@home" = {
+                  mountpoint = "/home";
+                  mountOptions = [
+                    "compress=zstd"
+                    "noatime"
+                  ];
+                };
+                "@nix" = {
                   mountpoint = "/nix";
                   mountOptions = [
                     "compress=zstd"
                     "noatime"
                   ];
                 };
-                "/persistent" = {
-                  mountpoint = "/persistent";
-                  mountOptions = [
-                    "compress=zstd"
-                    "noatime"
-                  ];
-                };
-                "/swap" = {
+                "@swap" = {
                   mountpoint = "/.swapvol";
                   swap.swapfile.size = "8G";
                 };
               };
+            };
+          };
+        };
+      };
+    };
+
+    disk.storage = {
+      type = "disk";
+      device = "/dev/disk/by-id/nvme-Verbatim_Vi3000_493744058892945";
+      content = {
+        type = "gpt";
+        partitions = {
+          data = {
+            size = "100%";
+            content = {
+              type = "filesystem";
+              format = "ext4";
+              mountpoint = "/mnt/data";
+              mountOptions = [
+                "defaults"
+                "nofail"
+                "x-systemd.automount"
+              ];
             };
           };
         };
