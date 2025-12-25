@@ -5,11 +5,16 @@
   services.polkit-gnome.enable = true;
   services.udiskie.enable = true;
 
-  systemd.user.targets.niri-session.Unit = {
-    Description = "Niri Wayland Session";
-    BindsTo = [ "graphical-session.target" ];
-    Wants = [ "graphical-session-pre.target" ];
-    After = [ "graphical-session-pre.target" ];
+  systemd.user.targets.niri-session = {
+    Unit = {
+      Description = "Niri Session";
+      BindsTo = [ "graphical-session.target" ];
+      After = [ "graphical-session-pre.target" ];
+      Wants = [ "graphical-session-pre.target" ];
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
   };
 
   xdg.configFile."niri/config.kdl".text = builtins.readFile ./niri.config.kdl + ''

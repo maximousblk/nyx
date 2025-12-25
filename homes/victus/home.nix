@@ -1,4 +1,9 @@
-{ pkgs, pkgx, ... }:
+{
+  pkgs,
+  pkgx,
+  config,
+  ...
+}:
 {
 
   imports = [
@@ -6,10 +11,11 @@
     ./waybar.nix
     ./ironbar.nix
     ./swww.nix
-    ./cursor.nix
     ./browser.nix
     ./hyprlock.nix
     ./hypridle.nix
+    ./vicinae.nix
+    ./mako.nix
   ];
 
   home.stateVersion = "25.05";
@@ -17,59 +23,61 @@
   home.packages = with pkgs; [
     pkgx.polycat
 
-    ncdu
-    tree
-    btop
-    ghostty
-    nvtopPackages.full
-    jq
     bitwarden-cli
     bitwarden-desktop
-    playerctl
-    pulseaudio
-    hyprpwcenter
-
-    gparted
-    kdePackages.dolphin
-    peazip
-    rar
-
-    lutris
-    protonup-qt
-    wine
-    winetricks
-    uxplay
+    btop
     exfatprogs
-
-    libappindicator-gtk3
-
-    adwaita-icon-theme
-    hicolor-icon-theme
+    hyprpwcenter
+    jq
+    kdePackages.ark
+    kdePackages.dolphin
+    kdePackages.gwenview
+    kdePackages.kdeconnect-kde
+    kdePackages.partitionmanager
+    libappindicator
+    lutris
+    ncdu
     nil
     nixd
+    nvtopPackages.full
+    playerctl
+    protonup-qt
+    pulseaudio
+    rar
+    rose-pine-icon-theme
+    tree
+    uxplay
+    wine
+    winetricks
     zed-editor
   ];
 
-  gtk = {
+  stylix = {
     enable = true;
+    polarity = "dark";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
 
-    iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+    cursor = {
+      package = pkgs.rose-pine-cursor;
+      name = "BreezeX-RosePine-Linux";
+      size = 32;
     };
 
-    theme = {
-      name = "rose-pine";
-      package = pkgs.rose-pine-gtk-theme;
-    };
+    image = null;
 
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
-    };
+    targets.zen-browser.profileNames = [ "default" ];
+    targets.hyprlock.enable = false;
 
-    gtk4.extraConfig = {
-      gtk-application-prefer-dark-theme = 1;
+    fonts = {
+      monospace = {
+        package = pkgs.nerd-fonts.jetbrains-mono;
+        name = "JetBrainsMono Nerd Font Propo";
+      };
     };
+  };
+
+  home.sessionVariables = {
+    XCURSOR_PATH = "${config.home.homeDirectory}/.local/share/icons";
   };
 
   programs.git = {
@@ -86,6 +94,26 @@
         identityFile = [ "~/.ssh/id_ed25519" ];
       };
     };
+  };
+
+  programs.ghostty = {
+    enable = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
+    systemd.enable = true;
+    settings = {
+
+      command = "${config.programs.fish.package}/bin/fish";
+      shell-integration-features = "ssh-terminfo,ssh-env";
+      window-padding-x = "2";
+      window-padding-y = "2";
+      window-padding-balance = true;
+    };
+  };
+
+  programs.fish = {
+    enable = true;
+    package = pkgs.fish;
   };
 
   programs.zed-editor = {
@@ -109,25 +137,6 @@
       ];
 
       lsp.nil.initialization_options.formatting.command = [ "return" ];
-    };
-  };
-
-  xdg.configFile."vicinae/vicinae.json".force = true;
-  services.vicinae = {
-    enable = true; # default: false
-    autoStart = true; # default: true
-    settings = {
-      faviconService = "twenty"; # twenty | google | none
-      font.normal = "JetBrainsMono Nerd Font Propo";
-      font.size = 12;
-      popToRootOnClose = true;
-      rootSearch.searchFiles = false;
-      theme.name = "kanagawa";
-      window = {
-        csd = true;
-        opacity = 0.95;
-        rounding = 10;
-      };
     };
   };
 

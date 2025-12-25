@@ -231,7 +231,6 @@
         }
 
         #popup-flyout .tray .item:hover {
-            background-color: rgba(38, 33, 69, 0.8);
             border-radius: 4px;
         }
 
@@ -240,12 +239,10 @@
             margin-top: 8px;
         }
 
-
         /* --- Popup Styling (General) --- */
         /* Generic style for all popups */
         popover {
-            background-color: rgba(3, 7, 18, 0.95);
-            border: 1px solid rgba(109, 103, 218, 0.5);
+
             border-radius: 6px;
         }
 
@@ -255,7 +252,6 @@
         }
         .popup-clock .calendar .today {
             color: #000;
-            background-color: rgba(204, 136, 34, 0.8); /* Using a color from your hyprlock config */
             border-radius: 4px;
         }
       '';
