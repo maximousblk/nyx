@@ -3,7 +3,7 @@
   hardware.nvidia = {
     open = true;
     modesetting.enable = true;
-    package = config.boot.kernelPackages.nvidiaPackages.beta;
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
 
     powerManagement = {
       enable = true;
@@ -29,4 +29,8 @@
   ];
 
   hardware.nvidia-container-toolkit.enable = true;
+
+  systemd.services.nvidia-suspend.enable = true;
+  systemd.services.nvidia-hibernate.enable = true;
+  systemd.services.nvidia-resume.enable = true;
 }

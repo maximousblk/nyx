@@ -1,8 +1,5 @@
 { pkgs, ... }:
 {
-  systemd.services.nvidia-suspend.enable = true;
-  systemd.services.nvidia-hibernate.enable = true;
-  systemd.services.nvidia-resume.enable = true;
 
   services.blueman.enable = true;
   services.openssh.enable = true;

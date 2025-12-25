@@ -9,7 +9,7 @@
   boot.extraModulePackages = [ ];
 
   # Kernel
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   boot.kernelParams = [ "intel_idle.max_cstate=4" ];
 

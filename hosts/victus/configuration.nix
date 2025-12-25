@@ -32,7 +32,6 @@
 
   programs.nix-index-database.comma.enable = true;
 
-  programs.partition-manager.enable = true;
   programs.ssh = {
     startAgent = false;
   };
