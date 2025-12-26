@@ -56,7 +56,7 @@
         };
 
         agent = {
-          enabled = true;
+          enabled = false;
           always_allow_tool_actions = true;
           expand_edit_card = false;
           expand_terminal_card = false;
