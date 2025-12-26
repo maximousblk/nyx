@@ -3,7 +3,11 @@
   config = {
     programs.mcp = {
       enable = true;
-      servers.gh_grep.url = "https://mcp.grep.app";
+      servers = {
+        gh_grep.url = "https://mcp.grep.app";
+        context7.url = "https://mcp.context7.com/mcp";
+        playwright.command = lib.getExe pkgs.playwright-mcp;
+      };
     };
 
     programs.opencode = {
@@ -26,7 +30,10 @@
         };
 
         formatter.nixfmt = {
-          command = [ (lib.getExe pkgs.nixfmt-rfc-style) "$FILE" ];
+          command = [
+            (lib.getExe pkgs.nixfmt-rfc-style)
+            "$FILE"
+          ];
           extensions = [ ".nix" ];
         };
 
