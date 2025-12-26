@@ -5,25 +5,30 @@
       enable = true;
       settings = {
         theme = "rosepine";
-        model = "opencode/big-pickle";
-        small_model = "opencode/big-pickle";
         autoupdate = false;
         share = "disabled";
 
+        enabled_providers = [ "github-copilot" ];
+        model = "claude-opus-4.5";
+        small_model = "claude-haiku-4.5";
+        default_agent = "plan";
+
+        mcp = {
+          gh_grep = {
+            type = "remote";
+            url = "https://mcp.grep.app";
+          };
+        };
+
         permission = {
-          # Destructive operations - always ask
+          # Write operations - require approval
           bash = "ask";
           edit = "ask";
-          write = "ask";
-          patch = "ask";
-          todowrite = "ask";
+          skill = "ask";
+          doom_loop = "ask";
+          external_directory = "ask";
 
-          # Safe operations - always allow
-          read = "allow";
-          grep = "allow";
-          glob = "allow";
-          list = "allow";
-          todoread = "allow";
+          # Read operations - always allow
           webfetch = "allow";
         };
       };
