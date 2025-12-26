@@ -1,8 +1,15 @@
-{ ... }:
+{ lib, pkgs, ... }:
 {
   config = {
+    programs.mcp = {
+      enable = true;
+      servers.gh_grep.url = "https://mcp.grep.app";
+    };
+
     programs.opencode = {
       enable = true;
+      enableMcpIntegration = true;
+
       settings = {
         theme = "rosepine";
         autoupdate = false;
@@ -13,11 +20,14 @@
         small_model = "claude-haiku-4.5";
         default_agent = "plan";
 
-        mcp = {
-          gh_grep = {
-            type = "remote";
-            url = "https://mcp.grep.app";
-          };
+        lsp.nixd = {
+          command = [ (lib.getExe pkgs.nixd) ];
+          extensions = [ ".nix" ];
+        };
+
+        formatter.nixfmt = {
+          command = [ (lib.getExe pkgs.nixfmt-rfc-style) "$FILE" ];
+          extensions = [ ".nix" ];
         };
 
         permission = {
