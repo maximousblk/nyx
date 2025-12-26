@@ -5,6 +5,7 @@
     bat
     btop
     bun
+    cmake
     conan
     docker
     docker-compose
@@ -15,6 +16,7 @@
     eza
     fd
     fzf
+    gcc
     gh
     git
     glibcLocales
@@ -25,36 +27,43 @@
     grafana-alloy
     gum
     intel-media-driver
+    jq
+    jwt-cli
     kubernetes-helm
     libgcc
     libva
     libva-utils
     mesa
     micro
+    mongosh
     mpv
     neovim
     nerd-fonts.jetbrains-mono
     nil
     nixd
     nixfmt-rfc-style
+    nodejs_24
     opencode
     opentofu
     packer
     podman
     podman-compose
     ripgrep
-    terragrunt
+    sops
+    ssh-to-age
+    # terragrunt
     tmux
     trufflehog
     uv
     uxplay
     winetricks
     wineWowPackages.waylandFull
+    wl-clipboard-rs
     yarn
+    yq
     zoxide
-    (ollama.override { acceleration = false; })
+
     (python312.withPackages (pypkgs: with pypkgs; [ exiv2 ]))
-    nodejs_24
     (ruby.withPackages (ps: with ps; [ license_finder ]))
 
     (google-cloud-sdk.withExtraComponents [
