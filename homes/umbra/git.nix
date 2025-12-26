@@ -34,6 +34,11 @@ in
             insteadOf = "https://github.com/aftershootco/aftershoot-cloud";
           };
         };
+
+        rerere = {
+          enabled = true;
+          autoUpdate = true;
+        };
       };
     };
 
