@@ -1,6 +1,9 @@
 { lib, pkgs, ... }:
 {
   config = {
+
+    home.packages = [ pkgs.crush ];
+
     programs.mcp = {
       enable = true;
       servers = {
@@ -47,6 +50,46 @@
 
           # Read operations - always allow
           webfetch = "allow";
+        };
+
+        agent = {
+          # Plan agent: Read-only tools + playwright for UI testing
+          plan.tools = {
+            # Read operations - enabled
+            read = true;
+            grep = true;
+            glob = true;
+            list = true;
+            lsp = true;
+            webfetch = true;
+            todoread = true;
+
+            # Write operations - disabled
+            bash = false;
+            edit = false;
+            write = false;
+            patch = false;
+            todowrite = false;
+          };
+
+          # Build agent: All tools enabled
+          build.tools = {
+            # Read operations - enabled
+            read = true;
+            grep = true;
+            glob = true;
+            list = true;
+            lsp = true;
+            webfetch = true;
+            todoread = true;
+
+            # Write operations - enabled
+            bash = true;
+            edit = true;
+            write = true;
+            patch = true;
+            todowrite = true;
+          };
         };
       };
     };
