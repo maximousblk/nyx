@@ -4,6 +4,9 @@
 
     home.packages = [ pkgs.crush ];
 
+    # Enable experimental LSP tool for OpenCode
+    home.sessionVariables.OPENCODE_EXPERIMENTAL_LSP_TOOL = "true";
+
     programs.mcp = {
       enable = true;
       servers = {
