@@ -97,6 +97,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    files.url = "github:mightyiam/files";
+
     nix-topology = {
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -113,13 +115,14 @@
   outputs = (
     inputs@{ flake-parts, self, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      { ... }:
+      { self, ... }:
       {
 
         imports = [
           inputs.treefmt-nix.flakeModule
           inputs.nix-topology.flakeModule
 
+          ./files.nix
           ./hosts/parts.nix
           ./homes/parts.nix
         ];
@@ -175,7 +178,6 @@
 
             topology.modules = [ ./topology.nix ];
 
-            packages.nur = pkgx.nur-taskrunner;
             packages.deploy-rs = inputs.deploy-rs.packages.${system}.default;
             packages.home-manager = inputs.home-manager.packages.${system}.default;
           }
