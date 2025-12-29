@@ -1,0 +1,7 @@
+def "nur generate-topology" [] {
+  let system = (nix eval --impure --raw --expr "builtins.currentSystem")
+  nix build $".#topology.($system).config.output" --out-link result-topology
+  mkdir .github
+  glob result-topology/*.svg | each { |f| cp -f $f $".github/($f | path basename)" }
+  print "Topology diagrams copied to .github/"
+}

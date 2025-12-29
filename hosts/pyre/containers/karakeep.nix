@@ -9,6 +9,15 @@ let
   meili = config.virtualisation.quadlet.containers.karakeep-meilisearch;
 in
 {
+  topology.self.services.karakeep = {
+    name = "Karakeep";
+    info = "Bookmark manager";
+    icon = builtins.fetchurl {
+      url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/karakeep-light.svg";
+      sha256 = "06mic8gs6ca36rkwh20sq3ykw5dlqj2nsz760j78pfg5g2krhrrg";
+    };
+  };
+
   systemd.tmpfiles.settings."10-karakeep" = {
     "${data_meilisearch}".d = {
       mode = "0755";

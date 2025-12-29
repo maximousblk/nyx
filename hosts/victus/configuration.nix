@@ -1,4 +1,10 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  lib,
+  inputs,
+  config,
+  ...
+}:
 {
   imports = [
     inputs.nix-index-database.nixosModules.nix-index
@@ -55,5 +61,21 @@
   ];
 
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  topology.self = {
+    name = "victus";
+    hardware.info = "Intel i7 12th Gen, 16GB RAM, HP Victus 15";
+    deviceIcon = "devices.laptop";
+    interfaces.wlp0s20f3 = {
+      network = "nyx";
+      addresses = lib.mkForce [ "DHCP" ];
+    };
+    interfaces.tailscale0 = {
+      network = "tailscale";
+      type = "tun";
+      virtual = true;
+      addresses = [ "100.100.1.1" ];
+    };
+  };
 
 }

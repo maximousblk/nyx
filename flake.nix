@@ -88,6 +88,11 @@
 
     treefmt-nix.url = "github:numtide/treefmt-nix";
 
+    nix-topology = {
+      url = "github:oddlama/nix-topology";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs = (
@@ -98,6 +103,7 @@
 
         imports = [
           inputs.treefmt-nix.flakeModule
+          inputs.nix-topology.flakeModule
 
           ./hosts/parts.nix
           ./homes/parts.nix
@@ -107,16 +113,23 @@
 
         perSystem = (
           { pkgs, system, ... }:
+          let
+            pkgx = import ./pkgx { inherit pkgs; };
+            modx = import ./modx;
+          in
           {
             _module.args.pkgs = import inputs.nixpkgs {
               inherit system;
               config.allowUnfree = true;
 
-              overlays = [ inputs.nur.overlays.default ];
+              overlays = [
+                inputs.nur.overlays.default
+                inputs.nix-topology.overlays.default
+              ];
             };
 
-            _module.args.pkgx = import ./pkgx { inherit pkgs; };
-            _module.args.modx = import ./modx;
+            _module.args.pkgx = pkgx;
+            _module.args.modx = modx;
 
             _module.args.homeManagerModules = [
               inputs.stylix.homeModules.stylix
@@ -134,6 +147,7 @@
               inputs.impermanence.nixosModules.impermanence
               inputs.nixos-facter-modules.nixosModules.facter
               inputs.nix-index-database.nixosModules.nix-index
+              inputs.nix-topology.nixosModules.default
             ];
 
             checks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
@@ -143,6 +157,12 @@
               strict = true;
               width = 160;
             };
+
+            topology.modules = [ ./topology.nix ];
+
+            packages.nur = pkgx.nur-taskrunner;
+            packages.deploy-rs = inputs.deploy-rs.packages.${system}.default;
+            packages.home-manager = inputs.home-manager.packages.${system}.default;
           }
         );
       }
