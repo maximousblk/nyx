@@ -120,9 +120,10 @@
 
         imports = [
           inputs.treefmt-nix.flakeModule
-          inputs.nix-topology.flakeModule
 
+          ./topology.nix
           ./files.nix
+
           ./hosts/parts.nix
           ./homes/parts.nix
         ];
@@ -175,8 +176,6 @@
               strict = true;
               width = 160;
             };
-
-            topology.modules = [ ./topology.nix ];
 
             packages.deploy-rs = inputs.deploy-rs.packages.${system}.default;
             packages.home-manager = inputs.home-manager.packages.${system}.default;
