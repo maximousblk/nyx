@@ -2,7 +2,7 @@
 {
   config = {
     home.sessionVariables = {
-      VISUAL = "zeditor";
+      VISUAL = "zeditor --wait";
     };
 
     programs.zed-editor = {
