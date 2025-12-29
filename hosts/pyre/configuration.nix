@@ -1,4 +1,4 @@
-{ ... }:
+{ inputs, ... }:
 {
   imports = [
     ./disko.nix
@@ -21,18 +21,30 @@
   # Users
   users.users = {
     root = {
-      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCoRsI0EOags5LP+Iy8/qfwKBzVzG+rlb1nszrJsaew" ];
+      openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
     };
 
     maximousblk = {
       isNormalUser = true;
       extraGroups = [ "wheel" ];
       hashedPassword = "$y$j9T$SoBGPt7DQ4HZUvUl/EfPg/$zQlWUcr34xNtVNVNMhdmwB02tfCBkClvgZChP/qc7..";
-      openssh.authorizedKeys.keys = [ "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDCoRsI0EOags5LP+Iy8/qfwKBzVzG+rlb1nszrJsaew" ];
+      openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
     };
   };
 
   systemd.tmpfiles.rules = [ "d /mnt/data 0755 root root -" ];
 
   security.sudo.wheelNeedsPassword = false;
+
+  topology.self = {
+    name = "pyre";
+    hardware.info = "Intel N150, 16GB RAM, Skullsaints Agni";
+    interfaces.enp2s0.network = "nyx";
+    interfaces.tailscale0 = {
+      network = "tailscale";
+      type = "tun";
+      virtual = true;
+      addresses = [ "100.100.2.2" ];
+    };
+  };
 }

@@ -73,7 +73,13 @@
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
-    stylix.url = "github:danth/stylix";
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.nur.follows = "nur";
+    };
 
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
@@ -86,11 +92,20 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    treefmt-nix.url = "github:numtide/treefmt-nix";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-topology = {
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
+
+    ssh-keys-maximousblk = {
+      url = "https://github.com/maximousblk.keys";
+      flake = false;
     };
 
   };

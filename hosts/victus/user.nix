@@ -6,12 +6,6 @@
   inputs,
   ...
 }:
-let
-  github_keys = pkgs.fetchurl {
-    url = "https://github.com/maximousblk.keys";
-    hash = "sha256-D98WDUJcwRVZtHzp3FNzJXnKzjX7fzxzsQV2sZKV3oA=";
-  };
-in
 {
   config = {
     users.users.maximousblk = {
@@ -27,7 +21,7 @@ in
         "video"
       ];
 
-      openssh.authorizedKeys.keyFiles = [ github_keys ];
+      openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
     };
 
     home-manager = {
