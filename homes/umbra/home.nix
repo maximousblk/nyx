@@ -7,7 +7,6 @@
 {
   imports = [
     inputs.nix-index-database.homeModules.nix-index
-    inputs.sops-nix.homeManagerModules.sops
 
     ./packages.nix
     ./zeditor.nix

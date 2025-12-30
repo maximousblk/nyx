@@ -47,11 +47,6 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    sops-nix = {
-      url = "github:Mic92/sops-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -152,14 +147,12 @@
 
             _module.args.homeManagerModules = [
               inputs.stylix.homeModules.stylix
-              inputs.sops-nix.homeManagerModules.sops
               inputs.vicinae.homeManagerModules.default
               inputs.nix-index-database.homeModules.nix-index
               inputs.impermanence.homeManagerModules.impermanence
             ];
             _module.args.nixosModules = [
               inputs.disko.nixosModules.disko
-              inputs.sops-nix.nixosModules.sops
               inputs.stylix.nixosModules.stylix
               inputs.quadlet-nix.nixosModules.quadlet
               inputs.home-manager.nixosModules.home-manager
