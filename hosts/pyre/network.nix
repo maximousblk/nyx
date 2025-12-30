@@ -9,7 +9,7 @@
     };
 
     networking.interfaces.enp2s0 = {
-      useDHCP = false;
+      useDHCP = true;
       ipv4.addresses = [
         {
           address = "192.168.69.201";
