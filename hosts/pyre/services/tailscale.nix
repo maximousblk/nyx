@@ -6,7 +6,7 @@
     services.tailscale = {
       enable = true;
       useRoutingFeatures = "both";
-      extraUpFlags = [ ];
+      extraUpFlags = [ "--advertise-tags=tag:nyx" ];
       extraSetFlags = [
         "--advertise-exit-node"
         "--advertise-routes=192.168.69.0/24,fd7a:115c:a1e0:b1a:0:2:c0a8:4500/120"

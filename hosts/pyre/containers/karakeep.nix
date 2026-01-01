@@ -1,4 +1,9 @@
-{ config, common, ... }:
+{
+  config,
+  common,
+  modx,
+  ...
+}:
 let
   persist = "${common.paths.data}/karakeep";
   data_meilisearch = "${persist}/meili";
@@ -12,6 +17,7 @@ let
   meiliMasterKeyEnv = config.age.secrets.karakeep-env-meili-master-key.path;
 in
 {
+  imports = [ modx.nixos.tailscale-services ];
   # NEXTAUTH_SECRET - used by karakeep only
   age.secrets.karakeep-env-nextauth-secret = {
     mode = "0400";
@@ -116,7 +122,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "ghcr.io/karakeep-app/karakeep:release";
-          publishPorts = [ "3000:3000" ];
+          publishPorts = [ "127.0.0.1:3000:3000" ];
 
           networks = [ net.ref ];
           networkAliases = [ "karakeep" ];
@@ -130,7 +136,7 @@ in
             DATA_DIR = "/data";
             MEILI_ADDR = "http://karakeep-meilisearch:7700";
             BROWSER_WEB_URL = "http://karakeep-chrome:9222";
-            NEXTAUTH_URL = "http://pyre.pony-clownfish.ts.net:3000";
+            NEXTAUTH_URL = "https://karakeep.pony-clownfish.ts.net";
           };
         };
 
@@ -148,6 +154,20 @@ in
           RequiresMountsFor = data_karakeep;
         };
       };
+    };
+  };
+
+  # Expose karakeep via Tailscale Services
+  optx.tailscale.services.karakeep = {
+    target = "http://localhost:3000";
+    port = 443;
+    protocol = "https";
+    unitConfig = {
+      After = [ "karakeep.service" ];
+      BindsTo = [ "karakeep.service" ];
+    };
+    installConfig = {
+      WantedBy = [ "karakeep.service" ];
     };
   };
 }
