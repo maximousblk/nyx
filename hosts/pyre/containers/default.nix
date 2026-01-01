@@ -1,6 +1,9 @@
-{ pkgs, ... }:
+{ ... }:
 {
-  imports = [ ./karakeep.nix ];
+  imports = [
+    ./karakeep.nix
+    ./paperless.nix
+  ];
 
   config = {
     virtualisation.podman = {
