@@ -7,8 +7,33 @@ let
   net = config.virtualisation.quadlet.networks.karakeep;
   chrome = config.virtualisation.quadlet.containers.karakeep-chrome;
   meili = config.virtualisation.quadlet.containers.karakeep-meilisearch;
+
+  nextauthSecretEnv = config.age.secrets.karakeep-env-nextauth-secret.path;
+  meiliMasterKeyEnv = config.age.secrets.karakeep-env-meili-master-key.path;
 in
 {
+  # NEXTAUTH_SECRET - used by karakeep only
+  age.secrets.karakeep-env-nextauth-secret = {
+    mode = "0400";
+    generator.script =
+      { pkgs, ... }:
+      ''
+        echo -n "NEXTAUTH_SECRET="
+        ${pkgs.pwgen}/bin/pwgen -s 48 1
+      '';
+  };
+
+  # MEILI_MASTER_KEY - used by both meilisearch and karakeep
+  age.secrets.karakeep-env-meili-master-key = {
+    mode = "0400";
+    generator.script =
+      { pkgs, ... }:
+      ''
+        echo -n "MEILI_MASTER_KEY="
+        ${pkgs.pwgen}/bin/pwgen -s 48 1
+      '';
+  };
+
   topology.self.services.karakeep = {
     name = "Karakeep";
     info = "Bookmark manager";
@@ -75,10 +100,10 @@ in
 
           volumes = [ "${data_meilisearch}:/meili_data" ];
 
+          environmentFiles = [ meiliMasterKeyEnv ];
           environments = common.env // {
             MEILI_NO_ANALYTICS = "true";
             MEILI_ADDR = "http://0.0.0.0:7700";
-            MEILI_MASTER_KEY = "development";
           };
         };
 
@@ -97,13 +122,15 @@ in
           networkAliases = [ "karakeep" ];
           volumes = [ "${data_karakeep}:/data" ];
 
+          environmentFiles = [
+            nextauthSecretEnv
+            meiliMasterKeyEnv
+          ];
           environments = common.env // {
             DATA_DIR = "/data";
             MEILI_ADDR = "http://karakeep-meilisearch:7700";
             BROWSER_WEB_URL = "http://karakeep-chrome:9222";
             NEXTAUTH_URL = "http://pyre.pony-clownfish.ts.net:3000";
-            NEXTAUTH_SECRET = "development";
-            MEILI_MASTER_KEY = "development";
           };
         };
 

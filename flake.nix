@@ -47,6 +47,17 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.darwin.follows = "";
+    };
+
+    agenix-rekey = {
+      url = "github:oddlama/agenix-rekey";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     zen-browser = {
       url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -104,7 +115,6 @@
       url = "https://github.com/maximousblk.keys";
       flake = false;
     };
-
   };
 
   outputs = (
@@ -116,6 +126,7 @@
         imports = [
           inputs.treefmt-nix.flakeModule
 
+          ./secrets.nix
           ./topology.nix
           ./files.nix
 
@@ -126,7 +137,12 @@
         systems = [ "x86_64-linux" ];
 
         perSystem = (
-          { pkgs, system, ... }:
+          {
+            pkgs,
+            system,
+            config,
+            ...
+          }:
           let
             pkgx = import ./pkgx { inherit pkgs; };
             modx = import ./modx;
@@ -172,6 +188,7 @@
 
             packages.deploy-rs = inputs.deploy-rs.packages.${system}.default;
             packages.home-manager = inputs.home-manager.packages.${system}.default;
+            packages.agenix = config.agenix-rekey.package;
           }
         );
       }

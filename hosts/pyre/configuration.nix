@@ -5,6 +5,7 @@
     ./network.nix
     ./services
     ./containers
+    ./secrets.nix
   ];
 
   system.stateVersion = "25.05";
