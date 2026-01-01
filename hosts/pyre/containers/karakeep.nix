@@ -137,6 +137,23 @@ in
             MEILI_ADDR = "http://karakeep-meilisearch:7700";
             BROWSER_WEB_URL = "http://karakeep-chrome:9222";
             NEXTAUTH_URL = "https://karakeep.pony-clownfish.ts.net";
+
+            # Disable AI tagging explicitly
+            INFERENCE_ENABLE_AUTO_TAGGING = "false";
+
+            # Aggressive archival options
+            CRAWLER_FULL_PAGE_ARCHIVE = "true";
+            CRAWLER_FULL_PAGE_SCREENSHOT = "true";
+            CRAWLER_VIDEO_DOWNLOAD = "true";
+            CRAWLER_VIDEO_DOWNLOAD_MAX_SIZE = "-1";
+
+            # OCR languages
+            OCR_LANGS = "eng,hin,jpn,chi_sim,chi_tra,rus";
+
+            # Performance & security
+            DB_WAL_MODE = "true";
+            DISABLE_SIGNUPS = "true";
+            LOG_LEVEL = "warning";
           };
         };
 
