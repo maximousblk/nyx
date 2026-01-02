@@ -36,18 +36,18 @@
           on-timeout = "${pkgs.systemd}/bin/loginctl lock-session";
         }
 
-        {
-          # 3. Turn Off Screen
-          timeout = 630; # 10.5min
-          on-timeout = "${pkgs.niri}/bin/niri msg action power-off-monitors";
-          on-resume = "${pkgs.niri}/bin/niri msg action power-on-monitors";
-        }
+        # {
+        #   # 3. Turn Off Screen
+        #   timeout = 630; # 10.5min
+        #   on-timeout = "${pkgs.niri}/bin/niri msg action power-off-monitors";
+        #   on-resume = "${pkgs.niri}/bin/niri msg action power-on-monitors";
+        # }
 
-        {
-          # 4. Suspend
-          timeout = 1200; # 20min
-          on-timeout = "${pkgs.systemd}/bin/systemd-ac-power || ${pkgs.systemd}/bin/systemctl suspend";
-        }
+        # {
+        #   # 4. Suspend
+        #   timeout = 1200; # 20min
+        #   on-timeout = "${pkgs.systemd}/bin/systemd-ac-power || ${pkgs.systemd}/bin/systemctl suspend";
+        # }
       ];
     };
   };
