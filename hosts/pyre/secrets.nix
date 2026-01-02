@@ -16,5 +16,6 @@
     storageMode = "local";
     localStorageDir = inputs.self + "/.secrets/pyre/rekeyed";
     generatedSecretsDir = inputs.self + "/.secrets/pyre/generated";
+    secretsDir = inputs.self + "/.secrets/pyre/manual";
   };
 }

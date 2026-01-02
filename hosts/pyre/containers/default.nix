@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./immich.nix
     ./karakeep.nix
     ./paperless.nix
   ];
