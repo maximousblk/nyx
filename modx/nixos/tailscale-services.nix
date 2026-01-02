@@ -89,7 +89,7 @@ let
       ];
     in
     {
-      name = "tailscale-serve@${name}";
+      name = "${name}-tailscale-svc";
       value = {
         description = "Tailscale Service: ${name}";
 
