@@ -1,6 +1,7 @@
 { inputs, ... }:
 {
   imports = [
+    ./intel.nix
     ./disko.nix
     ./network.nix
     ./services

@@ -106,16 +106,25 @@ in
       immich-ml = {
         autoStart = true;
         containerConfig = {
-          # Using OpenVINO for Intel CPU acceleration (N150 Alder Lake-N)
-          # Fall back to ghcr.io/immich-app/immich-machine-learning:v2 if issues arise
           image = "ghcr.io/immich-app/immich-machine-learning:v2-openvino";
 
           networks = [ net.ref ];
           networkAliases = [ "immich-ml" ];
 
-          volumes = [ "${model_cache_dir}:/cache" ];
+          volumes = [
+            "${model_cache_dir}:/cache"
+            "/sys/class/drm:/sys/class/drm:ro"
+            "/sys/dev/char:/sys/dev/char:ro"
+          ];
 
-          environments = common.env;
+          devices = [ "/dev/dri:/dev/dri" ];
+          podmanArgs = [ "--device-cgroup-rule=c 189:* rmw" ];
+
+          environments = common.env // {
+            DEVICE = "openvino";
+            OPENVINO_DEVICE = "GPU";
+            OPENVINO_CACHE_DIR = "/cache/openvino";
+          };
         };
 
         serviceConfig.Restart = "always";
