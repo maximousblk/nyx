@@ -44,54 +44,36 @@
         };
 
         permission = {
-          # Write operations - require approval
-          bash = "ask";
-          edit = "ask";
-          skill = "ask";
-          doom_loop = "ask";
-          external_directory = "ask";
+          # Default: require approval
+          "*" = "ask";
 
           # Read operations - always allow
+          read = "allow";
+          glob = "allow";
+          grep = "allow";
+          list = "allow";
+          lsp = "allow";
           webfetch = "allow";
+          todoread = "allow";
+          todowrite = "allow";
+          task = "allow";
         };
 
         agent = {
-          # Plan agent: Read-only tools + playwright for UI testing
-          plan.tools = {
-            # Read operations - enabled
-            read = true;
-            grep = true;
-            glob = true;
-            list = true;
-            lsp = true;
-            webfetch = true;
-            todoread = true;
-
-            # Write operations - disabled
-            bash = false;
-            edit = false;
-            write = false;
-            patch = false;
-            todowrite = false;
+          # Plan agent: Read-only, write operations require approval
+          plan = {
+            permission = {
+              edit = "ask";
+              bash = "ask";
+            };
           };
 
-          # Build agent: All tools enabled
-          build.tools = {
-            # Read operations - enabled
-            read = true;
-            grep = true;
-            glob = true;
-            list = true;
-            lsp = true;
-            webfetch = true;
-            todoread = true;
-
-            # Write operations - enabled
-            bash = true;
-            edit = true;
-            write = true;
-            patch = true;
-            todowrite = true;
+          # Build agent: All tools enabled with approval for writes
+          build = {
+            permission = {
+              edit = "ask";
+              bash = "ask";
+            };
           };
         };
       };
