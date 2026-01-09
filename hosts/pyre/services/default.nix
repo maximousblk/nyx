@@ -4,5 +4,6 @@
     ./ssh.nix
     ./tailscale.nix
     ./opentelemetry.nix
+    ./servarr
   ];
 }

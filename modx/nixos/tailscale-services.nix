@@ -1,7 +1,14 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.optx.tailscale.services;
+  tailscale = "${config.services.tailscale.package}/bin/tailscale";
+  flock = "${pkgs.util-linux}/bin/flock";
 
   serviceOpts =
     { ... }:
@@ -70,7 +77,6 @@ let
       userBindsTo = svc.unitConfig.BindsTo or [ ];
       userPartOf = svc.unitConfig.PartOf or [ ];
 
-      # Remaining unitConfig options (non-list)
       remainingUnitConfig = removeAttrs svc.unitConfig [
         "After"
         "Wants"
@@ -79,7 +85,6 @@ let
         "PartOf"
       ];
 
-      # Extract install options
       userWantedBy = svc.installConfig.WantedBy or [ ];
       userRequiredBy = svc.installConfig.RequiredBy or [ ];
 
@@ -87,37 +92,41 @@ let
         "WantedBy"
         "RequiredBy"
       ];
+
+      startScript = pkgs.writeShellScript "${name}-tailscale-serve" ''
+        ${flock} /run/tailscale-serve.lock \
+          ${tailscale} serve \
+          --service=svc:${name} \
+          ${protocolFlag svc.protocol svc.port} \
+          ${svc.target}
+      '';
+
+      stopScript = pkgs.writeShellScript "${name}-tailscale-clear" ''
+        ${flock} /run/tailscale-serve.lock \
+          ${tailscale} serve clear svc:${name}
+      '';
     in
     {
       name = "${name}-tailscale-svc";
       value = {
         description = "Tailscale Service: ${name}";
 
-        # Merge with default After (always wait for tailscaled)
         after = [ "tailscaled.service" ] ++ userAfter;
         wants = userWants;
         requires = userRequires;
         bindsTo = userBindsTo;
         partOf = userPartOf;
 
-        # Install section - don't start on boot by default, only via dependency chain
         wantedBy = userWantedBy;
         requiredBy = userRequiredBy;
 
-        # Pass through remaining unit config
         unitConfig = remainingUnitConfig // remainingInstallConfig;
 
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
-          ExecStart = lib.concatStringsSep " " [
-            "${config.services.tailscale.package}/bin/tailscale"
-            "serve"
-            "--service=svc:${name}"
-            (protocolFlag svc.protocol svc.port)
-            svc.target
-          ];
-          ExecStop = "${config.services.tailscale.package}/bin/tailscale serve clear svc:${name}";
+          ExecStart = startScript;
+          ExecStop = stopScript;
         }
         // svc.serviceConfig;
       };

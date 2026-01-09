@@ -79,6 +79,11 @@
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
+    nixarr = {
+      url = "github:rasmus-kirk/nixarr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     stylix = {
       url = "github:nix-community/stylix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -171,6 +176,7 @@
               inputs.disko.nixosModules.disko
               inputs.stylix.nixosModules.stylix
               inputs.quadlet-nix.nixosModules.quadlet
+              inputs.nixarr.nixosModules.default
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
               inputs.nixos-facter-modules.nixosModules.facter
