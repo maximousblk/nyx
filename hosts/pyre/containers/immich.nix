@@ -14,6 +14,7 @@ let
   # external_library_dir = "/mnt/data/photos";
 
   net = config.virtualisation.quadlet.networks.immich;
+  mainNet = config.virtualisation.quadlet.networks.main;
   valkey = config.virtualisation.quadlet.containers.immich-valkey;
   postgres = config.virtualisation.quadlet.containers.immich-postgres;
   ml = config.virtualisation.quadlet.containers.immich-ml;
@@ -66,6 +67,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/valkey/valkey:9";
+          pull = "always";
 
           networks = [ net.ref ];
           networkAliases = [ "immich-valkey" ];
@@ -81,6 +83,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0";
+          pull = "always";
 
           networks = [ net.ref ];
           networkAliases = [ "immich-postgres" ];
@@ -107,6 +110,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "ghcr.io/immich-app/immich-machine-learning:v2-openvino";
+          pull = "always";
 
           networks = [ net.ref ];
           networkAliases = [ "immich-ml" ];
@@ -136,9 +140,13 @@ in
         autoStart = true;
         containerConfig = {
           image = "ghcr.io/immich-app/immich-server:v2";
+          pull = "always";
           publishPorts = [ "127.0.0.1:2283:2283" ];
 
-          networks = [ net.ref ];
+          networks = [
+            net.ref
+            mainNet.ref
+          ];
           networkAliases = [ "immich" ];
 
           volumes = [
@@ -163,6 +171,11 @@ in
 
             # Logging
             IMMICH_LOG_LEVEL = "log";
+
+            # OpenTelemetry - send traces/metrics to SigNoz
+            IMMICH_TELEMETRY_INCLUDE = "all";
+            OTEL_EXPORTER_OTLP_ENDPOINT = "http://signoz-otel-collector:4318";
+            OTEL_SERVICE_NAME = "immich";
           };
         };
 

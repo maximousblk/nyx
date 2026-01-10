@@ -13,6 +13,7 @@ let
   user_scripts = "${persist}/user_scripts";
 
   net = config.virtualisation.quadlet.networks.signoz;
+  mainNet = config.virtualisation.quadlet.networks.main;
   zookeeper = config.virtualisation.quadlet.containers.signoz-zookeeper;
   clickhouse = config.virtualisation.quadlet.containers.signoz-clickhouse;
   signoz = config.virtualisation.quadlet.containers.signoz;
@@ -356,6 +357,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/clickhouse/clickhouse-server:${clickhouseVersion}";
+          pull = "always";
 
           volumes = [ "${user_scripts}:/var/lib/clickhouse/user_scripts" ];
 
@@ -386,6 +388,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/signoz/zookeeper:${zookeeperVersion}";
+          pull = "always";
           user = "root";
 
           networks = [ net.ref ];
@@ -417,6 +420,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/clickhouse/clickhouse-server:${clickhouseVersion}";
+          pull = "always";
 
           networks = [ net.ref ];
           networkAliases = [ "signoz-clickhouse" ];
@@ -463,6 +467,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/signoz/signoz-schema-migrator:${otelcolVersion}";
+          pull = "always";
 
           networks = [ net.ref ];
 
@@ -487,6 +492,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/signoz/signoz:${signozVersion}";
+          pull = "always";
           publishPorts = [ "127.0.0.1:8080:8080" ];
 
           networks = [ net.ref ];
@@ -529,12 +535,16 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/signoz/signoz-otel-collector:${otelcolVersion}";
+          pull = "always";
           publishPorts = [
             "127.0.0.1:4317:4317"
             "127.0.0.1:4318:4318"
           ];
 
-          networks = [ net.ref ];
+          networks = [
+            net.ref
+            mainNet.ref
+          ];
           networkAliases = [ "signoz-otel-collector" ];
 
           volumes = [

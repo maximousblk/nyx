@@ -71,6 +71,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/valkey/valkey:9";
+          pull = "always";
 
           networks = [ net.ref ];
           networkAliases = [ "paperless-valkey" ];
@@ -84,6 +85,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/apache/tika:latest";
+          pull = "always";
 
           networks = [ net.ref ];
           networkAliases = [ "paperless-tika" ];
@@ -97,6 +99,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/gotenberg/gotenberg:8.25";
+          pull = "always";
 
           exec = [
             "gotenberg"
@@ -116,6 +119,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "ghcr.io/paperless-ngx/paperless-ngx:latest";
+          pull = "always";
           publishPorts = [ "127.0.0.1:8000:8000" ];
 
           networks = [ net.ref ];

@@ -10,6 +10,7 @@ let
   data_karakeep = "${persist}/data";
 
   net = config.virtualisation.quadlet.networks.karakeep;
+  mainNet = config.virtualisation.quadlet.networks.main;
   chrome = config.virtualisation.quadlet.containers.karakeep-chrome;
   meili = config.virtualisation.quadlet.containers.karakeep-meilisearch;
 
@@ -78,6 +79,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "gcr.io/zenika-hub/alpine-chrome:124";
+          pull = "always";
 
           exec = [
             "--no-sandbox"
@@ -100,6 +102,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "getmeili/meilisearch:v1.13.3";
+          pull = "always";
 
           networks = [ net.ref ];
           networkAliases = [ "karakeep-meilisearch" ];
@@ -122,9 +125,13 @@ in
         autoStart = true;
         containerConfig = {
           image = "ghcr.io/karakeep-app/karakeep:release";
+          pull = "always";
           publishPorts = [ "127.0.0.1:3000:3000" ];
 
-          networks = [ net.ref ];
+          networks = [
+            net.ref
+            mainNet.ref
+          ];
           networkAliases = [ "karakeep" ];
           volumes = [ "${data_karakeep}:/data" ];
 
@@ -153,7 +160,12 @@ in
             # Performance & security
             DB_WAL_MODE = "true";
             DISABLE_SIGNUPS = "true";
-            LOG_LEVEL = "warning";
+            LOG_LEVEL = "info";
+
+            # OpenTelemetry - send traces to SigNoz
+            OTEL_TRACING_ENABLED = "true";
+            OTEL_EXPORTER_OTLP_ENDPOINT = "http://signoz-otel-collector:4318/v1/traces";
+            OTEL_SERVICE_NAME = "karakeep";
           };
         };
 

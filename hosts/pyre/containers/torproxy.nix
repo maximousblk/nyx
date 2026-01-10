@@ -4,6 +4,7 @@
     autoStart = true;
     containerConfig = {
       image = "docker.io/dockurr/tor:latest";
+      pull = "always";
       publishPorts = [ "127.0.0.1:9050:9050" ];
     };
     serviceConfig.Restart = "always";
