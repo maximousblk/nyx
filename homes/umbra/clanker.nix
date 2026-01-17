@@ -51,7 +51,7 @@ in
 
         formatter.nixfmt = {
           command = [
-            (lib.getExe pkgs.nixfmt-rfc-style)
+            (lib.getExe pkgs.nixfmt)
             "$FILE"
           ];
           extensions = [ ".nix" ];

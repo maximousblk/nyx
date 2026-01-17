@@ -42,7 +42,7 @@
     nerd-fonts.jetbrains-mono
     nil
     nixd
-    nixfmt-rfc-style
+    nixfmt
     nodejs_24
     opencode
     openssl.dev
