@@ -15,6 +15,7 @@
     exiv2
     eza
     fd
+    fenix.stable.toolchain
     fzf
     gcc
     gh
@@ -44,8 +45,10 @@
     nixfmt-rfc-style
     nodejs_24
     opencode
+    openssl.dev
     opentofu
     packer
+    pkg-config
     podman
     podman-compose
     ripgrep
