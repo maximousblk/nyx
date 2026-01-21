@@ -176,7 +176,6 @@
               inputs.stylix.homeModules.stylix
               inputs.vicinae.homeManagerModules.default
               inputs.nix-index-database.homeModules.nix-index
-              inputs.impermanence.homeManagerModules.impermanence
             ];
             _module.args.nixosModules = [
               inputs.disko.nixosModules.disko
