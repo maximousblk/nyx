@@ -35,7 +35,11 @@ in
         autoupdate = false;
         share = "disabled";
 
-        enabled_providers = [ "github-copilot" ];
+        enabled_providers = [
+          "github-copilot"
+          "opencode"
+          "anthropic"
+        ];
         model = "claude-opus-4.5";
         small_model = "claude-haiku-4.5";
         default_agent = "plan";
