@@ -1,1 +1,3 @@
 .secrets/**/*.age binary
+.github/main.svg binary
+.github/network.svg binary

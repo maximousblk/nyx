@@ -45,7 +45,13 @@
 
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
 
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs.home-manager.follows = "home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
 
     agenix = {
       url = "github:ryantm/agenix";
@@ -118,7 +124,7 @@
     nix-topology = {
       url = "github:oddlama/nix-topology";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
+      inputs.flake-parts.follows = "flake-parts";
     };
 
     ssh-keys-maximousblk = {
@@ -166,6 +172,7 @@
                 inputs.nur.overlays.default
                 inputs.nix-topology.overlays.default
                 inputs.fenix.overlays.default
+                inputs.nix-cachyos-kernel.overlays.pinned
               ];
             };
 
@@ -180,8 +187,8 @@
             _module.args.nixosModules = [
               inputs.disko.nixosModules.disko
               inputs.stylix.nixosModules.stylix
-              inputs.quadlet-nix.nixosModules.quadlet
               inputs.nixarr.nixosModules.default
+              inputs.quadlet-nix.nixosModules.quadlet
               inputs.home-manager.nixosModules.home-manager
               inputs.impermanence.nixosModules.impermanence
               inputs.nixos-facter-modules.nixosModules.facter
