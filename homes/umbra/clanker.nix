@@ -9,9 +9,11 @@ in
 {
   config = {
 
-    home.packages = [ pkgs.crush ];
+    home.packages = [
+      pkgs.crush
+      pkgs.claude-code
+    ];
 
-    # Enable experimental LSP tool for OpenCode
     home.sessionVariables.OPENCODE_EXPERIMENTAL_LSP_TOOL = "true";
 
     programs.mcp = {
