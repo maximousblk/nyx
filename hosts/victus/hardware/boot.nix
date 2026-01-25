@@ -9,7 +9,7 @@
   boot.extraModulePackages = [ ];
 
   # Kernel
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-latest-lto-x86_64-v4;
 
   boot.kernelParams = [ "intel_idle.max_cstate=4" ];
 
