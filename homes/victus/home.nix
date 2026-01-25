@@ -9,14 +9,15 @@
 
   imports = [
     ./niri.nix
-    ./waybar.nix
-    ./ironbar.nix
-    ./swww.nix
     ./browser.nix
     ./hyprlock.nix
     ./hypridle.nix
     ./vicinae.nix
-    ./mako.nix
+    ./noctalia.nix
+    # ./waybar.nix
+    # ./ironbar.nix
+    # ./swww.nix
+    # ./mako.nix
 
     modx.hm.wallpaper
   ];
@@ -79,8 +80,13 @@
 
     image = null;
 
-    targets.zen-browser.profileNames = [ "default" ];
-    targets.hyprlock.enable = false;
+    targets = {
+      zen-browser.profileNames = [ "default" ];
+      hyprlock.enable = false;
+      noctalia-shell.enable = false;
+      ghostty.colors.enable = false;
+      fish.enable = false;
+    };
 
     fonts = {
       monospace = {
@@ -116,9 +122,10 @@
     enableFishIntegration = true;
     systemd.enable = true;
     settings = {
-
+      theme = "noctalia";
       command = "${config.programs.fish.package}/bin/fish";
       shell-integration-features = "ssh-terminfo,ssh-env";
+      window-theme = "ghostty";
       window-padding-x = "2";
       window-padding-y = "2";
       window-padding-balance = true;
