@@ -23,17 +23,23 @@
   home.packages = with pkgs; [
     pkgx.polycat
 
+    adwaita-icon-theme
     bitwarden-cli
     bitwarden-desktop
-    btop
+    btop-cuda
     exfatprogs
+    gh
+    hicolor-icon-theme
     hyprpwcenter
     jq
     kdePackages.ark
+    kdePackages.breeze-icons
     kdePackages.dolphin
+    kdePackages.filelight
     kdePackages.gwenview
     kdePackages.kdeconnect-kde
     kdePackages.partitionmanager
+    kdePackages.qtsvg
     libappindicator
     lutris
     ncdu
@@ -41,7 +47,7 @@
     nixd
     nvtopPackages.full
     playerctl
-    protonup-qt
+    protonplus
     pulseaudio
     rar
     rose-pine-icon-theme
