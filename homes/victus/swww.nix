@@ -1,20 +1,11 @@
 {
   lib,
   pkgs,
-  pkgx,
-  modx,
   config,
   ...
 }:
 {
-  imports = [ modx.hm.wallpaper ];
-
   config = {
-    optx.wallpapers = {
-      enable = true;
-      package = pkgx.dharmx-walls;
-    };
-
     services.swww.enable = true;
 
     systemd.user.services.wallpaper-changer = {

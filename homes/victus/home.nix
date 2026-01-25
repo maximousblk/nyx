@@ -1,6 +1,7 @@
 {
   pkgs,
   pkgx,
+  modx,
   config,
   ...
 }:
@@ -16,7 +17,14 @@
     ./hypridle.nix
     ./vicinae.nix
     ./mako.nix
+
+    modx.hm.wallpaper
   ];
+
+  optx.wallpapers = {
+    enable = true;
+    package = pkgx.dharmx-walls;
+  };
 
   home.stateVersion = "25.05";
 
