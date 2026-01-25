@@ -125,6 +125,8 @@ let
         serviceConfig = {
           Type = "oneshot";
           RemainAfterExit = true;
+          Restart = "on-failure";
+          RestartSec = "5s";
           ExecStart = startScript;
           ExecStop = stopScript;
         }
