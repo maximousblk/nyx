@@ -792,6 +792,26 @@
         "type": "github"
       }
     },
+    "noctalia": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1769271866,
+        "narHash": "sha256-AHZrkb0Z/0C8TAwjrVP01KJIpGQ/cnaJFuRz0ofnv98=",
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "rev": "21774a5bba039f1d1e6e68d2eda8d283ad75ebac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "noctalia-dev",
+        "repo": "noctalia-shell",
+        "type": "github"
+      }
+    },
     "nur": {
       "inputs": {
         "flake-parts": [
@@ -875,6 +895,7 @@
         "nixarr": "nixarr",
         "nixos-facter-modules": "nixos-facter-modules",
         "nixpkgs": "nixpkgs_2",
+        "noctalia": "noctalia",
         "nur": "nur",
         "quadlet-nix": "quadlet-nix",
         "ssh-keys-maximousblk": "ssh-keys-maximousblk",

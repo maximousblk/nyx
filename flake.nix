@@ -127,6 +127,11 @@
       inputs.flake-parts.follows = "flake-parts";
     };
 
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ssh-keys-maximousblk = {
       url = "https://github.com/maximousblk.keys";
       flake = false;
@@ -181,6 +186,7 @@
 
             _module.args.homeManagerModules = [
               inputs.stylix.homeModules.stylix
+              inputs.noctalia.homeModules.default
               inputs.vicinae.homeManagerModules.default
               inputs.nix-index-database.homeModules.nix-index
             ];
