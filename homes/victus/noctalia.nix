@@ -91,6 +91,16 @@
         analogClockInCalendar = false;
       };
 
+      audio = {
+        volumeStep = 5;
+        volumeOverdrive = false;
+        cavaFrameRate = 144;
+        visualizerType = "linear";
+        mprisBlacklist = [ ];
+        preferredPlayer = "";
+        volumeFeedback = true;
+      };
+
       wallpaper = {
         enabled = true;
         overviewEnabled = false;
@@ -110,7 +120,7 @@
         wallpaperChangeMode = "random";
         randomIntervalSec = 300;
         transitionType = "disc";
-        transitionDuration = 500;
+        transitionDuration = 2000;
         transitionEdgeSmoothness = 0.1;
 
         useSolidColor = false;
