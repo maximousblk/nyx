@@ -51,17 +51,26 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-cachyos-kernel.url = "github:xddxdd/nix-cachyos-kernel/release";
+    nix-cachyos-kernel = {
+      url = "github:xddxdd/nix-cachyos-kernel/release";
+      inputs.flake-compat.follows = "flake-compat";
+      inputs.flake-parts.follows = "flake-parts";
+    };
 
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.darwin.follows = "";
+      inputs.systems.follows = "systems";
+      inputs.home-manager.follows = "home-manager";
     };
 
     agenix-rekey = {
       url = "github:oddlama/agenix-rekey";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
     };
 
     fenix = {
@@ -86,6 +95,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "flake-compat";
       inputs.nix-systems.follows = "systems";
+      inputs.naersk.inputs.fenix.follows = "fenix";
     };
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
