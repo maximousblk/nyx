@@ -55,6 +55,7 @@
     nil
     nixd
     nvtopPackages.full
+    p7zip
     playerctl
     protonplus
     pulseaudio
@@ -62,8 +63,8 @@
     rose-pine-icon-theme
     tree
     uxplay
-    wine
     winetricks
+    wineWowPackages.waylandFull
     zed-editor
   ];
 
@@ -160,6 +161,8 @@
       lsp.nil.initialization_options.formatting.command = [ "return" ];
     };
   };
+
+  programs.mangohud.enable = true;
 
   systemd.user.services.uxplay = {
     Unit = {
