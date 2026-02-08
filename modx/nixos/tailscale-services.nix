@@ -94,11 +94,26 @@ let
       ];
 
       startScript = pkgs.writeShellScript "${name}-tailscale-serve" ''
+        #!/bin/sh
+        set -e # Exit immediately if a command exits with a non-zero status.
+
+        # Wait for the tailscaled daemon to be ready.
+        # The 'tailscale status' command will fail until the daemon is up and connected.
+        until ${tailscale} status >/dev/null 2>&1; do
+          echo "Waiting for tailscaled daemon to be ready for service '${name}'..."
+          sleep 5
+        done
+        echo "tailscaled is ready."
+
+        # Use flock to ensure only one 'tailscale serve' command runs at a time,
+        # preventing race conditions when modifying the daemon's configuration.
+        echo "Attempting to configure tailscale serve for '${name}'..."
         ${flock} /run/tailscale-serve.lock \
           ${tailscale} serve \
           --service=svc:${name} \
           ${protocolFlag svc.protocol svc.port} \
           ${svc.target}
+        echo "tailscale serve for '${name}' configured successfully."
       '';
 
       stopScript = pkgs.writeShellScript "${name}-tailscale-clear" ''
@@ -113,7 +128,7 @@ let
 
         after = [ "tailscaled.service" ] ++ userAfter;
         wants = userWants;
-        requires = userRequires;
+        requires = [ "tailscaled.service" ] ++ userRequires;
         bindsTo = userBindsTo;
         partOf = userPartOf;
 
