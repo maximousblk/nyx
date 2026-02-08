@@ -29,6 +29,11 @@ in
     stateDir = state_dir;
   };
 
+  systemd.tmpfiles.rules = [
+    # Recursively set permissions to 0775 for the entire torrents directory
+    "Z '${media_dir}/torrents' 0775 transmission media - -"
+  ];
+
   systemd.tmpfiles.settings."10-servarr" = {
     "${persist}".d = {
       mode = "0755";
@@ -36,7 +41,7 @@ in
       group = "root";
     };
     "${media_dir}".d = {
-      mode = "0775";
+      mode = "2775";
       user = "root";
       group = "media";
     };

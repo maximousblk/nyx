@@ -15,6 +15,7 @@ in
       ratio-limit = 0;
       idle-seeding-limit-enabled = true;
       idle-seeding-limit = 1;
+      rpc-host-whitelist-enabled = false;
     };
   };
 
