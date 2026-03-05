@@ -1,4 +1,12 @@
 { pkgs }:
+let
+  python = pkgs.python3.withPackages (ps: [
+    ps.pillow
+    ps.imagehash
+  ]);
+
+  filterScript = ./scripts/filter_wallpapers.py;
+in
 pkgs.stdenv.mkDerivation {
   pname = "dharmx-walls";
   version = "2025.10.25";
@@ -10,20 +18,17 @@ pkgs.stdenv.mkDerivation {
     hash = "sha256-M96jJy3L0a+VkJ+DcbtrRAquwDWaIG9hAUxenr/TcQU=";
   };
 
+  nativeBuildInputs = [ python ];
+
   dontBuild = true;
+  allowSubstitutes = false;
 
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out
-
-    ${pkgs.fd}/bin/fd . --type f \
-      --extension jpg \
-      --extension jpeg \
-      --extension png \
-      --exec cp {} $out/
-
-    chmod 444 $out/*
+    ${python}/bin/python3 ${filterScript} \
+      "$src" "$out" \
+      --jobs "$NIX_BUILD_CORES"
 
     runHook postInstall
   '';
