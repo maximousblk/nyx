@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   config,
+  umbra,
   ...
 }:
 {
@@ -15,6 +16,9 @@
   ];
 
   config = {
+    home.username = umbra.username;
+    home.homeDirectory = umbra.homeDirectory;
+
     home.stateVersion = "25.05";
 
     home.sessionPath = [
@@ -25,8 +29,8 @@
     home.sessionVariables = {
       EDITOR = "nvim";
       LIBVA_DRIVERS_PATH = "${pkgs.intel-media-driver}/lib/dri";
-      DOCKER_HOST = "unix:///run/host/run/user/1000/podman/podman.sock";
-      CONTAINER_HOST = "unix:///run/host/run/user/1000/podman/podman.sock";
+      DOCKER_HOST = umbra.containerHost;
+      CONTAINER_HOST = umbra.containerHost;
       PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
     };
 

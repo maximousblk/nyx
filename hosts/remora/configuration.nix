@@ -1,6 +1,7 @@
 {
   inputs,
   self,
+  config,
   ...
 }:
 {
@@ -35,16 +36,22 @@
         hostname = "remora";
       };
 
-      user.default = "ashwin_y";
+      user.default = config.wsl.defaultUser;
     };
   };
 
-  users.users.ashwin_y = {
+  users.users.${config.wsl.defaultUser} = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
   };
 
-  home-manager.users.ashwin_y = {
-    imports = [ self.homeProfiles.umbra ];
+  home-manager.users.${config.wsl.defaultUser} = {
+    imports = [
+      (self.homeProfiles.mkUmbra {
+        username = config.wsl.defaultUser;
+        homeDirectory = "/home/${config.wsl.defaultUser}";
+        containerHost = "unix:///var/run/docker.sock";
+      })
+    ];
   };
 }

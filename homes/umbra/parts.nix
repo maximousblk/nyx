@@ -5,19 +5,33 @@
   withSystem,
   ...
 }:
+let
+  mkUmbra =
+    params@{
+      username,
+      homeDirectory,
+      containerHost,
+    }:
+    {
+      _module.args.umbra = params;
+      imports = [ ./home.nix ];
+    };
+in
 {
   flake = withSystem "x86_64-linux" (
     { system, ... }:
     {
-      homeProfiles.umbra = {
-        imports = [ ./home.nix ];
-      };
+      homeProfiles.mkUmbra = mkUmbra;
 
       homeConfigurations.umbra = mkHome {
         inherit system;
-        username = "ashwin_y";
-        homeDirectory = "/home/ashwin_y/.local/share/distrobox/home/umbra";
-        modules = [ self.homeProfiles.umbra ];
+        modules = [
+          (self.homeProfiles.mkUmbra {
+            username = "ashwin_y";
+            homeDirectory = "/home/ashwin_y/.local/share/distrobox/home/umbra";
+            containerHost = "unix:///run/host/run/user/1000/podman/podman.sock";
+          })
+        ];
       };
 
       deploy.nodes.umbra = {
