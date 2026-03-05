@@ -42,7 +42,15 @@
 
   users.users.${config.wsl.defaultUser} = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel"
+      "docker"
+    ];
+  };
+
+  virtualisation.docker = {
+    enable = true;
+    autoPrune.enable = true;
   };
 
   home-manager.users.${config.wsl.defaultUser} = {
