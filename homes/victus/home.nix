@@ -37,7 +37,10 @@
     bitwarden-cli
     bitwarden-desktop
     btop-cuda
+    chafa
+    duf
     exfatprogs
+    felix-fm
     gh
     hicolor-icon-theme
     hyprpwcenter
@@ -64,11 +67,14 @@
     pulseaudio
     rar
     rose-pine-icon-theme
+    sqlite
+    tmux
     tree
     uxplay
     winetricks
     wineWowPackages.waylandFull
     zed-editor
+    zoxide
   ];
 
   stylix = {
@@ -103,6 +109,11 @@
 
   home.sessionVariables = {
     XCURSOR_PATH = "${config.home.homeDirectory}/.local/share/icons";
+  };
+
+  programs.man = {
+    enable = true;
+    generateCaches = false;
   };
 
   programs.git = {
@@ -140,6 +151,13 @@
   programs.fish = {
     enable = true;
     package = pkgs.fish;
+  };
+
+  programs.zoxide = {
+    enable = true;
+    options = [ "--cmd cd" ];
+    enableFishIntegration = true;
+    enableBashIntegration = true;
   };
 
   programs.zed-editor = {
