@@ -60,7 +60,7 @@
     uv
     uxplay
     winetricks
-    wineWowPackages.waylandFull
+    wineWow64Packages.waylandFull
     wl-clipboard-rs
     yarn
     yq

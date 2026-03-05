@@ -72,7 +72,7 @@
     tree
     uxplay
     winetricks
-    wineWowPackages.waylandFull
+    wineWow64Packages.waylandFull
     zed-editor
     zoxide
   ];
