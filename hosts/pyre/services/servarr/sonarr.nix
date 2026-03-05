@@ -1,4 +1,4 @@
-{ servarr, ... }:
+{ lib, servarr, ... }:
 let
   port = 8989;
 in
@@ -10,7 +10,7 @@ in
   };
 
   # Set umask for group write permissions (0002 = rwxrwxr-x for dirs, rw-rw-r-- for files)
-  systemd.services.sonarr.serviceConfig.UMask = "0002";
+  systemd.services.sonarr.serviceConfig.UMask = lib.mkForce "0002";
 
   optx.tailscale.services.sonarr = {
     target = "http://localhost:${toString port}";

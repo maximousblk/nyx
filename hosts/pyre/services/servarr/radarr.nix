@@ -1,4 +1,4 @@
-{ servarr, ... }:
+{ lib, servarr, ... }:
 let
   port = 7878;
 in
@@ -10,7 +10,7 @@ in
   };
 
   # Set umask for group write permissions (0002 = rwxrwxr-x for dirs, rw-rw-r-- for files)
-  systemd.services.radarr.serviceConfig.UMask = "0002";
+  systemd.services.radarr.serviceConfig.UMask = lib.mkForce "0002";
 
   optx.tailscale.services.radarr = {
     target = "http://localhost:${toString port}";
