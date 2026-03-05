@@ -1,12 +1,10 @@
 { pkgs, ... }:
 {
   home.packages = with pkgs; [
-    argocd
     bat
     btop
     bun
     cmake
-    conan
     docker
     docker-compose
     duckdb
