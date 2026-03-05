@@ -1,5 +1,12 @@
 { config, ... }:
 {
+
+  home.file."wallpapers" = {
+    enable = true;
+    source = config.optx.wallpapers.package;
+    target = "Pictures/Wallpapers/.base";
+  };
+
   programs.noctalia-shell = {
     enable = true;
 
@@ -105,14 +112,15 @@
         enabled = true;
         overviewEnabled = false;
 
-        directory = config.optx.wallpapers.paths.collection;
+        directory = "${config.home.homeDirectory}/Pictures/Wallpapers";
         enableMultiMonitorDirectories = false;
         setWallpaperOnAllMonitors = true;
+        hideWallpaperFilenames = true;
         showHiddenFiles = false;
         monitorDirectories = [ ];
         panelPosition = "center";
         viewMode = "recursive";
-        hideWallpaperFilenames = true;
+        sortOrder = "name_desc";
         fillMode = "crop";
         fillColor = "#000000";
 
@@ -120,13 +128,23 @@
         wallpaperChangeMode = "random";
         randomIntervalSec = 300;
         transitionType = "disc";
-        transitionDuration = 2000;
+        transitionDuration = 4000;
         transitionEdgeSmoothness = 0.1;
 
         useSolidColor = false;
         solidColor = "#000000";
 
-        useWallhaven = false;
+        useWallhaven = true;
+        wallhavenApiKey = "";
+        wallhavenQuery = "";
+        wallhavenSorting = "favorites";
+        wallhavenOrder = "desc";
+        wallhavenPurity = "111";
+        wallhavenCategories = "110";
+        wallhavenRatios = "16x9";
+        wallhavenResolutionMode = "atleast";
+        wallhavenResolutionHeight = "1080";
+        wallhavenResolutionWidth = "1920";
       };
 
       bar = {
@@ -211,12 +229,12 @@
             }
             {
               id = "Battery";
-              displayMode = "alwaysHide";
+              displayMode = "icon-only";
               hideIfIdle = false;
               hideIfNotDetected = false;
               showNoctaliaPerformance = true;
               showPowerProfiles = true;
-              warningThreshold = 40;
+              deviceNativePath = "__default__";
             }
             {
               id = "NotificationHistory";
