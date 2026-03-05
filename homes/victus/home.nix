@@ -13,6 +13,7 @@
     ./hyprlock.nix
     ./hypridle.nix
     ./vicinae.nix
+    ./clanker.nix
     ./noctalia.nix
     # ./waybar.nix
     # ./ironbar.nix
@@ -55,6 +56,8 @@
     nil
     nixd
     nvtopPackages.full
+    opencode
+    opencode-desktop
     p7zip
     playerctl
     protonplus
@@ -87,6 +90,7 @@
       noctalia-shell.enable = false;
       ghostty.colors.enable = false;
       fish.enable = false;
+      opencode.enable = false;
     };
 
     fonts = {
