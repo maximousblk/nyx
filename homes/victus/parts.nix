@@ -4,19 +4,32 @@
   withSystem,
   ...
 }:
+let
+  mkVictus =
+    params@{
+      username,
+      homeDirectory,
+      ...
+    }:
+    {
+      _module.args.victus = params;
+      imports = [ ./home.nix ];
+    };
+in
 {
   flake = withSystem "x86_64-linux" (
     { system, ... }:
     {
-      homeProfiles.victus = {
-        imports = [ ./home.nix ];
-      };
+      homeProfiles.mkVictus = mkVictus;
 
       homeConfigurations.victus = mkHome {
         inherit system;
-        username = "maximousblk";
-        homeDirectory = "/home/maximousblk";
-        modules = [ self.homeProfiles.victus ];
+        modules = [
+          (self.homeProfiles.mkVictus {
+            username = "maximousblk";
+            homeDirectory = "/home/maximousblk";
+          })
+        ];
       };
     }
   );

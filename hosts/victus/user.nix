@@ -26,7 +26,12 @@
 
     home-manager = {
       users.maximousblk = {
-        imports = [ self.homeProfiles.victus ];
+        imports = [
+          (self.homeProfiles.mkVictus {
+            username = "maximousblk";
+            homeDirectory = "/home/maximousblk";
+          })
+        ];
       };
     };
   };

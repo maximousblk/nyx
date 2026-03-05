@@ -3,6 +3,7 @@
   pkgx,
   modx,
   config,
+  victus,
   ...
 }:
 {
@@ -28,6 +29,8 @@
     package = pkgx.dharmx-walls;
   };
 
+  home.username = victus.username;
+  home.homeDirectory = victus.homeDirectory;
   home.stateVersion = "25.05";
 
   home.packages = with pkgs; [
