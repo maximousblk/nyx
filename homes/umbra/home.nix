@@ -58,7 +58,11 @@
 
       functions = {
         prompt_hostname = ''
-          string replace -r -- "\..*" "" $CONTAINER_ID
+          if test -n "$CONTAINER_ID"
+            echo $CONTAINER_ID
+          else
+            hostname -s
+          end
         '';
       };
     };

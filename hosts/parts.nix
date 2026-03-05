@@ -20,6 +20,7 @@ in
   imports = [
     ./victus/parts.nix
     ./pyre/parts.nix
+    ./remora/parts.nix
   ];
 
   options = {

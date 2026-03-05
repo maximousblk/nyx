@@ -64,7 +64,7 @@
     yq
     zoxide
 
-    (python312.withPackages (pypkgs: with pypkgs; [ exiv2 ]))
+    (python312.withPackages (pypkgs: with pypkgs; [ ]))
     (ruby.withPackages (ps: with ps; [ license_finder ]))
 
     (google-cloud-sdk.withExtraComponents [

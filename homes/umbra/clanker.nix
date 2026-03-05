@@ -14,8 +14,6 @@ in
       pkgs.claude-code
     ];
 
-    home.sessionVariables.OPENCODE_EXPERIMENTAL_LSP_TOOL = "true";
-
     programs.mcp = {
       enable = true;
       servers = {
@@ -35,13 +33,8 @@ in
         autoupdate = false;
         share = "disabled";
 
-        enabled_providers = [
-          "github-copilot"
-          "opencode"
-          "anthropic"
-        ];
-        model = "claude-opus-4.5";
-        small_model = "claude-haiku-4.5";
+        model = "openai/gpt-5.3-codex";
+        small_model = "openai/gpt-5.1-codex-mini";
         default_agent = "plan";
 
         lsp.nixd = {
