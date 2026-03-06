@@ -159,6 +159,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    opencode.url = "github:anomalyco/opencode/dev";
+
     ssh-keys-maximousblk = {
       url = "https://github.com/maximousblk.keys";
       flake = false;
@@ -205,6 +207,7 @@
                 inputs.nix-topology.overlays.default
                 inputs.fenix.overlays.default
                 inputs.nix-cachyos-kernel.overlays.pinned
+                inputs.opencode.overlays.default
               ];
             };
 

@@ -814,6 +814,22 @@
         "type": "github"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1772091128,
+        "narHash": "sha256-TnrYykX8Mf/Ugtkix6V+PjW7miU2yClA6uqWl/v6KWM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3f0336406035444b4a24b942788334af5f906259",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixpkgs-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "noctalia": {
       "inputs": {
         "nixpkgs": [
@@ -876,6 +892,25 @@
       "original": {
         "owner": "nix-community",
         "repo": "NUR",
+        "type": "github"
+      }
+    },
+    "opencode": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3"
+      },
+      "locked": {
+        "lastModified": 1772801355,
+        "narHash": "sha256-geQfOFn5Uv2OFrfe38xfxaLnKykBnkcjFy/fLh5Gsfo=",
+        "owner": "anomalyco",
+        "repo": "opencode",
+        "rev": "1d9dcd2a27736b83d20abc0111141fdd6bffde7e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anomalyco",
+        "ref": "dev",
+        "repo": "opencode",
         "type": "github"
       }
     },
@@ -942,6 +977,7 @@
         "nixpkgs": "nixpkgs_2",
         "noctalia": "noctalia",
         "nur": "nur",
+        "opencode": "opencode",
         "pre-commit-hooks": "pre-commit-hooks",
         "quadlet-nix": "quadlet-nix",
         "ssh-keys-maximousblk": "ssh-keys-maximousblk",
