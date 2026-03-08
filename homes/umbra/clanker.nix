@@ -37,18 +37,7 @@ in
         small_model = "openai/gpt-5.1-codex-mini";
         default_agent = "plan";
 
-        lsp.nixd = {
-          command = [ (lib.getExe pkgs.nixd) ];
-          extensions = [ ".nix" ];
-        };
-
-        formatter.nixfmt = {
-          command = [
-            (lib.getExe pkgs.nixfmt)
-            "$FILE"
-          ];
-          extensions = [ ".nix" ];
-        };
+        lsp.rust.disabled = true;
 
         permission = {
           # Default: require approval
