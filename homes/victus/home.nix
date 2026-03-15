@@ -62,8 +62,6 @@
     nil
     nixd
     nvtopPackages.full
-    opencode
-    opencode-desktop
     p7zip
     playerctl
     protonplus

@@ -6,11 +6,7 @@
 }:
 let
   mkVictus =
-    params@{
-      username,
-      homeDirectory,
-      ...
-    }:
+    params@{ username, homeDirectory, ... }:
     {
       _module.args.victus = params;
       imports = [ ./home.nix ];

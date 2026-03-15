@@ -1,11 +1,17 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+  shadcn-mcp = pkgs.writeShellApplication {
+    name = "shadcn-mcp";
+    runtimeInputs = [ pkgs.bun ];
+    text = ''exec bun x shadcn@latest mcp "$@"'';
+  };
+in
 {
   config = {
 
     home.packages = with pkgs; [
       crush
       claude-code
-      opencode-desktop
     ];
 
     programs.mcp = {
@@ -13,6 +19,8 @@
       servers = {
         gh_grep.url = "https://mcp.grep.app";
         context7.url = "https://mcp.context7.com/mcp";
+        playwright.command = lib.getExe pkgs.playwright-mcp;
+        shadcn.command = lib.getExe shadcn-mcp;
       };
     };
 
