@@ -88,7 +88,8 @@
           adnauseam
           bitwarden
           sponsorblock
-          youtube-high-definition
+          enhancer-for-youtube
+          karakeep
         ];
 
         containersForce = true;
