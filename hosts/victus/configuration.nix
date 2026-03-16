@@ -64,11 +64,18 @@
 
   topology.self = {
     name = "victus";
-    hardware.info = "Intel i7 12th Gen, 16GB RAM, HP Victus 15";
+    hardware.info = "Intel Core i7 12650H, 16GB RAM, HP Victus 15";
     deviceIcon = "devices.laptop";
     interfaces.wlp0s20f3 = {
       network = "nyx";
       addresses = lib.mkForce [ "DHCP" ];
+      physicalConnections = [
+        {
+          node = "router";
+          interface = "wifi";
+          renderer.reverse = true;
+        }
+      ];
     };
     interfaces.tailscale0 = {
       network = "tailscale";

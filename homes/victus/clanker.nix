@@ -33,8 +33,8 @@ in
         autoupdate = false;
         share = "disabled";
 
-        model = "openai/gpt-5.3-codex";
-        small_model = "openai/gpt-5.1-codex-mini";
+        model = "openai/gpt-5.2-codex";
+        small_model = "openai/gpt-5.2-codex";
         default_agent = "plan";
         snapshot = false;
 

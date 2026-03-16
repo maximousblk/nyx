@@ -83,8 +83,6 @@
                   "wifi"
                 ]
               ];
-              connections.lan1 = mkConnection "switch" "lan1";
-              connections.wifi = mkConnection "victus" "wlp0s20f3";
               interfaces.lan1.network = "nyx";
             };
 
@@ -102,12 +100,20 @@
                   "lan8"
                 ]
               ];
+              interfaces.lan1.physicalConnections = [
+                {
+                  node = "router";
+                  interface = "lan1";
+                  renderer.reverse = true;
+                }
+              ];
               connections.lan2 = mkConnection "pyre" "enp2s0";
               connections.lan3 = mkConnection "wisp" "eth0";
             };
 
             nodes.wisp = mkDevice "wisp" {
               info = "Raspberry Pi 4B 8GB";
+              deviceIcon = "devices.cloud-server";
               interfaceGroups = [
                 [ "eth0" ]
                 [ "tailscale0" ]

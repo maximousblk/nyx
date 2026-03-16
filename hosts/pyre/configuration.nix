@@ -41,6 +41,7 @@
   topology.self = {
     name = "pyre";
     hardware.info = "Intel N150, 16GB RAM, Skullsaints Agni";
+    deviceIcon = "devices.cloud-server";
     interfaces.enp2s0.network = "nyx";
     interfaces.tailscale0 = {
       network = "tailscale";
