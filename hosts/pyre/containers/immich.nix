@@ -187,7 +187,12 @@ in
             postgres.ref
             ml.ref
           ];
-          Requires = [
+          Wants = [
+            valkey.ref
+            postgres.ref
+            ml.ref
+          ];
+          PartOf = [
             valkey.ref
             postgres.ref
             ml.ref

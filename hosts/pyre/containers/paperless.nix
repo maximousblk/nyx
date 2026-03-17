@@ -164,7 +164,12 @@ in
             tika.ref
             gotenberg.ref
           ];
-          Requires = [
+          Wants = [
+            valkey.ref
+            tika.ref
+            gotenberg.ref
+          ];
+          PartOf = [
             valkey.ref
             tika.ref
             gotenberg.ref

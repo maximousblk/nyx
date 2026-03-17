@@ -175,7 +175,11 @@ in
             chrome.ref
             meili.ref
           ];
-          Requires = [
+          Wants = [
+            chrome.ref
+            meili.ref
+          ];
+          PartOf = [
             chrome.ref
             meili.ref
           ];

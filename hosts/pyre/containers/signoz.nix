@@ -457,7 +457,8 @@ in
             "signoz-init-clickhouse.service"
             zookeeper.ref
           ];
-          Requires = [ zookeeper.ref ];
+          Wants = [ zookeeper.ref ];
+          PartOf = [ zookeeper.ref ];
           RequiresMountsFor = clickhouse_data;
         };
       };
@@ -483,7 +484,8 @@ in
 
         unitConfig = {
           After = [ clickhouse.ref ];
-          Requires = [ clickhouse.ref ];
+          Wants = [ clickhouse.ref ];
+          PartOf = [ clickhouse.ref ];
         };
       };
 
@@ -525,7 +527,11 @@ in
             clickhouse.ref
             "signoz-schema-migrator.service"
           ];
-          Requires = [ clickhouse.ref ];
+          Wants = [ clickhouse.ref ];
+          PartOf = [
+            clickhouse.ref
+            "signoz-schema-migrator.service"
+          ];
           RequiresMountsFor = sqlite_data;
         };
       };
@@ -569,7 +575,8 @@ in
 
         unitConfig = {
           After = [ signoz.ref ];
-          Requires = [ signoz.ref ];
+          Wants = [ signoz.ref ];
+          PartOf = [ signoz.ref ];
         };
       };
     };
