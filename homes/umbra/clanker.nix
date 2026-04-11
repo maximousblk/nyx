@@ -33,11 +33,24 @@ in
         autoupdate = false;
         share = "disabled";
 
-        model = "openai/gpt-5.3-codex";
+        model = "openai/gpt-5.4";
         small_model = "openai/gpt-5.1-codex-mini";
         default_agent = "plan";
 
         lsp.rust.disabled = true;
+
+        provider = {
+          ollama = {
+            npm = "@ai-sdk/openai-compatible";
+            name = "Ollama";
+            options = {
+              baseURL = "http://localhost:11434/v1";
+            };
+            models = {
+              "gemma4:26b".name = "Gemma 4";
+            };
+          };
+        };
 
         permission = {
           # Default: require approval
