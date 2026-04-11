@@ -9,10 +9,7 @@ in
 {
   config = {
 
-    home.packages = with pkgs; [
-      crush
-      claude-code
-    ];
+    home.packages = with pkgs; [ crush ];
 
     programs.mcp = {
       enable = true;
@@ -28,8 +25,11 @@ in
       enable = true;
       enableMcpIntegration = true;
 
-      settings = {
+      tui = {
         theme = "system";
+      };
+
+      settings = {
         autoupdate = false;
         share = "disabled";
 
@@ -79,6 +79,11 @@ in
           };
         };
       };
+    };
+
+    programs.claude-code = {
+      enable = true;
+      enableMcpIntegration = true;
     };
   };
 }
