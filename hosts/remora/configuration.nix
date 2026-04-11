@@ -2,6 +2,7 @@
   inputs,
   self,
   config,
+  pkgs,
   ...
 }:
 {
@@ -51,6 +52,7 @@
 
   wsl = {
     enable = true;
+    useWindowsDriver = true;
     defaultUser = "ashwin_y";
 
     wslConf = {
@@ -90,6 +92,28 @@
   virtualisation.docker = {
     enable = true;
     autoPrune.enable = true;
+  };
+
+  # GPU/Vulkan support via WSL2 GPU paravirtualization
+  hardware.graphics.enable = true;
+  environment.sessionVariables = {
+    OLLAMA_VULKAN = "1";
+    GGML_VK_VISIBLE_DEVICES = "0";
+    LD_LIBRARY_PATH = [ "/run/opengl-driver/lib" ];
+  };
+
+  hardware.graphics.extraPackages = with pkgs; [
+    mesa
+    vulkan-loader
+    intel-media-driver
+  ];
+
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      llvmPackages.openmp
+      openssl
+    ];
   };
 
   home-manager.users.${config.wsl.defaultUser} = {
