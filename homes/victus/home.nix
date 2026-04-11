@@ -58,6 +58,7 @@
     kdePackages.qtsvg
     libappindicator
     lutris
+    mindustry-wayland
     ncdu
     nil
     nixd
