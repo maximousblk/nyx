@@ -2,6 +2,7 @@
 {
   home.packages = with pkgs; [
     bat
+    binutils
     btop
     bun
     cmake
@@ -14,12 +15,14 @@
     eza
     fd
     fenix.stable.toolchain
+    file
     fzf
     gcc
     gh
     git
     glibcLocales
     gnumake
+    gnutar
     go
     gopls
     gping
@@ -44,25 +47,35 @@
     nodejs_24
     opencode
     openssl.dev
+    openstack-rs
+    openstackclient-full
     opentofu
+    p7zip
     packer
+    patchelf
     pkg-config
     podman
     podman-compose
     ripgrep
     sops
     ssh-to-age
+    strace
     # terragrunt
     tmux
     trufflehog
+    unzip
     uv
     uxplay
+    vulkan-tools
     winetricks
     wineWow64Packages.waylandFull
     wl-clipboard-rs
+    xz
     yarn
     yq
+    zip
     zoxide
+    zstd
 
     (python312.withPackages (pypkgs: with pypkgs; [ ]))
     (ruby.withPackages (ps: with ps; [ license_finder ]))
