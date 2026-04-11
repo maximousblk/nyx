@@ -22,8 +22,8 @@ let
 
   # Version tags
   clickhouseVersion = "25.5.6";
-  signozVersion = "v0.105.1";
-  otelcolVersion = "v0.129.12";
+  signozVersion = "v0.117.1";
+  otelcolVersion = "v0.144.2";
   zookeeperVersion = "3.7.1";
 
   # ClickHouse config.xml - simplified for single node
@@ -209,6 +209,27 @@ let
                   - localhost:8888
                 labels:
                   job_name: otel-collector
+      docker_stats:
+        endpoint: unix:///var/run/docker.sock
+        metrics:
+          container.cpu.utilization:
+            enabled: true
+          container.memory.percent:
+            enabled: true
+          container.network.io.usage.rx_bytes:
+            enabled: true
+          container.network.io.usage.tx_bytes:
+            enabled: true
+          container.network.io.usage.rx_dropped:
+            enabled: true
+          container.network.io.usage.tx_dropped:
+            enabled: true
+          container.memory.usage.limit:
+            enabled: true
+          container.memory.usage.total:
+            enabled: true
+          container.blockio.io_service_bytes_recursive:
+            enabled: true
 
     processors:
       batch:
@@ -222,6 +243,10 @@ let
       resourcedetection:
         detectors: [env, system]
         timeout: 2s
+      resourcedetection/docker:
+        detectors: [env, docker]
+        timeout: 2s
+        override: false
       signozspanmetrics/delta:
         metrics_exporter: signozclickhousemetrics
         metrics_flush_interval: 60s
@@ -236,7 +261,13 @@ let
             default: default
           - name: signoz.collector.id
           - name: service.version
+          - name: browser.platform
+          - name: browser.mobile
+          - name: k8s.cluster.name
+          - name: k8s.node.name
+          - name: k8s.namespace.name
           - name: host.name
+          - name: host.type
           - name: container.name
 
     extensions:
@@ -248,7 +279,7 @@ let
     exporters:
       clickhousetraces:
         datasource: tcp://signoz-clickhouse:9000/signoz_traces
-        low_cardinal_exception_grouping: false
+        low_cardinal_exception_grouping: ''${env:LOW_CARDINAL_EXCEPTION_GROUPING}
         use_new_schema: true
       signozclickhousemetrics:
         dsn: tcp://signoz-clickhouse:9000/signoz_metrics
@@ -261,6 +292,12 @@ let
         timeout: 45s
         sending_queue:
           enabled: false
+      metadataexporter:
+        cache:
+          provider: in_memory
+        dsn: tcp://signoz-clickhouse:9000/signoz_metadata
+        enabled: true
+        timeout: 45s
 
     service:
       telemetry:
@@ -273,19 +310,19 @@ let
         traces:
           receivers: [otlp]
           processors: [signozspanmetrics/delta, batch]
-          exporters: [clickhousetraces, signozmeter]
+          exporters: [clickhousetraces, metadataexporter, signozmeter]
         metrics:
-          receivers: [otlp]
-          processors: [batch]
-          exporters: [signozclickhousemetrics, signozmeter]
+          receivers: [otlp, docker_stats]
+          processors: [batch, resourcedetection/docker]
+          exporters: [signozclickhousemetrics, metadataexporter, signozmeter]
         metrics/prometheus:
           receivers: [prometheus]
           processors: [batch]
-          exporters: [signozclickhousemetrics, signozmeter]
+          exporters: [signozclickhousemetrics, metadataexporter, signozmeter]
         logs:
           receivers: [otlp]
           processors: [batch]
-          exporters: [clickhouselogsexporter, signozmeter]
+          exporters: [clickhouselogsexporter, metadataexporter, signozmeter]
         metrics/meter:
           receivers: [signozmeter]
           processors: [batch/meter]
@@ -359,17 +396,22 @@ in
           image = "docker.io/clickhouse/clickhouse-server:${clickhouseVersion}";
           pull = "always";
 
-          volumes = [ "${user_scripts}:/var/lib/clickhouse/user_scripts" ];
+          volumes = [ "''${user_scripts}:/var/lib/clickhouse/user_scripts" ];
 
-          exec = lib.concatStringsSep " && " [
-            ''version="v0.0.1"''
-            "node_os=$(uname -s | tr '[:upper:]' '[:lower:]')"
-            "node_arch=$(uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)"
-            ''echo "Fetching histogram-binary for $node_os/$node_arch"''
-            "cd /tmp"
-            ''wget -O histogram-quantile.tar.gz "https://github.com/SigNoz/signoz/releases/download/histogram-quantile%2F$version/histogram-quantile_''${node_os}_''${node_arch}.tar.gz"''
-            "tar -xvzf histogram-quantile.tar.gz"
-            "mv histogram-quantile /var/lib/clickhouse/user_scripts/histogramQuantile"
+          entrypoint = "bash";
+
+          exec = [
+            "-c"
+            (lib.concatStringsSep " && " [
+              ''version="v0.0.1"''
+              "node_os=$(uname -s | tr '[:upper:]' '[:lower:]')"
+              "node_arch=$(uname -m | sed s/aarch64/arm64/ | sed s/x86_64/amd64/)"
+              ''echo "Fetching histogram-binary for $node_os/$node_arch"''
+              "cd /tmp"
+              ''wget -O histogram-quantile.tar.gz "https://github.com/SigNoz/signoz/releases/download/histogram-quantile%2F$version/histogram-quantile_''${node_os}_''${node_arch}.tar.gz"''
+              "tar -xvzf histogram-quantile.tar.gz"
+              "mv histogram-quantile /var/lib/clickhouse/user_scripts/histogramQuantile"
+            ])
           ];
         };
 
@@ -463,16 +505,32 @@ in
         };
       };
 
-      # --- SCHEMA MIGRATOR ---
-      signoz-schema-migrator = {
+      # --- TELEMETRYSTORE MIGRATOR ---
+      signoz-telemetrystore-migrator = {
         autoStart = true;
         containerConfig = {
-          image = "docker.io/signoz/signoz-schema-migrator:${otelcolVersion}";
+          image = "docker.io/signoz/signoz-otel-collector:${otelcolVersion}";
           pull = "always";
 
           networks = [ net.ref ];
 
-          exec = "sync --dsn=tcp://signoz-clickhouse:9000 --up=";
+          entrypoint = "/bin/sh";
+
+          exec = [
+            "-c"
+            (lib.concatStringsSep " && " [
+              "/signoz-otel-collector migrate bootstrap"
+              "/signoz-otel-collector migrate sync up"
+              "/signoz-otel-collector migrate async up"
+            ])
+          ];
+
+          environments = {
+            SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_DSN = "tcp://signoz-clickhouse:9000";
+            SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_CLUSTER = "cluster";
+            SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_REPLICATION = "true";
+            SIGNOZ_OTEL_COLLECTOR_TIMEOUT = "10m";
+          };
         };
 
         serviceConfig = {
@@ -509,6 +567,7 @@ in
             STORAGE = "clickhouse";
             GODEBUG = "netdns=go";
             TELEMETRY_ENABLED = "false";
+            SIGNOZ_ANALYTICS_ENABLED = "false";
             DEPLOYMENT_TYPE = "docker-standalone";
             DOT_METRICS_ENABLED = "true";
           };
@@ -525,12 +584,12 @@ in
         unitConfig = {
           After = [
             clickhouse.ref
-            "signoz-schema-migrator.service"
+            "signoz-telemetrystore-migrator.service"
           ];
           Wants = [ clickhouse.ref ];
           PartOf = [
             clickhouse.ref
-            "signoz-schema-migrator.service"
+            "signoz-telemetrystore-migrator.service"
           ];
           RequiresMountsFor = sqlite_data;
         };
@@ -542,6 +601,7 @@ in
         containerConfig = {
           image = "docker.io/signoz/signoz-otel-collector:${otelcolVersion}";
           pull = "always";
+          user = "root";
           publishPorts = [
             "127.0.0.1:4317:4317"
             "127.0.0.1:4318:4318"
@@ -556,18 +616,26 @@ in
           volumes = [
             "${configDir}/otel-collector-config.yaml:/etc/otel-collector-config.yaml:ro"
             "${configDir}/otel-collector-opamp-config.yaml:/etc/manager-config.yaml:ro"
+            "/run/podman/podman.sock:/var/run/docker.sock:ro"
           ];
 
-          exec = lib.concatStringsSep " " [
-            "--config=/etc/otel-collector-config.yaml"
-            "--manager-config=/etc/manager-config.yaml"
-            "--copy-path=/var/tmp/collector-config.yaml"
-            "--feature-gates=-pkg.translator.prometheus.NormalizeName"
+          entrypoint = "/bin/sh";
+
+          exec = [
+            "-c"
+            (lib.concatStringsSep " && " [
+              "/signoz-otel-collector migrate sync check"
+              "/signoz-otel-collector --config=/etc/otel-collector-config.yaml --manager-config=/etc/manager-config.yaml --copy-path=/var/tmp/collector-config.yaml"
+            ])
           ];
 
           environments = {
             OTEL_RESOURCE_ATTRIBUTES = "host.name=signoz-host,os.type=linux";
             LOW_CARDINAL_EXCEPTION_GROUPING = "false";
+            SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_DSN = "tcp://signoz-clickhouse:9000";
+            SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_CLUSTER = "cluster";
+            SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_REPLICATION = "true";
+            SIGNOZ_OTEL_COLLECTOR_TIMEOUT = "10m";
           };
         };
 
