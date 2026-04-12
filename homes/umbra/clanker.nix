@@ -12,6 +12,7 @@ in
     home.packages = [
       pkgs.crush
       pkgs.claude-code
+      pkgs.nur.repos.xddxdd.lightpanda
     ];
 
     programs.mcp = {
@@ -19,6 +20,10 @@ in
       servers = {
         gh_grep.url = "https://mcp.grep.app";
         context7.url = "https://mcp.context7.com/mcp";
+        lightpanda = {
+          command = lib.getExe pkgs.nur.repos.xddxdd.lightpanda;
+          args = [ "mcp" ];
+        };
         playwright.command = lib.getExe pkgs.playwright-mcp;
         shadcn.command = lib.getExe shadcn-mcp;
       };
