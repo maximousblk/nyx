@@ -42,7 +42,20 @@
     name = "pyre";
     hardware.info = "Intel N150, 16GB RAM, Skullsaints Agni";
     deviceIcon = "devices.cloud-server";
-    interfaces.enp2s0.network = "nyx";
+    interfaces.enp2s0 = {
+      type = "ethernet";
+      network = "nyx";
+      physicalConnections = [
+        {
+          node = "switch";
+          interface = "lan2";
+          renderer.reverse = true;
+        }
+      ];
+    };
+    interfaces.enp4s0 = {
+      type = "ethernet";
+    };
     interfaces.tailscale0 = {
       network = "tailscale";
       type = "tun";

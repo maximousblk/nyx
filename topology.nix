@@ -24,7 +24,7 @@
               style = {
                 primaryColor = "#f9a8a8";
                 secondaryColor = null;
-                pattern = "dashed";
+                pattern = "solid";
               };
             };
 
@@ -51,9 +51,33 @@
             networks.containers = {
               name = "Container Network";
               cidrv4 = "10.69.0.0/16";
+              style = {
+                primaryColor = "#9ca3af";
+                secondaryColor = "#d1d5db";
+                pattern = "dashed";
+              };
             };
 
-            nodes.internet = mkInternet { connections = mkConnection "extender" "wifi"; };
+            nodes.internet = mkInternet { connections = mkConnection "ont" "pon"; };
+
+            nodes.ont = mkDevice "Airtel ONT-RG" {
+              info = "ISP-provided optical network terminal/router";
+              interfaceGroups = [
+                [ "pon" ]
+                [ "wifi" ]
+              ];
+              interfaces.pon.type = "fiber-duplex";
+              interfaces.wifi = {
+                type = "wifi";
+                network = "upstream";
+                physicalConnections = [
+                  {
+                    node = "extender";
+                    interface = "wifi";
+                  }
+                ];
+              };
+            };
 
             nodes.extender = mkDevice "Range Extender" {
               info = "TP-Link RE200 AC750";
@@ -107,27 +131,7 @@
                   renderer.reverse = true;
                 }
               ];
-              connections.lan2 = mkConnection "pyre" "enp2s0";
-              connections.lan3 = mkConnection "wisp" "eth0";
-            };
 
-            nodes.wisp = mkDevice "wisp" {
-              info = "Raspberry Pi 4B 8GB";
-              deviceIcon = "devices.cloud-server";
-              interfaceGroups = [
-                [ "eth0" ]
-                [ "tailscale0" ]
-              ];
-              interfaces.eth0 = {
-                network = "nyx";
-                addresses = [ "192.168.69.202" ];
-              };
-              interfaces.tailscale0 = {
-                network = "tailscale";
-                type = "tun";
-                virtual = true;
-                addresses = [ "100.100.2.1" ];
-              };
             };
           }
         )
