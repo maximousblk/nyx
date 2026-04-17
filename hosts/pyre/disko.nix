@@ -59,7 +59,7 @@
 
     disk.storage = {
       type = "disk";
-      device = "/dev/disk/by-id/nvme-Verbatim_Vi3000_493744058892945";
+      device = "/dev/disk/by-id/nvme-CT1000P3SSD8_2303E69FA9C6";
       content = {
         type = "gpt";
         partitions = {

@@ -27,8 +27,8 @@
     },
     "bluetooth": [
       {
-        "index": 33,
-        "attached_to": 37,
+        "index": 31,
+        "attached_to": 35,
         "class_list": ["usb", "bluetooth"],
         "bus_type": {
           "hex": "0086",
@@ -102,8 +102,8 @@
         "module_alias": "usb:v0BDApB85Bd0000dcE0dsc01dp01icE0isc01ip01in01"
       },
       {
-        "index": 42,
-        "attached_to": 37,
+        "index": 39,
+        "attached_to": 35,
         "class_list": ["usb", "bluetooth"],
         "bus_type": {
           "hex": "0086",
@@ -696,6 +696,7 @@
           "swapgs",
           "rfds",
           "bhi",
+          "spectre_v2_user",
           "vmscape"
         ],
         "power_management": [""],
@@ -710,7 +711,6 @@
         "fpu_exception": false,
         "cpuid_level": 32,
         "write_protect": false,
-        "tlb_size": 32767,
         "clflush_size": 64,
         "cache_alignment": 64,
         "address_sizes": {
@@ -721,7 +721,7 @@
     ],
     "disk": [
       {
-        "index": 27,
+        "index": 26,
         "attached_to": 15,
         "class_list": ["disk", "block_device", "nvme"],
         "bus_type": {
@@ -744,38 +744,38 @@
           "value": 0
         },
         "vendor": {
-          "hex": "1ed0",
-          "value": 7888
+          "hex": "c0a9",
+          "value": 49321
         },
         "sub_vendor": {
-          "hex": "1ed0",
-          "value": 7888
+          "hex": "c0a9",
+          "value": 49321
         },
         "device": {
-          "hex": "2283",
-          "name": "Verbatim Vi3000",
-          "value": 8835
+          "hex": "540a",
+          "name": "CT1000P3SSD8",
+          "value": 21514
         },
         "sub_device": {
-          "hex": "2283",
-          "value": 8835
+          "hex": "5021",
+          "value": 20513
         },
-        "serial": "493744058892945",
-        "model": "Verbatim Vi3000",
+        "serial": "2303E69FA9C6",
+        "model": "CT1000P3SSD8",
         "sysfs_id": "/class/block/nvme0n1",
         "sysfs_bus_id": "nvme0",
         "sysfs_device_link": "/devices/pci0000:00/0000:00:1c.0/0000:01:00.0/nvme/nvme0",
         "unix_device_names": [
-          "/dev/disk/by-id/nvme-Verbatim_Vi3000_493744058892945",
-          "/dev/disk/by-id/nvme-Verbatim_Vi3000_493744058892945_1",
-          "/dev/disk/by-id/nvme-eui.2c3ebf39323934350000000000000000",
+          "/dev/disk/by-id/nvme-CT1000P3SSD8_2303E69FA9C6",
+          "/dev/disk/by-id/nvme-CT1000P3SSD8_2303E69FA9C6_1",
+          "/dev/disk/by-id/nvme-nvme.c0a9-323330334536394641394336-435431303030503353534438-00000001",
           "/dev/disk/by-path/pci-0000:01:00.0-nvme-1",
           "/dev/nvme0n1"
         ],
         "resources": [
           {
             "type": "disk_geo",
-            "cylinders": 488386,
+            "cylinders": 953869,
             "heads": 64,
             "sectors": 32,
             "size": "0x0",
@@ -784,7 +784,7 @@
           {
             "type": "size",
             "unit": "sectors",
-            "value_1": 1000215216,
+            "value_1": 1953525168,
             "value_2": 512
           }
         ],
@@ -794,7 +794,7 @@
         "driver_modules": ["nvme"]
       },
       {
-        "index": 28,
+        "index": 27,
         "attached_to": 9,
         "class_list": ["disk", "ide", "block_device"],
         "bus_type": {
@@ -940,7 +940,7 @@
     ],
     "hub": [
       {
-        "index": 37,
+        "index": 35,
         "attached_to": 24,
         "class_list": ["usb", "hub"],
         "bus_type": {
@@ -959,7 +959,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.63 xhci-hcd",
+          "name": "Linux 6.18.21 xhci-hcd",
           "value": 7531
         },
         "device": {
@@ -969,11 +969,11 @@
         },
         "revision": {
           "hex": "0000",
-          "name": "6.12",
+          "name": "6.18",
           "value": 0
         },
         "serial": "0000:00:14.0",
-        "model": "Linux 6.12.63 xhci-hcd xHCI Host Controller",
+        "model": "Linux 6.18.21 xhci-hcd xHCI Host Controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:14.0/usb1/1-0:1.0",
         "sysfs_bus_id": "1-0:1.0",
         "resources": [
@@ -1017,10 +1017,10 @@
         "driver_module": "usbcore",
         "drivers": ["hub"],
         "driver_modules": ["usbcore"],
-        "module_alias": "usb:v1D6Bp0002d0612dc09dsc00dp01ic09isc00ip00in00"
+        "module_alias": "usb:v1D6Bp0002d0618dc09dsc00dp01ic09isc00ip00in00"
       },
       {
-        "index": 41,
+        "index": 38,
         "attached_to": 24,
         "class_list": ["usb", "hub"],
         "bus_type": {
@@ -1039,7 +1039,7 @@
         },
         "vendor": {
           "hex": "1d6b",
-          "name": "Linux 6.12.63 xhci-hcd",
+          "name": "Linux 6.18.21 xhci-hcd",
           "value": 7531
         },
         "device": {
@@ -1049,11 +1049,11 @@
         },
         "revision": {
           "hex": "0000",
-          "name": "6.12",
+          "name": "6.18",
           "value": 0
         },
         "serial": "0000:00:14.0",
-        "model": "Linux 6.12.63 xhci-hcd xHCI Host Controller",
+        "model": "Linux 6.18.21 xhci-hcd xHCI Host Controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:14.0/usb2/2-0:1.0",
         "sysfs_bus_id": "2-0:1.0",
         "detail": {
@@ -1087,103 +1087,7 @@
         "driver_module": "usbcore",
         "drivers": ["hub"],
         "driver_modules": ["usbcore"],
-        "module_alias": "usb:v1D6Bp0003d0612dc09dsc00dp03ic09isc00ip00in00"
-      }
-    ],
-    "keyboard": [
-      {
-        "index": 40,
-        "attached_to": 37,
-        "class_list": ["keyboard", "usb"],
-        "bus_type": {
-          "hex": "0086",
-          "name": "USB",
-          "value": 134
-        },
-        "slot": {
-          "bus": 0,
-          "number": 0
-        },
-        "base_class": {
-          "hex": "0108",
-          "name": "Keyboard",
-          "value": 264
-        },
-        "sub_class": {
-          "hex": "0000",
-          "name": "Keyboard",
-          "value": 0
-        },
-        "vendor": {
-          "hex": "413c",
-          "value": 16700
-        },
-        "device": {
-          "hex": "2113",
-          "name": "Dell KB216 Wired Keyboard",
-          "value": 8467
-        },
-        "revision": {
-          "hex": "0000",
-          "name": "33.11",
-          "value": 0
-        },
-        "model": "Dell KB216 Wired Keyboard",
-        "sysfs_id": "/devices/pci0000:00/0000:00:14.0/usb1/1-1/1-1:1.0",
-        "sysfs_bus_id": "1-1:1.0",
-        "unix_device_names": [
-          "/dev/input/by-id/usb-413c_Dell_KB216_Wired_Keyboard-event-kbd",
-          "/dev/input/by-path/pci-0000:00:14.0-usb-0:1:1.0-event-kbd",
-          "/dev/input/by-path/pci-0000:00:14.0-usbv2-0:1:1.0-event-kbd",
-          "/dev/input/event0"
-        ],
-        "resources": [
-          {
-            "type": "baud",
-            "speed": 1500000,
-            "bits": 0,
-            "stop_bits": 0,
-            "parity": 0,
-            "handshake": 0
-          }
-        ],
-        "detail": {
-          "device_class": {
-            "hex": "0000",
-            "name": "per_interface",
-            "value": 0
-          },
-          "device_subclass": {
-            "hex": "0000",
-            "name": "per_interface",
-            "value": 0
-          },
-          "device_protocol": 0,
-          "interface_class": {
-            "hex": "0003",
-            "name": "hid",
-            "value": 3
-          },
-          "interface_subclass": {
-            "hex": "0001",
-            "name": "audio",
-            "value": 1
-          },
-          "interface_protocol": 1,
-          "interface_number": 0,
-          "interface_alternate_setting": 0
-        },
-        "hotplug": "usb",
-        "driver": "usbhid",
-        "driver_module": "usbhid",
-        "drivers": ["usbhid"],
-        "driver_modules": ["usbhid"],
-        "driver_info": {
-          "type": "keyboard",
-          "xkb_rules": "xfree86",
-          "xkb_model": "pc104"
-        },
-        "module_alias": "usb:v413Cp2113d3311dc00dsc00dp00ic03isc01ip01in00"
+        "module_alias": "usb:v1D6Bp0003d0618dc09dsc00dp03ic09isc00ip00in00"
       }
     ],
     "memory": [
@@ -1205,155 +1109,9 @@
         "resources": [
           {
             "type": "phys_mem",
-            "range": 16106127360
+            "range": 8053063680
           }
         ]
-      }
-    ],
-    "monitor": [
-      {
-        "index": 26,
-        "attached_to": 23,
-        "class_list": ["monitor"],
-        "base_class": {
-          "hex": "0100",
-          "name": "Monitor",
-          "value": 256
-        },
-        "sub_class": {
-          "hex": "0002",
-          "name": "LCD Monitor",
-          "value": 2
-        },
-        "vendor": {
-          "hex": "2157",
-          "value": 8535
-        },
-        "device": {
-          "hex": "0001",
-          "name": "HDMI TO USB",
-          "value": 1
-        },
-        "serial": "1",
-        "model": "HDMI TO USB",
-        "resources": [
-          {
-            "type": "monitor",
-            "width": 1024,
-            "height": 768,
-            "vertical_frequency": 60,
-            "interlaced": false
-          },
-          {
-            "type": "monitor",
-            "width": 1152,
-            "height": 864,
-            "vertical_frequency": 60,
-            "interlaced": false
-          },
-          {
-            "type": "monitor",
-            "width": 1280,
-            "height": 720,
-            "vertical_frequency": 60,
-            "interlaced": false
-          },
-          {
-            "type": "monitor",
-            "width": 1280,
-            "height": 960,
-            "vertical_frequency": 60,
-            "interlaced": false
-          },
-          {
-            "type": "monitor",
-            "width": 1920,
-            "height": 1080,
-            "vertical_frequency": 60,
-            "interlaced": false
-          },
-          {
-            "type": "monitor",
-            "width": 640,
-            "height": 480,
-            "vertical_frequency": 60,
-            "interlaced": false
-          },
-          {
-            "type": "monitor",
-            "width": 800,
-            "height": 600,
-            "vertical_frequency": 60,
-            "interlaced": false
-          },
-          {
-            "type": "size",
-            "unit": "mm",
-            "value_1": 708,
-            "value_2": 398
-          }
-        ],
-        "detail": {
-          "manufacture_year": 2019,
-          "manufacture_week": 1,
-          "vertical_sync": {
-            "min": 57,
-            "max": 60
-          },
-          "horizontal_sync": {
-            "min": 31,
-            "max": 84
-          },
-          "horizontal_sync_timings": {
-            "disp": 1920,
-            "sync_start": 2008,
-            "sync_end": 2052,
-            "total": 2200
-          },
-          "vertical_sync_timings": {
-            "disp": 1080,
-            "sync_start": 1084,
-            "sync_end": 1089,
-            "total": 1125
-          },
-          "clock": 148500,
-          "width": 1920,
-          "height": 1080,
-          "width_millimetres": 708,
-          "height_millimetres": 398,
-          "horizontal_flag": 43,
-          "vertical_flag": 43,
-          "vendor": "",
-          "name": "HDMI TO USB"
-        },
-        "driver_info": {
-          "type": "display",
-          "width": 1920,
-          "height": 1080,
-          "vertical_sync": {
-            "min": 57,
-            "max": 60
-          },
-          "horizontal_sync": {
-            "min": 31,
-            "max": 84
-          },
-          "bandwidth": 0,
-          "horizontal_sync_timings": {
-            "disp": 1920,
-            "sync_start": 2008,
-            "sync_end": 2052,
-            "total": 2200
-          },
-          "vertical_sync_timings": {
-            "disp": 1080,
-            "sync_start": 1084,
-            "sync_end": 1089,
-            "total": 1125
-          },
-          "horizontal_flag": 43,
-          "vertical_flag": 43
-        }
       }
     ],
     "network_controller": [
@@ -1660,7 +1418,7 @@
     ],
     "network_interface": [
       {
-        "index": 44,
+        "index": 40,
         "attached_to": 8,
         "class_list": ["network_interface"],
         "base_class": {
@@ -1693,7 +1451,7 @@
         "driver_modules": ["rtw89_8852be"]
       },
       {
-        "index": 46,
+        "index": 47,
         "attached_to": 0,
         "class_list": ["network_interface"],
         "base_class": {
@@ -1711,7 +1469,7 @@
         "unix_device_names": ["lo"]
       },
       {
-        "index": 48,
+        "index": 51,
         "attached_to": 12,
         "class_list": ["network_interface"],
         "base_class": {
@@ -1744,7 +1502,7 @@
         "driver_modules": ["r8169"]
       },
       {
-        "index": 50,
+        "index": 58,
         "attached_to": 22,
         "class_list": ["network_interface"],
         "base_class": {
@@ -2074,8 +1832,8 @@
         "label": "Onboard - Sound"
       },
       {
-        "index": 29,
-        "attached_to": 37,
+        "index": 28,
+        "attached_to": 35,
         "class_list": ["sound", "usb"],
         "bus_type": {
           "hex": "0086",
@@ -2159,8 +1917,8 @@
         "module_alias": "usb:v0573p1573d8007dc00dsc00dp00ic01isc02ip00in02"
       },
       {
-        "index": 31,
-        "attached_to": 37,
+        "index": 30,
+        "attached_to": 35,
         "class_list": ["sound", "usb"],
         "bus_type": {
           "hex": "0086",
@@ -2244,8 +2002,8 @@
         "module_alias": "usb:v0573p1573d8007dc00dsc00dp00ic01isc01ip00in00"
       },
       {
-        "index": 38,
-        "attached_to": 37,
+        "index": 36,
+        "attached_to": 35,
         "class_list": ["sound", "usb"],
         "bus_type": {
           "hex": "0086",
@@ -2441,20 +2199,24 @@
           "value": 2
         },
         "vendor": {
-          "hex": "1ed0",
-          "value": 7888
+          "hex": "c0a9",
+          "value": 49321
         },
         "sub_vendor": {
-          "hex": "1ed0",
-          "value": 7888
+          "hex": "c0a9",
+          "value": 49321
         },
         "device": {
-          "hex": "2283",
-          "value": 8835
+          "hex": "540a",
+          "value": 21514
         },
         "sub_device": {
-          "hex": "2283",
-          "value": 8835
+          "hex": "5021",
+          "value": 20513
+        },
+        "revision": {
+          "hex": "0001",
+          "value": 1
         },
         "model": "Mass storage controller",
         "sysfs_id": "/devices/pci0000:00/0000:00:1c.0/0000:01:00.0",
@@ -2470,7 +2232,7 @@
         "driver_module": "nvme",
         "drivers": ["nvme"],
         "driver_modules": ["nvme"],
-        "module_alias": "pci:v00001ED0d00002283sv00001ED0sd00002283bc01sc08i02"
+        "module_alias": "pci:v0000C0A9d0000540Asv0000C0A9sd00005021bc01sc08i02"
       }
     ],
     "system": {
@@ -2478,8 +2240,8 @@
     },
     "usb": [
       {
-        "index": 30,
-        "attached_to": 37,
+        "index": 29,
+        "attached_to": 35,
         "class_list": ["usb", "unknown"],
         "bus_type": {
           "hex": "0086",
@@ -2558,91 +2320,7 @@
       },
       {
         "index": 32,
-        "attached_to": 37,
-        "class_list": ["usb", "unknown"],
-        "bus_type": {
-          "hex": "0086",
-          "name": "USB",
-          "value": 134
-        },
-        "slot": {
-          "bus": 0,
-          "number": 0
-        },
-        "base_class": {
-          "hex": "0000",
-          "name": "Unclassified device",
-          "value": 0
-        },
-        "sub_class": {
-          "hex": "0000",
-          "name": "Unclassified device",
-          "value": 0
-        },
-        "vendor": {
-          "hex": "413c",
-          "value": 16700
-        },
-        "device": {
-          "hex": "2113",
-          "name": "Dell KB216 Wired Keyboard",
-          "value": 8467
-        },
-        "revision": {
-          "hex": "0000",
-          "name": "33.11",
-          "value": 0
-        },
-        "model": "Dell KB216 Wired Keyboard",
-        "sysfs_id": "/devices/pci0000:00/0000:00:14.0/usb1/1-1/1-1:1.1",
-        "sysfs_bus_id": "1-1:1.1",
-        "unix_device_names": ["/dev/input/event1"],
-        "resources": [
-          {
-            "type": "baud",
-            "speed": 1500000,
-            "bits": 0,
-            "stop_bits": 0,
-            "parity": 0,
-            "handshake": 0
-          }
-        ],
-        "detail": {
-          "device_class": {
-            "hex": "0000",
-            "name": "per_interface",
-            "value": 0
-          },
-          "device_subclass": {
-            "hex": "0000",
-            "name": "per_interface",
-            "value": 0
-          },
-          "device_protocol": 0,
-          "interface_class": {
-            "hex": "0003",
-            "name": "hid",
-            "value": 3
-          },
-          "interface_subclass": {
-            "hex": "0000",
-            "name": "per_interface",
-            "value": 0
-          },
-          "interface_protocol": 0,
-          "interface_number": 1,
-          "interface_alternate_setting": 0
-        },
-        "hotplug": "usb",
-        "driver": "usbhid",
-        "driver_module": "usbhid",
-        "drivers": ["usbhid"],
-        "driver_modules": ["usbhid"],
-        "module_alias": "usb:v413Cp2113d3311dc00dsc00dp00ic03isc00ip00in01"
-      },
-      {
-        "index": 34,
-        "attached_to": 37,
+        "attached_to": 35,
         "class_list": ["usb", "unknown"],
         "bus_type": {
           "hex": "0086",
@@ -2734,8 +2412,8 @@
         "module_alias": "usb:v1A86p7523d8134dcFFdsc00dp00icFFisc01ip02in00"
       },
       {
-        "index": 35,
-        "attached_to": 37,
+        "index": 33,
+        "attached_to": 35,
         "class_list": ["usb", "unknown"],
         "bus_type": {
           "hex": "0086",
@@ -2815,8 +2493,8 @@
         "module_alias": "usb:v0573p1573d8007dc00dsc00dp00ic03isc00ip00in03"
       },
       {
-        "index": 36,
-        "attached_to": 37,
+        "index": 34,
+        "attached_to": 35,
         "class_list": ["usb", "unknown"],
         "bus_type": {
           "hex": "0086",
@@ -2898,8 +2576,8 @@
         "module_alias": "usb:v04D9pFD01d0110dc00dsc00dp00ic03isc00ip00in02"
       },
       {
-        "index": 39,
-        "attached_to": 37,
+        "index": 37,
+        "attached_to": 35,
         "class_list": ["usb", "unknown"],
         "bus_type": {
           "hex": "0086",
@@ -2941,7 +2619,7 @@
           "/dev/input/by-id/usb-04d9_fd01-event-if00",
           "/dev/input/by-path/pci-0000:00:14.0-usb-0:8:1.0-event",
           "/dev/input/by-path/pci-0000:00:14.0-usbv2-0:8:1.0-event",
-          "/dev/input/event3"
+          "/dev/input/event4"
         ],
         "resources": [
           {
@@ -3285,7 +2963,7 @@
         "name": "Firmware Version Info",
         "handles": [
           197568495661, 201863462958, 206158430255, 210453397552, 283467841585,
-          4471060955202
+          1172526071874
         ]
       }
     ],
@@ -3327,7 +3005,7 @@
         "handle": 41,
         "array_handle": 39,
         "start_address": "0x0",
-        "end_address": "0x400000000",
+        "end_address": "0x200000000",
         "part_width": 1
       }
     ],
@@ -3336,13 +3014,13 @@
         "handle": 40,
         "location": "Controller0-ChannelA-DIMM0",
         "bank_location": "BANK 0",
-        "manufacturer": "A-DATA Technology",
-        "part_number": "",
+        "manufacturer": "Micron Technology",
+        "part_number": "4ATF1G64HZ-3G2F1",
         "array_handle": 39,
         "error_handle": 65534,
         "width": 64,
         "ecc_bits": 0,
-        "size": 16777216,
+        "size": 8388608,
         "form_factor": {
           "hex": "000d",
           "name": "SODIMM",
@@ -3364,7 +3042,7 @@
         "memory_device_handle": 40,
         "array_map_handle": 41,
         "start_address": "0x0",
-        "end_address": "0x400000000",
+        "end_address": "0x200000000",
         "row_position": 255,
         "interleave_position": 0,
         "interleave_depth": 0
