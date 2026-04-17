@@ -20,6 +20,7 @@ in
     ./victus/parts.nix
     ./pyre/parts.nix
     ./remora/parts.nix
+    ./cairn/parts.nix
   ];
 
   options = {
