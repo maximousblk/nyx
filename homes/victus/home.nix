@@ -186,6 +186,8 @@
     };
   };
 
+  services.tailscale-systray.enable = true;
+
   programs.mangohud.enable = true;
 
   systemd.user.services.uxplay = {

@@ -215,7 +215,7 @@
               drawerEnabled = true;
               colorizeIcons = false;
               hidePassive = false;
-              pinned = [ ];
+              pinned = [ "tailscale" ];
               blacklist = [ ];
             }
             {
