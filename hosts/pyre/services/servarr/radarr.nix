@@ -13,16 +13,8 @@ in
   systemd.services.radarr.serviceConfig.UMask = lib.mkForce "0002";
 
   optx.tailscale.services.radarr = {
-    target = "http://localhost:${toString port}";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "radarr.service" ];
-      BindsTo = [ "radarr.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "radarr.service" ];
-    };
+    serve."https:443" = "http://localhost:${toString port}";
+    backends = [ "radarr.service" ];
   };
 
   topology.self.services.radarr = {

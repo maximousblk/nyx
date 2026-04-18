@@ -205,15 +205,7 @@ in
 
   # Expose Immich via Tailscale Services
   optx.tailscale.services.immich = {
-    target = "http://localhost:2283";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "immich.service" ];
-      BindsTo = [ "immich.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "immich.service" ];
-    };
+    serve."https:443" = "http://localhost:2283";
+    backends = [ "immich.service" ];
   };
 }

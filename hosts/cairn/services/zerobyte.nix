@@ -211,15 +211,7 @@ in
   };
 
   optx.tailscale.services.zerobyte = {
-    target = "http://localhost:${toString port}";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "docker-zerobyte.service" ];
-      BindsTo = [ "docker-zerobyte.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "docker-zerobyte.service" ];
-    };
+    serve."https:443" = "http://localhost:${toString port}";
+    backends = [ "docker-zerobyte.service" ];
   };
 }

@@ -10,16 +10,8 @@ in
   };
 
   optx.tailscale.services.jellyseerr = {
-    target = "http://localhost:${toString port}";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "jellyseerr.service" ];
-      BindsTo = [ "jellyseerr.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "jellyseerr.service" ];
-    };
+    serve."https:443" = "http://localhost:${toString port}";
+    backends = [ "jellyseerr.service" ];
   };
 
   topology.self.services.jellyseerr = {

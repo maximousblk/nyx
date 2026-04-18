@@ -7,145 +7,109 @@
 
 let
   cfg = config.optx.tailscale.services;
-  tailscale = "${config.services.tailscale.package}/bin/tailscale";
+  tailscale = lib.getExe config.services.tailscale.package;
   flock = "${pkgs.util-linux}/bin/flock";
+  lockFile = "/run/tailscale-serve.lock";
+
+  validProtocols = [
+    "https"
+    "http"
+    "tcp"
+    "tls-terminated-tcp"
+  ];
+
+  parseFrontend =
+    frontend:
+    let
+      match = builtins.match "(${lib.concatStringsSep "|" validProtocols}):([0-9]+)" frontend;
+    in
+    if match == null then
+      null
+    else
+      {
+        protocol = builtins.elemAt match 0;
+        port = lib.toInt (builtins.elemAt match 1);
+      };
+
+  validateFrontend =
+    svcName: frontend:
+    let
+      parsed = parseFrontend frontend;
+    in
+    {
+      assertion = parsed != null && parsed.port >= 1 && parsed.port <= 65535;
+      message = "optx.tailscale.services.${svcName}.serve: invalid key '${frontend}' — must be {${lib.concatStringsSep "," validProtocols}}:{1-65535}";
+    };
 
   serviceOpts =
     { ... }:
     {
       options = {
-        target = lib.mkOption {
-          type = lib.types.str;
-          example = "http://10.69.1.10:3000";
-          description = "Target URL to proxy to (container IP or localhost)";
+        serve = lib.mkOption {
+          type = lib.types.attrsOf lib.types.str;
+          description = "Endpoint map: frontend (protocol:port) → backend target";
+          example = {
+            "https:443" = "http://localhost:8096";
+          };
         };
 
-        port = lib.mkOption {
-          type = lib.types.port;
-          default = 443;
-          description = "Port to expose on the Tailscale Service VIP";
-        };
-
-        protocol = lib.mkOption {
-          type = lib.types.enum [
-            "https"
-            "http"
-            "tcp"
-            "tls-terminated-tcp"
-          ];
-          default = "https";
-          description = "Protocol for the exposed endpoint";
-        };
-
-        unitConfig = lib.mkOption {
-          type = lib.types.attrsOf lib.types.anything;
-          default = { };
-          description = "Systemd [Unit] section config passed through transparently";
-        };
-
-        serviceConfig = lib.mkOption {
-          type = lib.types.attrsOf lib.types.anything;
-          default = { };
-          description = "Systemd [Service] section config passed through transparently";
-        };
-
-        installConfig = lib.mkOption {
-          type = lib.types.attrsOf lib.types.anything;
-          default = { };
-          description = "Systemd [Install] section config passed through transparently";
+        backends = lib.mkOption {
+          type = lib.types.listOf lib.types.str;
+          description = "Systemd units backing this service. Sidecar drains when any stops.";
+          example = [ "jellyfin.service" ];
         };
       };
     };
 
-  protocolFlag =
-    protocol: port:
-    {
-      "https" = "--https=${toString port}";
-      "http" = "--http=${toString port}";
-      "tcp" = "--tcp=${toString port}";
-      "tls-terminated-tcp" = "--tls-terminated-tcp=${toString port}";
-    }
-    .${protocol};
+  # "https:443" → "--https=443"
+  serveFlag =
+    frontend:
+    let
+      parts = lib.splitString ":" frontend;
+    in
+    "--${builtins.elemAt parts 0}=${builtins.elemAt parts 1}";
 
-  mkService =
+  # Build a locked `tailscale serve` command for one endpoint
+  serveCmd =
+    name: frontend: backend:
+    "${flock} ${lockFile} ${tailscale} serve --service=svc:${name} ${serveFlag frontend} ${lib.escapeShellArg backend}";
+
+  mkStartScript =
     name: svc:
     let
-      # Extract list-type unit options for proper merging
-      userAfter = svc.unitConfig.After or [ ];
-      userWants = svc.unitConfig.Wants or [ ];
-      userRequires = svc.unitConfig.Requires or [ ];
-      userBindsTo = svc.unitConfig.BindsTo or [ ];
-      userPartOf = svc.unitConfig.PartOf or [ ];
-
-      remainingUnitConfig = removeAttrs svc.unitConfig [
-        "After"
-        "Wants"
-        "Requires"
-        "BindsTo"
-        "PartOf"
-      ];
-
-      userWantedBy = svc.installConfig.WantedBy or [ ];
-      userRequiredBy = svc.installConfig.RequiredBy or [ ];
-
-      remainingInstallConfig = removeAttrs svc.installConfig [
-        "WantedBy"
-        "RequiredBy"
-      ];
-
-      startScript = pkgs.writeShellScript "${name}-tailscale-serve" ''
-        #!/bin/sh
-        set -e # Exit immediately if a command exits with a non-zero status.
-
-        # Wait for the tailscaled daemon to be ready.
-        # The 'tailscale status' command will fail until the daemon is up and connected.
-        until ${tailscale} status >/dev/null 2>&1; do
-          echo "Waiting for tailscaled daemon to be ready for service '${name}'..."
-          sleep 5
-        done
-        echo "tailscaled is ready."
-
-        # Use flock to ensure only one 'tailscale serve' command runs at a time,
-        # preventing race conditions when modifying the daemon's configuration.
-        echo "Attempting to configure tailscale serve for '${name}'..."
-        ${flock} /run/tailscale-serve.lock \
-          ${tailscale} serve \
-          --service=svc:${name} \
-          ${protocolFlag svc.protocol svc.port} \
-          ${svc.target}
-        echo "tailscale serve for '${name}' configured successfully."
-      '';
-
-      stopScript = pkgs.writeShellScript "${name}-tailscale-clear" ''
-        ${flock} /run/tailscale-serve.lock \
-          ${tailscale} serve clear svc:${name}
-      '';
+      cmds = lib.mapAttrsToList (serveCmd name) svc.serve;
     in
-    {
-      name = "${name}-tailscale-svc";
-      value = {
-        description = "Tailscale Service: ${name}";
+    pkgs.writeShellScript "tailscale-svc-${name}-start" ''
+      set -e
+      ${tailscale} wait --timeout=60s
+      ${lib.concatStringsSep "\n" cmds}
+    '';
 
-        after = [ "tailscaled.service" ] ++ userAfter;
-        wants = userWants;
-        requires = [ "tailscaled.service" ] ++ userRequires;
-        bindsTo = userBindsTo;
-        partOf = userPartOf;
+  mkStopScript =
+    name:
+    pkgs.writeShellScript "tailscale-svc-${name}-stop" ''
+      ${flock} ${lockFile} ${tailscale} serve drain svc:${name} || true
+      ${flock} ${lockFile} ${tailscale} serve clear svc:${name} || true
+    '';
 
-        wantedBy = userWantedBy;
-        requiredBy = userRequiredBy;
+  mkServiceUnit =
+    name: svc:
+    lib.nameValuePair "tailscale-svc-${name}" {
+      description = "Tailscale Service: ${name}";
 
-        unitConfig = remainingUnitConfig // remainingInstallConfig;
+      bindsTo = svc.backends;
+      requires = [ "tailscaled.service" ];
+      after = svc.backends ++ [ "tailscaled.service" ];
+      wantedBy = svc.backends ++ [ "multi-user.target" ];
 
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          Restart = "on-failure";
-          RestartSec = "5s";
-          ExecStart = startScript;
-          ExecStop = stopScript;
-        }
-        // svc.serviceConfig;
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = true;
+        Restart = "on-failure";
+        RestartSec = "5s";
+        ExecStart = mkStartScript name svc;
+        ExecStop = mkStopScript name;
+        ExecStopPost = mkStopScript name;
       };
     };
 in
@@ -153,7 +117,7 @@ in
   options.optx.tailscale.services = lib.mkOption {
     type = lib.types.attrsOf (lib.types.submodule serviceOpts);
     default = { };
-    description = "Tailscale Services to expose via tailscale serve";
+    description = "Tailscale Services with lifecycle management";
   };
 
   config = lib.mkIf (cfg != { }) {
@@ -162,8 +126,9 @@ in
         assertion = config.services.tailscale.enable;
         message = "optx.tailscale.services requires services.tailscale.enable = true";
       }
-    ];
+    ]
+    ++ lib.concatLists (lib.mapAttrsToList (name: svc: map (validateFrontend name) (builtins.attrNames svc.serve)) cfg);
 
-    systemd.services = lib.mapAttrs' mkService cfg;
+    systemd.services = lib.mapAttrs' mkServiceUnit cfg;
   };
 }

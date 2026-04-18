@@ -191,15 +191,7 @@ in
 
   # Expose karakeep via Tailscale Services
   optx.tailscale.services.karakeep = {
-    target = "http://localhost:3000";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "karakeep.service" ];
-      BindsTo = [ "karakeep.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "karakeep.service" ];
-    };
+    serve."https:443" = "http://localhost:3000";
+    backends = [ "karakeep.service" ];
   };
 }

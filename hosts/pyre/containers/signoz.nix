@@ -652,13 +652,7 @@ in
 
   # Expose SigNoz via Tailscale
   optx.tailscale.services.signoz = {
-    target = "http://localhost:8080";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "signoz.service" ];
-      BindsTo = [ "signoz.service" ];
-    };
-    installConfig.WantedBy = [ "signoz.service" ];
+    serve."https:443" = "http://localhost:8080";
+    backends = [ "signoz.service" ];
   };
 }

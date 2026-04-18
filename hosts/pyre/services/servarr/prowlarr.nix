@@ -10,16 +10,8 @@ in
   };
 
   optx.tailscale.services.prowlarr = {
-    target = "http://localhost:${toString port}";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "prowlarr.service" ];
-      BindsTo = [ "prowlarr.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "prowlarr.service" ];
-    };
+    serve."https:443" = "http://localhost:${toString port}";
+    backends = [ "prowlarr.service" ];
   };
 
   topology.self.services.prowlarr = {

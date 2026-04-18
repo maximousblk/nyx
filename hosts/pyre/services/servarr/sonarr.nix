@@ -13,16 +13,8 @@ in
   systemd.services.sonarr.serviceConfig.UMask = lib.mkForce "0002";
 
   optx.tailscale.services.sonarr = {
-    target = "http://localhost:${toString port}";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "sonarr.service" ];
-      BindsTo = [ "sonarr.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "sonarr.service" ];
-    };
+    serve."https:443" = "http://localhost:${toString port}";
+    backends = [ "sonarr.service" ];
   };
 
   topology.self.services.sonarr = {

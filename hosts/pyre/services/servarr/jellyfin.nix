@@ -14,16 +14,8 @@ in
   ];
 
   optx.tailscale.services.jellyfin = {
-    target = "http://localhost:${toString port}";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "jellyfin.service" ];
-      BindsTo = [ "jellyfin.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "jellyfin.service" ];
-    };
+    serve."https:443" = "http://localhost:${toString port}";
+    backends = [ "jellyfin.service" ];
   };
 
   topology.self.services.jellyfin = {

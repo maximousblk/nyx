@@ -186,15 +186,7 @@ in
 
   # Expose paperless via Tailscale Services
   optx.tailscale.services.paperless = {
-    target = "http://localhost:8000";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "paperless.service" ];
-      BindsTo = [ "paperless.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "paperless.service" ];
-    };
+    serve."https:443" = "http://localhost:8000";
+    backends = [ "paperless.service" ];
   };
 }

@@ -10,16 +10,8 @@ in
   };
 
   optx.tailscale.services.bazarr = {
-    target = "http://localhost:${toString port}";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "bazarr.service" ];
-      BindsTo = [ "bazarr.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "bazarr.service" ];
-    };
+    serve."https:443" = "http://localhost:${toString port}";
+    backends = [ "bazarr.service" ];
   };
 
   topology.self.services.bazarr = {

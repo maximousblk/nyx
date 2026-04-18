@@ -22,16 +22,8 @@ in
   systemd.services.transmission.serviceConfig.UMask = lib.mkForce "0002";
 
   optx.tailscale.services.transmission = {
-    target = "http://localhost:${toString port}";
-    port = 443;
-    protocol = "https";
-    unitConfig = {
-      After = [ "transmission.service" ];
-      BindsTo = [ "transmission.service" ];
-    };
-    installConfig = {
-      WantedBy = [ "transmission.service" ];
-    };
+    serve."https:443" = "http://localhost:${toString port}";
+    backends = [ "transmission.service" ];
   };
 
   topology.self.services.transmission = {
