@@ -3,20 +3,20 @@
   config = {
     networking.hostName = "cairn";
     networking.wireless.enable = false;
+    networking.useDHCP = false;
+    networking.useNetworkd = true;
+
     networking.firewall.enable = false;
 
-    networking.interfaces.enp0s31f6 = {
-      useDHCP = true;
-      ipv4.addresses = [
-        {
-          address = "192.168.69.203";
-          prefixLength = 24;
-        }
-      ];
-      mtu = 1280;
+    systemd.network.networks."10-enp0s31f6" = {
+      matchConfig.Name = "enp0s31f6";
+      address = [ "192.168.69.203/24" ];
+      gateway = [ "192.168.69.1" ];
+      dns = [ "192.168.69.1" ];
+      linkConfig.MTUBytes = "1280";
+      networkConfig.DHCP = "yes";
     };
 
-    networking.defaultGateway = "192.168.69.1";
-    networking.nameservers = [ "192.168.69.1" ];
+    systemd.network.wait-online.extraArgs = [ "--interface=enp0s31f6" ];
   };
 }

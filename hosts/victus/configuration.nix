@@ -18,6 +18,7 @@
   networking.hostName = "victus"; # Define your hostname.
 
   # Enable networking
+  networking.useDHCP = false;
   networking.networkmanager.enable = true;
 
   # Set your time zone.

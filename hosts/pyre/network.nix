@@ -3,22 +3,22 @@
   config = {
     networking.hostName = "pyre";
     networking.wireless.enable = false;
+    networking.useDHCP = false;
+    networking.useNetworkd = true;
+
     networking.firewall.enable = false;
     networking.firewall.interfaces = {
       "podman*".allowedUDPPorts = [ 53 ];
     };
 
-    networking.interfaces.enp2s0 = {
-      useDHCP = true;
-      ipv4.addresses = [
-        {
-          address = "192.168.69.201";
-          prefixLength = 24;
-        }
-      ];
+    systemd.network.networks."10-enp2s0" = {
+      matchConfig.Name = "enp2s0";
+      address = [ "192.168.69.201/24" ];
+      gateway = [ "192.168.69.1" ];
+      dns = [ "192.168.69.1" ];
+      networkConfig.DHCP = "yes";
     };
 
-    networking.defaultGateway = "192.168.69.1";
-    networking.nameservers = [ "192.168.69.1" ];
+    systemd.network.wait-online.extraArgs = [ "--interface=enp2s0" ];
   };
 }
