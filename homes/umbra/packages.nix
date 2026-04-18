@@ -37,10 +37,12 @@
     libva-utils
     mesa
     micro
+    mockgen
     mongosh
     mpv
     neovim
     nerd-fonts.jetbrains-mono
+    nh
     nil
     nixd
     nixfmt
