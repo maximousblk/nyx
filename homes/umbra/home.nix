@@ -134,11 +134,6 @@
       enableBashIntegration = true;
     };
 
-    services.ollama = {
-      enable = true;
-      acceleration = false;
-    };
-
     fonts.fontconfig.enable = true;
   };
 }
