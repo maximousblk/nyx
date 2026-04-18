@@ -97,9 +97,11 @@
   # GPU/Vulkan support via WSL2 GPU paravirtualization
   hardware.graphics.enable = true;
   environment.sessionVariables = {
-    OLLAMA_VULKAN = "1";
-    GGML_VK_VISIBLE_DEVICES = "0";
-    LD_LIBRARY_PATH = [ "/run/opengl-driver/lib" ];
+    LD_LIBRARY_PATH = [
+      "/run/opengl-driver/lib"
+      "${pkgs.openssl.out}/lib"
+    ];
+    GALLIUM_DRIVER = "d3d12";
   };
 
   hardware.graphics.extraPackages = with pkgs; [
