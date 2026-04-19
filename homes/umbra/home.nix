@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  modx,
   config,
   umbra,
   ...
@@ -12,10 +13,17 @@
     ./packages.nix
     ./zeditor.nix
     ./git.nix
-    ./clanker.nix
+
+    modx.hm.clanker
   ];
 
   config = {
+    optx.clanker = {
+      opencode.enable = true;
+      claude.enable = true;
+      ollama.enable = true;
+    };
+
     home.username = umbra.username;
     home.homeDirectory = umbra.homeDirectory;
 

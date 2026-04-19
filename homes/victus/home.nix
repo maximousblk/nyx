@@ -14,15 +14,22 @@
     ./hyprlock.nix
     ./hypridle.nix
     ./vicinae.nix
-    ./clanker.nix
     ./noctalia.nix
     # ./waybar.nix
     # ./ironbar.nix
     # ./swww.nix
     # ./mako.nix
 
+    modx.hm.clanker
     modx.hm.wallpaper
   ];
+
+  optx.clanker = {
+    opencode.enable = true;
+    claude.enable = true;
+    ollama.enable = true;
+    ollama.acceleration = "cuda";
+  };
 
   optx.wallpapers = {
     enable = true;
