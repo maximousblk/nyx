@@ -6,11 +6,6 @@
 }:
 let
   cfg = config.optx.clanker;
-  shadcn-mcp = pkgs.writeShellApplication {
-    name = "shadcn-mcp";
-    runtimeInputs = [ pkgs.bun ];
-    text = ''exec bun x shadcn@latest mcp "$@"'';
-  };
 in
 {
   options.optx.clanker = {
@@ -44,8 +39,7 @@ in
         servers = {
           gh_grep.url = "https://mcp.grep.app";
           context7.url = "https://mcp.context7.com/mcp";
-          playwright.command = lib.getExe pkgs.playwright-mcp;
-          shadcn.command = lib.getExe shadcn-mcp;
+          linear.url = "https://mcp.linear.app/mcp";
           lightpanda = {
             command = lib.getExe pkgs.nur.repos.xddxdd.lightpanda;
             args = [ "mcp" ];
@@ -67,8 +61,8 @@ in
           default_agent = "plan";
           snapshot = false;
 
-          model = "openai/gpt-5.4";
-          small_model = "openai/gpt-5.1-codex-mini";
+          model = "openai/gpt-5.5";
+          small_model = "openai/gpt-5.4-mini";
 
           lsp.rust.disabled = true;
 
@@ -121,7 +115,8 @@ in
         enableMcpIntegration = true;
 
         settings = {
-          model = "opus";
+          model = "sonnet";
+          effortLevel = "low";
           permissions = {
             allow = [ ];
             defaultMode = "plan";
