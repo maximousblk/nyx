@@ -26,7 +26,10 @@ in
         user.name = name;
         user.email = email;
 
-        aliases.pullauto = "pull --rebase --autostash";
+        aliases = {
+          pullauto = "pull --rebase --autostash";
+          difft = "-c diff.external='${pkgs.difftastic}/bin/difft --display inline --sort-paths' diff";
+        };
 
         gpg.ssh.allowedSignersFile = "${signers}";
         url = {
@@ -39,16 +42,6 @@ in
           enabled = true;
           autoUpdate = true;
         };
-      };
-    };
-
-    programs.difftastic = {
-      enable = true;
-      git.enable = true;
-      git.diffToolMode = true;
-      options = {
-        display = "inline";
-        sort-paths = true;
       };
     };
 
