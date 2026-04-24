@@ -16,6 +16,7 @@
     fd
     fenix.stable.toolchain
     file
+    fleetctl
     fzf
     gcc
     gh
