@@ -48,6 +48,9 @@
     };
 
     programs.nix-index-database.comma.enable = true;
+    programs.nix-index = {
+      enableBashIntegration = false;
+    };
     programs.home-manager.enable = true;
     programs.nix-index.enable = true;
     programs.lazydocker.enable = true;
@@ -127,6 +130,11 @@
       '';
 
       initExtra = ''
+        command_not_found_handle() {
+          comma --print-packages "$@"
+          return $?
+        }
+
         if [[ $(${pkgs.procps}/bin/ps --no-header --pid=$PPID --format=comm) != "fish" && -z ''${BASH_EXECUTION_STRING} ]]
         then
           shopt -q login_shell && LOGIN_OPTION='--login' || LOGIN_OPTION=""
