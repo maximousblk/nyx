@@ -29,6 +29,7 @@
     enable = true;
     useRoutingFeatures = "both";
     openFirewall = true;
+    extraSetFlags = [ "--ssh=false" ];
   };
 
   services.avahi = {
