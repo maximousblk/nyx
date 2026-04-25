@@ -67,6 +67,7 @@
     lutris
     mindustry-wayland
     ncdu
+    nh
     nil
     nixd
     nvtopPackages.full
