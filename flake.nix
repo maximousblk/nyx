@@ -204,8 +204,8 @@
                 inputs.fenix.overlays.default
                 inputs.nix-cachyos-kernel.overlays.pinned
                 inputs.opencode.overlays.default
-                # https://github.com/anomalyco/opencode/issues/23256
                 (_final: prev: {
+                  # https://github.com/anomalyco/opencode/issues/23256
                   opencode = prev.opencode.overrideAttrs (old: {
                     preBuild = (old.preBuild or "") + ''
                       substituteInPlace packages/opencode/src/cli/cmd/generate.ts \
@@ -216,6 +216,12 @@
                       substituteInPlace packages/script/src/index.ts \
                         --replace-fail 'const expectedBunVersionRange = `^''${expectedBunVersion}`' 'const expectedBunVersionRange = ">=1.3.11"'
                     '';
+                  });
+                })
+                (_final: prev: {
+                  # https://github.com/NixOS/nixpkgs/issues/426717
+                  openldap = prev.openldap.overrideAttrs (_: {
+                    doCheck = !prev.stdenv.hostPlatform.isi686;
                   });
                 })
               ];
