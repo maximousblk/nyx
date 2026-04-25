@@ -11,6 +11,11 @@
     jack.enable = true;
     wireplumber.enable = true;
 
+    extraLadspaPackages = [
+      pkgs.rnnoise-plugin.ladspa
+      pkgs.deepfilternet
+    ];
+
     extraConfig.pipewire = {
       "91-global-clock" = {
         "context.properties" = {
@@ -47,7 +52,7 @@
                   {
                     type = "ladspa";
                     name = "rnnoise";
-                    plugin = "${pkgs.rnnoise-plugin}/lib/ladspa/librnnoise_ladspa.so";
+                    plugin = "librnnoise_ladspa";
                     label = "noise_suppressor_mono";
                     control = {
                       "VAD Threshold (%)" = 60.0;
@@ -58,7 +63,7 @@
                   {
                     type = "ladspa";
                     name = "deepfilter";
-                    plugin = "${pkgs.deepfilternet}/lib/ladspa/libdeep_filter_ladspa.so";
+                    plugin = "libdeep_filter_ladspa";
                     label = "deep_filter_mono";
                     control = {
                       "Attenuation Limit (dB)" = 100;
