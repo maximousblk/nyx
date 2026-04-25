@@ -1,9 +1,9 @@
-{ inputs, ... }:
+{ inputs, modx, ... }:
 {
   imports = [
+    modx.nixos.secrets
     ./disko.nix
     ./network.nix
-    ./secrets.nix
     ./storage.nix
     ./services
   ];

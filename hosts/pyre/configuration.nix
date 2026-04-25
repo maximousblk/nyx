@@ -1,12 +1,12 @@
-{ inputs, ... }:
+{ inputs, modx, ... }:
 {
   imports = [
+    modx.nixos.secrets
     ./intel.nix
     ./disko.nix
     ./network.nix
     ./services
     ./containers
-    ./secrets.nix
   ];
 
   system.stateVersion = "25.05";

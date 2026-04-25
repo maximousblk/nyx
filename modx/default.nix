@@ -1,5 +1,6 @@
 {
   nixos = {
+    secrets = ./nixos/secrets.nix;
     tailscale-services = ./nixos/tailscale-services.nix;
   };
 
