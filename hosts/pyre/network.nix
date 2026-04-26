@@ -15,7 +15,6 @@
       matchConfig.Name = "enp2s0";
       address = [ "192.168.69.201/24" ];
       gateway = [ "192.168.69.1" ];
-      dns = [ "192.168.69.1" ];
       networkConfig.DHCP = "yes";
     };
 

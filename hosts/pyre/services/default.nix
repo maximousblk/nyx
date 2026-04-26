@@ -1,6 +1,7 @@
 { ... }:
 {
   imports = [
+    ./dns.nix
     ./ssh.nix
     ./tailscale.nix
     ./opentelemetry.nix
