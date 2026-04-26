@@ -205,16 +205,10 @@
                 inputs.nix-cachyos-kernel.overlays.pinned
                 inputs.opencode.overlays.default
                 (_final: prev: {
-                  # https://github.com/anomalyco/opencode/issues/23256
+                  # https://github.com/NixOS/nixpkgs/pull/508770
                   opencode = prev.opencode.overrideAttrs (old: {
-                    preBuild = (old.preBuild or "") + ''
-                      substituteInPlace packages/opencode/src/cli/cmd/generate.ts \
-                        --replace-fail 'const prettier = await import("prettier")' 'const prettier: any = { format: async (s: string) => s }' \
-                        --replace-fail 'const babel = await import("prettier/plugins/babel")' 'const babel = {}' \
-                        --replace-fail 'const estree = await import("prettier/plugins/estree")' 'const estree = {}'
-
-                      substituteInPlace packages/script/src/index.ts \
-                        --replace-fail 'const expectedBunVersionRange = `^''${expectedBunVersion}`' 'const expectedBunVersionRange = ">=1.3.11"'
+                    postPatch = (old.postPatch or "") + ''
+                      substituteInPlace package.json --replace-fail 'bun@1.3.13' 'bun@1.3.11'
                     '';
                   });
                 })
