@@ -76,7 +76,7 @@ in
                     auto-optimise-store = true;
                     connect-timeout = 5;
                     narinfo-cache-negative-ttl = 86400; # 24h (default is 3600)
-                    commit-lockfile-summary = "nix: update flake";
+                    commit-lockfile-summary = "chore(flake): nix flake update";
                   };
 
                   optimise.automatic = true;
