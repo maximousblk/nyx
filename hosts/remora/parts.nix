@@ -1,9 +1,4 @@
-{
-  self,
-  mkNixos,
-  withSystem,
-  ...
-}:
+{ mkNixos, withSystem, ... }:
 {
   flake = withSystem "x86_64-linux" (
     { system, ... }:
