@@ -7,7 +7,6 @@
   ...
 }:
 {
-
   imports = [
     ./niri.nix
     ./browser.nix
@@ -78,8 +77,6 @@
     uxplay
     winetricks
     wineWow64Packages.waylandFull
-    zed-editor
-    zoxide
   ];
 
   home.pointerCursor = {
@@ -114,10 +111,7 @@
     XCURSOR_PATH = "${config.home.homeDirectory}/.local/share/icons";
   };
 
-  programs.man = {
-    enable = true;
-    generateCaches = false;
-  };
+  programs.man.enable = true;
 
   programs.git = {
     enable = true;
@@ -128,11 +122,7 @@
   programs.ssh = {
     enable = true;
     enableDefaultConfig = false;
-    matchBlocks = {
-      "*" = {
-        identityFile = [ "~/.ssh/id_ed25519" ];
-      };
-    };
+    matchBlocks."*".identityFile = [ "~/.ssh/id_ed25519" ];
   };
 
   programs.ghostty = {
@@ -152,10 +142,7 @@
     };
   };
 
-  programs.fish = {
-    enable = true;
-    package = pkgs.fish;
-  };
+  programs.fish.enable = true;
 
   programs.zoxide = {
     enable = true;
@@ -166,16 +153,12 @@
 
   programs.zed-editor = {
     enable = true;
-
-    ## This populates the userSettings "auto_install_extensions"
     extensions = [
       "nix"
       "toml"
       "elixir"
       "make"
     ];
-
-    ## everything inside of these brackets are Zed options.
     userSettings = {
       vim_mode = true;
       buffer_font_family = "JetBrainsMono Nerd Font Propo";
@@ -183,7 +166,6 @@
         "nil"
         "!nixd"
       ];
-
       lsp.nil.initialization_options.formatting.command = [ "return" ];
     };
   };
@@ -209,10 +191,7 @@
       ];
       Wants = [ "niri-session.target" ];
     };
-    Install = {
-      WantedBy = [ "niri-session.target" ];
-    };
-
+    Install.WantedBy = [ "niri-session.target" ];
     Service = {
       ExecStart = "${pkgs.uxplay}/bin/uxplay";
       Restart = "on-failure";
