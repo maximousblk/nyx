@@ -15,25 +15,28 @@
     niri
     xwayland-satellite
     gnome-keyring
-    nautilus
+    nemo
   ];
 
   xdg.portal = {
     enable = true;
     extraPortals = with pkgs; [
-      xdg-desktop-portal-wlr
       xdg-desktop-portal-gtk
       xdg-desktop-portal-gnome
+      kdePackages.xdg-desktop-portal-kde
     ];
-    config.preferred = {
+    config.niri = {
       default = [
+        "kde"
         "gnome"
         "gtk"
       ];
-      "org.freedesktop.impl.portal.Access" = [ "gtk" ];
-      "org.freedesktop.impl.portal.Notification" = [ "gtk" ];
-      "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+      "org.freedesktop.impl.portal.FileChooser" = [
+        "kde"
+        "gtk"
+      ];
       "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
+      "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
     };
   };
 }

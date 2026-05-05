@@ -53,7 +53,6 @@
     jq
     kdePackages.ark
     kdePackages.breeze-icons
-    kdePackages.dolphin
     kdePackages.filelight
     kdePackages.gwenview
     kdePackages.kdeconnect-kde
@@ -185,6 +184,14 @@
       ];
 
       lsp.nil.initialization_options.formatting.command = [ "return" ];
+    };
+  };
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = "nemo.desktop";
+      "application/x-gnome-saved-search" = "nemo.desktop";
     };
   };
 

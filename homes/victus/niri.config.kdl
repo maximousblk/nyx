@@ -156,7 +156,7 @@ binds {
     Mod+V      { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }     // Mod + V            : Clipboard history
     Mod+period { spawn "vicinae" "vicinae://extensions/vicinae/vicinae/search-emojis"; } // Mod + Period (.)   : Emoji picker
     Mod+grave  { spawn "ghostty" "+new-window"; }                                        // Mod + Backtick (`) : Launch Terminal
-    Mod+E      { spawn "dolphin"; }                                                      // Mod + E            : Launch File Explorer
+    Mod+E      { spawn "nemo"; }                                                         // Mod + E            : Launch File Explorer
 
     // Essential Window Controls
     Alt+F4      { close-window; }               // Alt + F4        : Close the focused window
