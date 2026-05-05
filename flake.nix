@@ -97,15 +97,6 @@
       inputs.systems.follows = "systems";
     };
 
-    ironbar = {
-      url = "github:JakeStanger/ironbar";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-compat.follows = "flake-compat";
-      inputs.nix-systems.follows = "systems";
-      inputs.naersk.follows = "naersk";
-      inputs.naersk.inputs.fenix.follows = "fenix";
-    };
-
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
     nixarr = {
@@ -122,12 +113,6 @@
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-compat.follows = "flake-compat";
-    };
-
-    naersk = {
-      url = "github:nix-community/naersk";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.fenix.follows = "fenix";
     };
 
     files.url = "github:mightyiam/files";

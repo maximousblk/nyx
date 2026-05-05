@@ -15,10 +15,6 @@
     ./hypridle.nix
     ./vicinae.nix
     ./noctalia.nix
-    # ./waybar.nix
-    # ./ironbar.nix
-    # ./swww.nix
-    # ./mako.nix
 
     modx.hm.clanker
     modx.hm.wallpaper
