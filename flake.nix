@@ -163,12 +163,11 @@
     };
   };
 
-  outputs = (
-    inputs@{ flake-parts, self, ... }:
+  outputs =
+    inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       { self, ... }:
       {
-
         imports = [
           inputs.treefmt-nix.flakeModule
 
@@ -178,6 +177,7 @@
 
           ./hosts/parts.nix
           ./homes/parts.nix
+          ./nixconf.nix
         ];
 
         systems = [ "x86_64-linux" ];
@@ -194,33 +194,7 @@
             modx = import ./modx;
           in
           {
-            _module.args.pkgs = import inputs.nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
-
-              overlays = [
-                inputs.nur.overlays.default
-                inputs.nix-topology.overlays.default
-                inputs.fenix.overlays.default
-                inputs.nix-cachyos-kernel.overlays.pinned
-                inputs.opencode.overlays.default
-                (_final: prev: {
-                  # https://github.com/NixOS/nixpkgs/pull/508770
-                  opencode = prev.opencode.overrideAttrs (old: {
-                    postPatch = (old.postPatch or "") + ''
-                      substituteInPlace package.json --replace-fail 'bun@1.3.13' 'bun@1.3.11'
-                    '';
-                  });
-                })
-                (_final: prev: {
-                  # https://github.com/NixOS/nixpkgs/issues/426717
-                  openldap = prev.openldap.overrideAttrs (_: {
-                    doCheck = !prev.stdenv.hostPlatform.isi686;
-                  });
-                })
-              ];
-            };
-
+            _module.args.pkgs = import inputs.nixpkgs ({ inherit system; } // self.nixpkgsConfig);
             _module.args.pkgx = pkgx;
             _module.args.modx = modx;
 
@@ -256,6 +230,5 @@
           }
         );
       }
-    )
-  );
+    );
 }
