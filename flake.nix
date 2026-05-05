@@ -76,8 +76,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
       inputs.treefmt-nix.follows = "treefmt-nix";
-      inputs.pre-commit-hooks.follows = "pre-commit-hooks";
-      inputs.pre-commit-hooks.inputs.flake-compat.follows = "flake-compat";
     };
 
     fenix = {
@@ -107,12 +105,6 @@
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    pre-commit-hooks = {
-      url = "github:cachix/git-hooks.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.flake-compat.follows = "flake-compat";
     };
 
     files.url = "github:mightyiam/files";
