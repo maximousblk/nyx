@@ -113,14 +113,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    stylix = {
-      url = "github:nix-community/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.systems.follows = "systems";
-      inputs.flake-parts.follows = "flake-parts";
-      inputs.nur.follows = "nur";
-    };
-
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -199,14 +191,13 @@
             _module.args.modx = modx;
 
             _module.args.homeManagerModules = [
-              inputs.stylix.homeModules.stylix
               inputs.noctalia.homeModules.default
               inputs.vicinae.homeManagerModules.default
               inputs.nix-index-database.homeModules.nix-index
             ];
+
             _module.args.nixosModules = [
               inputs.disko.nixosModules.disko
-              inputs.stylix.nixosModules.stylix
               inputs.nixarr.nixosModules.default
               inputs.quadlet-nix.nixosModules.quadlet
               inputs.home-manager.nixosModules.home-manager

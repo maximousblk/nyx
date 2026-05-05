@@ -87,35 +87,33 @@
     zoxide
   ];
 
-  stylix = {
-    enable = true;
-    polarity = "dark";
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/rose-pine.yaml";
-
-    cursor = {
-      package = pkgs.rose-pine-cursor;
-      name = "BreezeX-RosePine-Linux";
-      size = 32;
-    };
-
-    image = null;
-
-    targets = {
-      zen-browser.profileNames = [ "default" ];
-      hyprlock.enable = false;
-      noctalia-shell.enable = false;
-      ghostty.colors.enable = false;
-      fish.enable = false;
-      opencode.enable = false;
-    };
-
-    fonts = {
-      monospace = {
-        package = pkgs.nerd-fonts.jetbrains-mono;
-        name = "JetBrainsMono Nerd Font Propo";
-      };
-    };
+  home.pointerCursor = {
+    package = pkgs.rose-pine-cursor;
+    name = "BreezeX-RosePine-Linux";
+    size = 32;
+    gtk.enable = true;
+    x11.enable = true;
   };
+
+  gtk = {
+    enable = true;
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+  };
+
+  qt = {
+    enable = true;
+    platformTheme.name = "adwaita";
+    style.name = "adwaita-dark";
+    style.package = [
+      pkgs.adwaita-qt
+      pkgs.adwaita-qt6
+    ];
+  };
+
+  dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
+  fonts.fontconfig.enable = true;
 
   home.sessionVariables = {
     XCURSOR_PATH = "${config.home.homeDirectory}/.local/share/icons";
