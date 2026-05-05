@@ -13,7 +13,6 @@
       address = [ "192.168.69.203/24" ];
       gateway = [ "192.168.69.1" ];
       dns = [ "192.168.69.1" ];
-      linkConfig.MTUBytes = "1280";
       networkConfig.DHCP = "yes";
     };
 
