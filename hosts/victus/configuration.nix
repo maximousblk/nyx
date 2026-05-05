@@ -35,19 +35,12 @@
   security.rtkit.enable = true;
   security.sudo.wheelNeedsPassword = false;
 
-  environment.etc."/xdg/menus/applications.menu".text = builtins.readFile "${pkgs.kdePackages.plasma-workspace}/etc/xdg/menus/plasma-applications.menu";
-
   programs.nix-index-database.comma.enable = true;
 
   programs.ssh = {
     startAgent = false;
   };
 
-  environment.variables = {
-    ZED_WINDOW_DECORATIONS = "server";
-  };
-
-  programs.firefox.enable = true;
   programs.appimage = {
     enable = true;
     binfmt = true;
