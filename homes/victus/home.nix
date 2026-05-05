@@ -148,6 +148,7 @@
       window-padding-x = "2";
       window-padding-y = "2";
       window-padding-balance = true;
+      background-opacity = 0.9;
     };
   };
 
