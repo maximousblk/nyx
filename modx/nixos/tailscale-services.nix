@@ -1,3 +1,6 @@
+# Runs `tailscale serve` imperatively on each start instead of using `set-config` because
+# set-config drops HTTPS and registers services as plain HTTP — tailscale/tailscale#18381.
+# Revisit when fixed: switch to declarative set-config or upstream tailscale nixos module if fully supported.
 {
   config,
   lib,
