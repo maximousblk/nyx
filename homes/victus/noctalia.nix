@@ -45,8 +45,8 @@
       };
 
       ui = {
-        fontDefault = "JetBrainsMono NFP";
-        fontFixed = "JetBrainsMono NFP";
+        fontDefault = "IoskeleyMono Nerd Font";
+        fontFixed = "IoskeleyMonoTerm Nerd Font";
         fontDefaultScale = 1.0;
         fontFixedScale = 1.0;
         tooltipsEnabled = true;

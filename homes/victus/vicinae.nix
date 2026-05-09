@@ -11,8 +11,9 @@
       pop_to_root_on_close = true;
 
       font = {
+        rendering = "native";
         normal = {
-          normal = "JetBrainsMono Nerd Font Propo";
+          family = "IoskeleyMono Nerd Font";
           size = 12;
         };
       };

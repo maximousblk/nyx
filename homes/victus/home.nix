@@ -49,6 +49,8 @@
     gh
     hicolor-icon-theme
     hyprpwcenter
+    ioskeley-mono.normal-NF
+    ioskeley-mono.normal-term-NF
     jq
     kdePackages.ark
     kdePackages.breeze-icons
@@ -139,6 +141,7 @@
       window-padding-y = "2";
       window-padding-balance = true;
       background-opacity = 0.9;
+      font-family = "IoskeleyMonoTerm Nerd Font";
     };
   };
 
@@ -161,7 +164,7 @@
     ];
     userSettings = {
       vim_mode = true;
-      buffer_font_family = "JetBrainsMono Nerd Font Propo";
+      buffer_font_family = "IoskeleyMono Nerd Font";
       languages.Nix.language_servers = [
         "nil"
         "!nixd"
