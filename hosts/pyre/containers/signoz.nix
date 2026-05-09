@@ -22,8 +22,8 @@ let
 
   # Version tags
   clickhouseVersion = "25.5.6";
-  signozVersion = "v0.117.1";
-  otelcolVersion = "v0.144.2";
+  signozVersion = "v0.122.0";
+  otelcolVersion = "v0.144.3";
   zookeeperVersion = "3.7.1";
 
   # ClickHouse config.xml - simplified for single node
