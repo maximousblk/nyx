@@ -21,6 +21,7 @@
     optx.clanker = {
       opencode.enable = true;
       claude.enable = true;
+      pi.enable = true;
       ollama.enable = true;
     };
 
