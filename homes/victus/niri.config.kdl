@@ -50,6 +50,13 @@ layout {
     background-color "transparent"
 }
 
+blur {
+    passes 2
+    offset 3.0
+    noise 0.1
+    saturation 0.5
+}
+
 cursor {
     xcursor-theme "BreezeX-RosePine-Linux"
     xcursor-size 32
@@ -116,13 +123,34 @@ layer-rule {
     place-within-backdrop true
 }
 
+layer-rule {
+    match namespace="^noctalia-(background|launcher-overlay|dock)-.*$"
+
+    background-effect {
+        xray false
+    }
+}
+
+layer-rule {
+    match namespace="^vicinae$"
+
+    background-effect {
+        blur true
+        xray false
+    }
+}
+
 // Window Rules
 window-rule {
     geometry-corner-radius 6
     clip-to-geometry true
-
     open-focused true
     open-maximized true
+
+    background-effect {
+        blur true
+        xray false
+    }
 }
 
 window-rule {
@@ -132,15 +160,6 @@ window-rule {
     open-on-workspace "chat"
 }
 
-window-rule {
-    match app-id=r#"^com\.mitchellh\.ghostty$"#
-
-    background-effect {
-        blur true
-        noise 0.1
-        saturation 0.5
-    }
-}
 
 window-rule {
     match app-id="discord"
