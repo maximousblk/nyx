@@ -198,10 +198,11 @@ binds {
     Mod+Q { switch-preset-column-width; }
 
     // Session Controls
-    Mod+Shift+slash { show-hotkey-overlay; } // Mod + ?         : Help
-    Mod+Shift+Q     { quit; }                // Mod + Shift + E : Exit Niri
-    Mod+Tab         { toggle-overview; }     // Mod + Tab       : Show overview
-    Mod+L           { spawn "hyprlock"; }    // Mod + L         : Lock the screen
+    Mod+Shift+slash { show-hotkey-overlay; }                                      // Mod + ?         : Help
+    Mod+Shift+Q     { quit; }                                                     // Mod + Shift + E : Exit Niri
+    Mod+Tab         { toggle-overview; }                                          // Mod + Tab       : Show overview
+    Mod+L           { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }  // Mod + L         : Lock the screen
+    Mod+I           { spawn "noctalia-shell" "ipc" "call" "settings" "toggle"; }  // Mod + I         : Noctalia settings
 
     // Screencast
     Mod+Shift+S { screenshot; }                 // Mod + Shift + S   : Upen screenshot ui

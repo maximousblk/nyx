@@ -10,8 +10,6 @@
   imports = [
     ./niri.nix
     ./browser.nix
-    ./hyprlock.nix
-    ./hypridle.nix
     ./vicinae.nix
     ./noctalia.nix
 

@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 {
 
   home.file."wallpapers" = {
@@ -10,6 +10,8 @@
   programs.noctalia-shell = {
     enable = true;
 
+    # Intentionally using systemd for auto-recovery on crash and structured logging via journald.
+    # The deprecation warning from the module can be ignored.
     systemd.enable = true;
 
     settings = {
@@ -26,10 +28,16 @@
         animationSpeed = 2;
         animationDisabled = false;
 
-        compactLockScreen = true;
+        compactLockScreen = false;
         lockOnSuspend = true;
-        showSessionButtonsOnLockScreen = true;
+        autoStartAuth = true;
+        showSessionButtonsOnLockScreen = false;
         showHibernateOnLockScreen = false;
+        enableLockScreenMediaControls = false;
+        lockScreenAnimations = true;
+        lockScreenBlur = 0.5;
+        lockScreenTint = 0.2;
+        clockStyle = "digital";
 
         enableShadows = false;
         shadowDirection = "center";
@@ -42,6 +50,19 @@
         enableLockScreenCountdown = false;
         lockScreenCountdownDuration = 0;
         telemetryEnabled = false;
+      };
+
+      idle = {
+        enabled = true;
+        fadeDuration = 5;
+
+        screenOffTimeout = 300;
+        screenOffCommand = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10 && ${pkgs.brightnessctl}/bin/brightnessctl -sd rgb:kbd_backlight set 10";
+        resumeScreenOffCommand = "${pkgs.brightnessctl}/bin/brightnessctl -r && ${pkgs.brightnessctl}/bin/brightnessctl -rd rgb:kbd_backlight";
+
+        lockTimeout = 600;
+
+        suspendTimeout = 0;
       };
 
       ui = {
