@@ -91,6 +91,10 @@
             enabled = true;
             id = "ghostty";
           }
+          {
+            enabled = true;
+            id = "vicinae";
+          }
         ];
         enableUserTheming = false;
       };

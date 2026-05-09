@@ -95,6 +95,13 @@
       inputs.systems.follows = "systems";
     };
 
+    vicinae-extensions = {
+      url = "github:vicinaehq/extensions";
+      inputs.vicinae.follows = "vicinae";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.systems.follows = "systems";
+    };
+
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
     nixarr = {

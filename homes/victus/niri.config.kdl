@@ -162,11 +162,11 @@ window-rule {
 // Keybinds
 binds {
     // Launchers
-    Mod+Space  { spawn "vicinae" "vicinae://toggle"; }                                   // Mod + Space        : Application launcher
-    Mod+V      { spawn "vicinae" "vicinae://extensions/vicinae/clipboard/history"; }     // Mod + V            : Clipboard history
-    Mod+period { spawn "vicinae" "vicinae://extensions/vicinae/vicinae/search-emojis"; } // Mod + Period (.)   : Emoji picker
-    Mod+grave  { spawn "ghostty" "+new-window"; }                                        // Mod + Backtick (`) : Launch Terminal
-    Mod+E      { spawn "nemo"; }                                                         // Mod + E            : Launch File Explorer
+    Mod+Space  { spawn "vicinae" "toggle"; }                                                      // Mod + Space        : Application launcher
+    Mod+V      { spawn "vicinae" "deeplink" "vicinae://launch/clipboard/history?toggle=true"; }   // Mod + V            : Clipboard history
+    Mod+period { spawn "vicinae" "deeplink" "vicinae://launch/core/search-emojis?toggle=true"; }  // Mod + Period (.)   : Emoji picker
+    Mod+grave  { spawn "ghostty" "+new-window"; }                                                 // Mod + Backtick (`) : Launch Terminal
+    Mod+E      { spawn "nemo"; }                                                                  // Mod + E            : Launch File Explorer
 
     // Essential Window Controls
     Alt+F4      { close-window; }               // Alt + F4        : Close the focused window
