@@ -56,9 +56,7 @@
                 home-manager.useGlobalPkgs = false;
                 home-manager.useUserPackages = true;
                 home-manager.backupFileExtension = "hm_bak";
-                home-manager.sharedModules = homeManagerModules ++ [
-                  { nixpkgs = self.nixpkgsConfig; }
-                ];
+                home-manager.sharedModules = homeManagerModules ++ [ { nixpkgs = self.nixpkgsConfig; } ];
                 home-manager.extraSpecialArgs = { inherit inputs pkgx modx; };
               }
             ]
