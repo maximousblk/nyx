@@ -7,7 +7,7 @@
     {
       topology.modules = [
         (
-          { config, ... }:
+          { config, lib, ... }:
           let
             inherit (config.lib.topology)
               mkInternet
@@ -18,6 +18,19 @@
               ;
           in
           {
+            renderers.elk.overviews.services.enable = false;
+            renderers.elk.overviews.networks.enable = false;
+
+            networks.internet = {
+              name = "Internet";
+              cidrv4 = "0.0.0.0/0";
+              style = {
+                primaryColor = "#94a3b8";
+                secondaryColor = null;
+                pattern = "dotted";
+              };
+            };
+
             networks.upstream = {
               name = "Upstream";
               cidrv4 = "192.168.0.0/24";
@@ -48,6 +61,36 @@
               };
             };
 
+            networks.wsl = {
+              name = "WSL";
+              cidrv4 = "172.30.0.0/16";
+              style = {
+                primaryColor = "#c4b5fd";
+                secondaryColor = null;
+                pattern = "dotted";
+              };
+            };
+
+            networks.oracle = {
+              name = "OCI Internal";
+              cidrv4 = "169.254.0.0/16";
+              style = {
+                primaryColor = "#fb923c";
+                secondaryColor = null;
+                pattern = "dashed";
+              };
+            };
+
+            networks.celest = {
+              name = "Celest VCN";
+              cidrv4 = "10.42.0.0/16";
+              style = {
+                primaryColor = "#fdba74";
+                secondaryColor = null;
+                pattern = "solid";
+              };
+            };
+
             networks.containers = {
               name = "Container Network";
               cidrv4 = "10.69.0.0/16";
@@ -58,7 +101,7 @@
               };
             };
 
-            nodes.internet = mkInternet { connections = mkConnection "ont" "pon"; };
+            nodes.internet = lib.recursiveUpdate (mkInternet { connections = mkConnection "ont" "pon"; }) { interfaces."*".network = "internet"; };
 
             nodes.ont = mkDevice "Airtel ONT-RG" {
               info = "ISP-provided optical network terminal/router";
@@ -66,7 +109,10 @@
                 [ "pon" ]
                 [ "wifi" ]
               ];
-              interfaces.pon.type = "fiber-duplex";
+              interfaces.pon = {
+                type = "fiber-duplex";
+                network = "internet";
+              };
               interfaces.wifi = {
                 type = "wifi";
                 network = "upstream";
