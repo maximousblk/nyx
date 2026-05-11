@@ -1,6 +1,5 @@
 {
   pkgs,
-  inputs,
   modx,
   config,
   umbra,
@@ -8,8 +7,6 @@
 }:
 {
   imports = [
-    inputs.nix-index-database.homeModules.nix-index
-
     ./packages.nix
     ./zeditor.nix
     ./git.nix
@@ -24,9 +21,6 @@
       pi.enable = true;
       ollama.enable = true;
     };
-
-    home.username = umbra.username;
-    home.homeDirectory = umbra.homeDirectory;
 
     home.stateVersion = "25.05";
 

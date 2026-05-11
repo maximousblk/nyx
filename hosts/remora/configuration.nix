@@ -120,7 +120,7 @@
 
   home-manager.users.${config.wsl.defaultUser} = {
     imports = [
-      (self.homeProfiles.mkUmbra {
+      (self.homeProfiles.umbra {
         username = config.wsl.defaultUser;
         homeDirectory = "/home/${config.wsl.defaultUser}";
         containerHost = "unix:///var/run/docker.sock";
