@@ -174,23 +174,6 @@
             _module.args.pkgx = pkgx;
             _module.args.modx = modx;
 
-            _module.args.homeManagerModules = [
-              inputs.noctalia.homeModules.default
-              inputs.vicinae.homeManagerModules.default
-              inputs.nix-index-database.homeModules.nix-index
-            ];
-
-            _module.args.nixosModules = [
-              inputs.disko.nixosModules.disko
-              inputs.nixarr.nixosModules.default
-              inputs.quadlet-nix.nixosModules.quadlet
-              inputs.home-manager.nixosModules.home-manager
-              inputs.impermanence.nixosModules.impermanence
-              inputs.nixos-facter-modules.nixosModules.facter
-              inputs.nix-index-database.nixosModules.nix-index
-              inputs.nix-topology.nixosModules.default
-            ];
-
             checks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
 
             treefmt.programs.nixfmt = {

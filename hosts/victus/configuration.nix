@@ -1,13 +1,6 @@
-{
-  pkgs,
-  lib,
-  inputs,
-  ...
-}:
+{ pkgs, lib, ... }:
 {
   imports = [
-    inputs.nix-index-database.nixosModules.nix-index
-
     ./hardware
     ./nixos
     ./user.nix

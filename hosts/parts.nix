@@ -5,6 +5,18 @@
   withSystem,
   ...
 }:
+let
+  nixosModules = [
+    inputs.disko.nixosModules.disko
+    inputs.nixarr.nixosModules.default
+    inputs.quadlet-nix.nixosModules.quadlet
+    inputs.home-manager.nixosModules.home-manager
+    inputs.impermanence.nixosModules.impermanence
+    inputs.nixos-facter-modules.nixosModules.facter
+    inputs.nix-index-database.nixosModules.nix-index
+    inputs.nix-topology.nixosModules.default
+  ];
+in
 {
   imports = [
     ./victus/parts.nix
@@ -30,8 +42,6 @@
           pkgs,
           pkgx,
           modx,
-          nixosModules,
-          homeManagerModules,
           ...
         }:
         inputs.nixpkgs.lib.nixosSystem {
@@ -56,8 +66,14 @@
                 home-manager.useGlobalPkgs = false;
                 home-manager.useUserPackages = true;
                 home-manager.backupFileExtension = "hm_bak";
-                home-manager.sharedModules = homeManagerModules ++ [ { nixpkgs = self.nixpkgsConfig; } ];
-                home-manager.extraSpecialArgs = { inherit inputs pkgx modx; };
+                home-manager.extraSpecialArgs = {
+                  inherit
+                    inputs
+                    self
+                    pkgx
+                    modx
+                    ;
+                };
               }
             ]
             ++ modules;
