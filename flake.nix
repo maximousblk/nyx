@@ -147,13 +147,13 @@
         imports = [
           inputs.treefmt-nix.flakeModule
 
+          ./files.nix
+          ./nixconf.nix
           ./secrets.nix
           ./topology.nix
-          ./files.nix
 
-          ./hosts/parts.nix
           ./homes/parts.nix
-          ./nixconf.nix
+          ./hosts/parts.nix
           ./infra/parts.nix
         ];
 
@@ -163,11 +163,7 @@
         ];
 
         perSystem = (
-          {
-            pkgs,
-            system,
-            ...
-          }:
+          { pkgs, system, ... }:
           let
             pkgx = import ./pkgx { inherit pkgs; };
             modx = import ./modx;
@@ -176,8 +172,6 @@
             _module.args.pkgs = import inputs.nixpkgs ({ inherit system; } // self.nixpkgsConfig);
             _module.args.pkgx = pkgx;
             _module.args.modx = modx;
-
-            checks = inputs.deploy-rs.lib.${system}.deployChecks self.deploy;
 
             treefmt.programs.nixfmt = {
               enable = true;
