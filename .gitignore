@@ -2,6 +2,20 @@
 result
 result-*
 .direnv/
+.terraform/
+.terragrunt-cache/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+*.auto.tfvars
+*.auto.tfvars.json
+*.tfplan
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
 
 # Secrets (encrypted files are fine, but not decrypted)
 *.decrypted

@@ -154,6 +154,7 @@
           ./hosts/parts.nix
           ./homes/parts.nix
           ./nixconf.nix
+          ./infra/parts.nix
         ];
 
         systems = [ "x86_64-linux" ];
@@ -162,7 +163,6 @@
           {
             pkgs,
             system,
-            config,
             ...
           }:
           let
@@ -184,7 +184,6 @@
 
             packages.deploy-rs = inputs.deploy-rs.packages.${system}.default;
             packages.home-manager = inputs.home-manager.packages.${system}.default;
-            packages.agenix = config.agenix-rekey.package;
           }
         );
       }
