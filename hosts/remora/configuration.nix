@@ -20,6 +20,7 @@
         interfaceGroups = [
           [ "Wi-Fi" ]
           [ "tailscale0" ]
+          [ "wsl" ]
         ];
         interfaces."Wi-Fi" = {
           type = "wifi";
@@ -39,13 +40,27 @@
           virtual = true;
           addresses = [ "100.100.3.3" ];
         };
+        interfaces.wsl = {
+          type = "ethernet";
+          network = "wsl";
+          virtual = true;
+        };
       };
 
       self = {
         parent = "apex";
         guestType = "wsl";
         interfaces.eth0 = {
+          type = "ethernet";
+          network = "wsl";
           virtual = true;
+          physicalConnections = [
+            {
+              node = "apex";
+              interface = "wsl";
+              renderer.reverse = true;
+            }
+          ];
         };
       };
     };
