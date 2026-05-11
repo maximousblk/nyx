@@ -4,7 +4,6 @@
     ./immich.nix
     ./karakeep.nix
     ./paperless.nix
-    ./signoz.nix
     ./torproxy.nix
   ];
 

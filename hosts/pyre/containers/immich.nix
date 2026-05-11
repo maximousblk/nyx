@@ -174,7 +174,7 @@ in
 
             # OpenTelemetry - send traces/metrics to SigNoz
             IMMICH_TELEMETRY_INCLUDE = "all";
-            OTEL_EXPORTER_OTLP_ENDPOINT = "http://signoz-otel-collector:4318";
+            OTEL_EXPORTER_OTLP_ENDPOINT = "http://otlp.pony-clownfish.ts.net:4318";
             OTEL_SERVICE_NAME = "immich";
           };
         };

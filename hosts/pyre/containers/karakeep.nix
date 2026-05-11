@@ -164,7 +164,7 @@ in
 
             # OpenTelemetry - send traces to SigNoz
             OTEL_TRACING_ENABLED = "true";
-            OTEL_EXPORTER_OTLP_ENDPOINT = "http://signoz-otel-collector:4318/v1/traces";
+            OTEL_EXPORTER_OTLP_ENDPOINT = "http://otlp.pony-clownfish.ts.net:4318/v1/traces";
           };
         };
 

@@ -1,5 +1,6 @@
 {
   nixos = {
+    opentelemetry-agent = ./nixos/opentelemetry-agent.nix;
     secrets = ./nixos/secrets.nix;
     tailscale-services = ./nixos/tailscale-services.nix;
   };
