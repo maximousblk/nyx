@@ -23,6 +23,7 @@ in
     ./pyre/parts.nix
     ./remora/parts.nix
     ./cairn/parts.nix
+    ./scry/parts.nix
   ];
 
   options = {

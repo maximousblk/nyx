@@ -157,7 +157,10 @@
           ./infra/parts.nix
         ];
 
-        systems = [ "x86_64-linux" ];
+        systems = [
+          "aarch64-linux"
+          "x86_64-linux"
+        ];
 
         perSystem = (
           {
