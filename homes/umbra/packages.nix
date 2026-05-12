@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, pkgx, ... }:
 {
   home.packages = with pkgs; [
     bat
@@ -89,5 +89,7 @@
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.package-go-module
     ])
+
+    pkgx.mermaid-ascii
   ];
 }

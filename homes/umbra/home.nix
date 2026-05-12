@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgx,
   modx,
   config,
   umbra,
