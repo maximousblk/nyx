@@ -47,7 +47,10 @@ in
         substituters = builtins.attrNames subs;
         trusted-substituters = builtins.attrNames subs;
         trusted-public-keys = builtins.attrValues subs;
-        trusted-users = [ "maximousblk" ];
+        trusted-users = [
+          "root"
+          "@wheel"
+        ];
         auto-optimise-store = true;
         connect-timeout = 5;
         narinfo-cache-negative-ttl = 86400;
