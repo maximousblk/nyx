@@ -46,6 +46,8 @@
     programs.nix-index = {
       enableBashIntegration = false;
     };
+    services.ssh-agent.enable = true;
+
     programs.home-manager.enable = true;
     programs.nix-index.enable = true;
     programs.lazydocker.enable = true;
