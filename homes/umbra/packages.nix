@@ -33,6 +33,7 @@
     jq
     jwt-cli
     kubernetes-helm
+    kustomize
     libgcc
     libva
     libva-utils
@@ -63,7 +64,7 @@
     sops
     ssh-to-age
     strace
-    # terragrunt
+    terragrunt
     tmux
     trufflehog
     unzip
