@@ -3,20 +3,20 @@ let
   port = 5055;
 in
 {
-  nixarr.jellyseerr = {
+  nixarr.seerr = {
     enable = true;
     openFirewall = false;
     port = port;
   };
 
-  optx.tailscale.services.jellyseerr = {
+  optx.tailscale.services.seerr = {
     serve."https:443" = "http://localhost:${toString port}";
-    backends = [ "jellyseerr.service" ];
+    backends = [ "seerr.service" ];
   };
 
-  topology.self.services.jellyseerr = {
-    name = "Jellyseerr";
+  topology.self.services.seerr = {
+    name = "Seerr";
     info = "Media request management";
-    icon = "services.jellyseerr";
+    icon = "services.seerr";
   };
 }

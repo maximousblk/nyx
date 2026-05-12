@@ -18,7 +18,7 @@ in
     ./sonarr.nix
     ./bazarr.nix
     ./jellyfin.nix
-    ./jellyseerr.nix
+    ./seerr.nix
   ];
 
   _module.args.servarr = { inherit persist media_dir state_dir; };
