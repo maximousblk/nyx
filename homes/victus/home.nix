@@ -58,6 +58,7 @@
     libappindicator
     lutris
     mindustry-wayland
+    mpv
     ncdu
     nh
     nil
