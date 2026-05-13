@@ -57,8 +57,8 @@
         fadeDuration = 5;
 
         screenOffTimeout = 300;
-        screenOffCommand = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10 && ${pkgs.brightnessctl}/bin/brightnessctl -sd rgb:kbd_backlight set 10";
-        resumeScreenOffCommand = "${pkgs.brightnessctl}/bin/brightnessctl -r && ${pkgs.brightnessctl}/bin/brightnessctl -rd rgb:kbd_backlight";
+        screenOffCommand = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10%";
+        resumeScreenOffCommand = "${pkgs.brightnessctl}/bin/brightnessctl -r";
 
         lockTimeout = 600;
 
