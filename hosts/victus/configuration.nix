@@ -61,7 +61,7 @@
       addresses = lib.mkForce [ "DHCP" ];
       physicalConnections = [
         {
-          node = "router";
+          node = "ap";
           interface = "wifi";
           renderer.reverse = true;
         }

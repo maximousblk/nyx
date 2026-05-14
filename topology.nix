@@ -139,8 +139,9 @@
               pattern = "dashed";
             };
 
-            networks.celest.name = "Celest VCN";
-            networks.celest.cidrv4 = "10.42.0.0/16";
+            networks.celest.name = "Celest Subnet";
+            networks.celest.cidrv4 = "10.42.0.0/24";
+            networks.celest.cidrv6 = "2603:c021:4009:7f00::/64";
             networks.celest.style = {
               primaryColor = "#fdba74";
               secondaryColor = null;
@@ -162,16 +163,10 @@
               interfaces.wifi = {
                 type = "wifi";
                 network = "upstream";
-                physicalConnections = [
-                  {
-                    node = "extender";
-                    interface = "wifi";
-                  }
-                ];
               };
             };
 
-            nodes.extender = mkDevice "Range Extender" {
+            nodes.re200 = mkDevice "Range Extender" {
               info = "TP-Link RE200 AC750";
               interfaceGroups = [
                 [
@@ -182,12 +177,68 @@
               interfaces.wifi = {
                 type = "wifi";
                 network = "upstream";
+                physicalConnections = [
+                  {
+                    node = "ont";
+                    interface = "wifi";
+                    renderer.reverse = true;
+                  }
+                ];
               };
-              interfaces.eth.type = "ethernet";
-              connections.eth = mkConnection "router" "wan";
+              interfaces.eth = {
+                type = "ethernet";
+                network = "upstream";
+              };
+              connections.eth = mkConnection "hex" "ether1";
             };
 
-            nodes.router = mkRouter "Router" {
+            nodes.re305 = mkDevice "Range Extender" {
+              info = "TP-Link RE305 AC1200";
+              interfaceGroups = [
+                [
+                  "wifi"
+                  "eth"
+                ]
+              ];
+              interfaces.wifi = {
+                type = "wifi";
+                network = "upstream";
+                physicalConnections = [
+                  {
+                    node = "ont";
+                    interface = "wifi";
+                    renderer.reverse = true;
+                  }
+                ];
+              };
+              interfaces.eth = {
+                type = "ethernet";
+                network = "upstream";
+              };
+              connections.eth = mkConnection "hex" "ether2";
+            };
+
+            nodes.hex = mkRouter "Router" {
+              info = "MikroTik hEX RB750Gr3";
+              interfaceGroups = [
+                [
+                  "ether1"
+                  "ether2"
+                ]
+                [
+                  "ether3"
+                  "ether4"
+                  "ether5"
+                ]
+              ];
+              interfaces.ether1.network = "upstream";
+              interfaces.ether2.network = "upstream";
+              interfaces.ether3.network = "nyx";
+              interfaces.ether4.network = "nyx";
+              interfaces.ether5.network = "nyx";
+            };
+
+            nodes.ap = mkRouter "Wi-Fi AP" {
               info = "TP-Link Archer C6 AC1200";
               interfaceGroups = [
                 [ "wan" ]
@@ -199,11 +250,44 @@
                   "wifi"
                 ]
               ];
-              interfaces.lan1.network = "nyx";
+              interfaces.wan = {
+                network = "nyx";
+                physicalConnections = [
+                  {
+                    node = "hex";
+                    interface = "ether3";
+                    renderer.reverse = true;
+                  }
+                ];
+              };
+              interfaces.wifi = {
+                type = "wifi";
+                network = "nyx";
+              };
             };
 
-            nodes.switch = mkSwitch "Switch" {
-              info = "TP-Link TL-SG1008D";
+            nodes.sg1005d = mkSwitch "TL-SG1005D" {
+              info = "TP-Link TL-SG1005D 5-port switch";
+              interfaceGroups = [
+                [
+                  "lan1"
+                  "lan2"
+                  "lan3"
+                  "lan4"
+                  "lan5"
+                ]
+              ];
+              interfaces.lan1.physicalConnections = [
+                {
+                  node = "hex";
+                  interface = "ether4";
+                  renderer.reverse = true;
+                }
+              ];
+            };
+
+            nodes.sg1008d = mkSwitch "TL-SG1008D" {
+              info = "TP-Link TL-SG1008D 8-port switch";
               interfaceGroups = [
                 [
                   "lan1"
@@ -218,45 +302,43 @@
               ];
               interfaces.lan1.physicalConnections = [
                 {
-                  node = "router";
-                  interface = "lan1";
+                  node = "hex";
+                  interface = "ether5";
                   renderer.reverse = true;
                 }
               ];
             };
 
-            nodes.oci = mkDevice "Oracle Cloud" {
-              info = "OCI ap-mumbai-1";
-              deviceIcon = "devices.cloud";
+            nodes.igw = mkRouter "Internet Gateway" {
+              info = "OCI Internet Gateway (ap-mumbai-1)";
               interfaceGroups = [
-                [ "internet" ]
-                [ "vcn" ]
+                [ "wan" ]
+                [ "lan" ]
               ];
-              connections.internet = mkConnectionRev "internet" "*";
-              connections.vcn = mkConnection "celest" "igw";
-              interfaces.internet.network = "internet";
-              interfaces.vcn = {
+              connections.wan = mkConnectionRev "internet" "*";
+              interfaces.wan.network = "internet";
+              interfaces.lan = {
                 network = "oracle";
                 virtual = true;
               };
+              connections.lan = mkConnection "celest" "uplink";
             };
 
-            nodes.celest = mkDevice "Celest VCN" {
-              info = "OCI VCN 10.42.0.0/16";
-              deviceIcon = "devices.cloud";
+            nodes.celest = mkRouter "Celest VCN" {
+              info = "OCI VCN + Subnet + NSG";
               interfaceGroups = [
-                [ "igw" ]
-                [ "subnet" ]
+                [ "uplink" ]
+                [ "lan1" ]
               ];
-              connections.subnet = mkConnection "scry" "enp0s6";
-              interfaces.igw = {
+              interfaces.uplink = {
                 network = "oracle";
                 virtual = true;
               };
-              interfaces.subnet = {
+              interfaces.lan1 = {
                 network = "celest";
                 virtual = true;
               };
+              connections.lan1 = mkConnection "scry" "enp0s6";
             };
           }
         )

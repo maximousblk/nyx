@@ -45,9 +45,10 @@
     interfaces.enp2s0 = {
       type = "ethernet";
       network = "nyx";
+      addresses = [ "DHCP" ];
       physicalConnections = [
         {
-          node = "switch";
+          node = "sg1005d";
           interface = "lan2";
           renderer.reverse = true;
         }

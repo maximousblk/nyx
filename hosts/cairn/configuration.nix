@@ -85,9 +85,10 @@
     interfaces.enp0s31f6 = {
       type = "ethernet";
       network = "nyx";
+      addresses = [ "DHCP" ];
       physicalConnections = [
         {
-          node = "switch";
+          node = "sg1008d";
           interface = "lan3";
           renderer.reverse = true;
         }
