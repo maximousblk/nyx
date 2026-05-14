@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 {
-  imports = [ inputs.files.flakeModules.default ];
+  imports = [ (inputs.files + "/flake-module.nix") ];
 
   perSystem =
     {
@@ -12,19 +12,19 @@
     {
       files.files = [
         {
-          path_ = ".github/main.svg";
+          path = ".github/main.svg";
           drv = pkgs.runCommand "main.svg" { } ''
             cp ${self.topology.${system}.config.output}/main.svg $out
           '';
         }
         {
-          path_ = ".github/network.svg";
+          path = ".github/network.svg";
           drv = pkgs.runCommand "network.svg" { } ''
             cp ${self.topology.${system}.config.output}/network.svg $out
           '';
         }
         {
-          path_ = ".github/README.md";
+          path = ".github/README.md";
           drv = pkgs.writeText "README.md" ''
             # nyx
 

@@ -119,7 +119,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    files.url = "github:mightyiam/files";
+    files = {
+      url = "github:mightyiam/files";
+      inputs.flake-parts.follows = "flake-parts";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.git-hooks.follows = "git-hooks";
+      inputs.systems.follows = "systems";
+      inputs.treefmt-nix.follows = "treefmt-nix";
+    };
 
     nix-topology = {
       url = "github:oddlama/nix-topology";

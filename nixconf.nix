@@ -43,6 +43,7 @@ in
         experimental-features = [
           "nix-command"
           "flakes"
+          "pipe-operators"
         ];
         substituters = builtins.attrNames subs;
         trusted-substituters = builtins.attrNames subs;
