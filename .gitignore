@@ -1,6 +1,7 @@
 # Nix
 result
 result-*
+/.pre-commit-config.yaml
 .direnv/
 .terraform/
 .terragrunt-cache/

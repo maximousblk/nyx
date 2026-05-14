@@ -114,6 +114,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     files.url = "github:mightyiam/files";
 
     nix-topology = {
@@ -146,6 +151,7 @@
       {
         imports = [
           inputs.treefmt-nix.flakeModule
+          inputs.git-hooks.flakeModule
 
           ./files.nix
           ./nixconf.nix
@@ -163,7 +169,12 @@
         ];
 
         perSystem = (
-          { pkgs, system, ... }:
+          {
+            config,
+            pkgs,
+            system,
+            ...
+          }:
           let
             pkgx = import ./pkgx { inherit pkgs; };
             modx = import ./modx;
@@ -179,6 +190,31 @@
               width = 160;
             };
 
+            pre-commit.check.enable = false;
+            pre-commit.settings.hooks.flake-check = {
+              enable = true;
+              name = "nix flake check";
+              entry = "nix flake check --no-build --keep-going";
+              pass_filenames = false;
+              always_run = true;
+            };
+
+            apps.install-git-hooks = {
+              type = "app";
+              meta.description = "Install git pre-commit hooks";
+              program = pkgs.lib.getExe (
+                pkgs.writeShellScriptBin "install-git-hooks" ''
+                  export PATH=${
+                    pkgs.lib.makeBinPath [
+                      pkgs.coreutils
+                      pkgs.nix
+                    ]
+                  }:$PATH
+
+                  ${config.pre-commit.installationScript}
+                ''
+              );
+            };
             packages.deploy-rs = inputs.deploy-rs.packages.${system}.default;
             packages.home-manager = inputs.home-manager.packages.${system}.default;
           }
