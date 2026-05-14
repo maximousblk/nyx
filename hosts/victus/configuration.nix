@@ -28,8 +28,6 @@
   security.rtkit.enable = true;
   security.sudo.wheelNeedsPassword = false;
 
-  programs.nix-index-database.comma.enable = true;
-
   programs.ssh = {
     startAgent = false;
   };

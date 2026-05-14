@@ -142,7 +142,18 @@
     };
   };
 
-  programs.fish.enable = true;
+  programs.nix-index.enableFishIntegration = false;
+
+  programs.nix-index-database.comma.enable = true;
+
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      function __fish_command_not_found_handler --on-event fish_command_not_found
+          comma --print-packages $argv[1]
+      end
+    '';
+  };
 
   programs.zoxide = {
     enable = true;
