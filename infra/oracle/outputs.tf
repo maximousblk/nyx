@@ -7,7 +7,7 @@ output "vcn_id" {
 }
 
 output "subnet_id" {
-  value = module.vcn.subnet_all_attributes.main.id
+  value = oci_core_subnet.celest_main.id
 }
 
 output "scry_id" {
@@ -18,8 +18,12 @@ output "scry_private_ip" {
   value = one(module.scry.private_ip)
 }
 
-output "scry_public_ip" {
-  value = oci_core_public_ip.scry.ip_address
+output "scry_ipv4" {
+  value = data.oci_core_vnic.scry.public_ip_address
+}
+
+output "scry_ipv6" {
+  value = oci_core_ipv6.scry.ip_address
 }
 
 output "scry_bootstrap_image_name" {

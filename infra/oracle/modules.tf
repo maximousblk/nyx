@@ -21,15 +21,7 @@ module "vcn" {
   vcn_cidrs                = ["10.42.0.0/16"]
   vcn_dns_label            = local.project_name
   vcn_name                 = "vcn"
-
-  subnets = {
-    main = {
-      cidr_block = local.subnet_cidr
-      dns_label  = "main"
-      name       = "${local.project_name}-main"
-      type       = "public"
-    }
-  }
+  enable_ipv6              = true
 }
 
 module "scry" {
@@ -47,8 +39,8 @@ module "scry" {
   source_type                 = "image"
   ssh_public_keys             = var.ssh_authorized_keys
   hostname_label              = local.scry_name
-  public_ip                   = "NONE"
-  subnet_ocids                = [module.vcn.subnet_all_attributes.main.id]
+  public_ip                   = "EPHEMERAL"
+  subnet_ocids                = [oci_core_subnet.celest_main.id]
   primary_vnic_nsg_ids        = [oci_core_network_security_group.scry.id]
   boot_volume_size_in_gbs     = local.scry_boot_volume_gbs
   block_storage_sizes_in_gbs  = []
