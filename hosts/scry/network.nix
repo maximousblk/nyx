@@ -17,7 +17,7 @@
 
   systemd.network.networks."10-enp0s6" = {
     matchConfig.Name = "enp0s6";
-    networkConfig.DHCP = "ipv4";
+    networkConfig.DHCP = "yes";
     linkConfig.RequiredForOnline = "routable";
   };
 
