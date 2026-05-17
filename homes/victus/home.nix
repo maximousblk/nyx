@@ -64,6 +64,7 @@
     nil
     nixd
     nvtopPackages.full
+    orca-slicer
     p7zip
     playerctl
     protonplus
