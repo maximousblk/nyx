@@ -30,7 +30,6 @@
             {
               node = "ap";
               interface = "wifi";
-              renderer.reverse = true;
             }
           ];
         };
@@ -54,13 +53,6 @@
           type = "ethernet";
           network = "wsl";
           virtual = true;
-          physicalConnections = [
-            {
-              node = "apex";
-              interface = "wsl";
-              renderer.reverse = true;
-            }
-          ];
         };
       };
     };

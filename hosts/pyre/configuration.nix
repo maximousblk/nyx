@@ -50,7 +50,6 @@
         {
           node = "sg1005d";
           interface = "lan2";
-          renderer.reverse = true;
         }
       ];
     };

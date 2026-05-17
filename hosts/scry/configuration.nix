@@ -42,6 +42,12 @@
       addresses = [ "DHCP" ];
       network = "celest";
       virtual = true;
+      physicalConnections = [
+        {
+          node = "celest";
+          interface = "lan1";
+        }
+      ];
     };
     interfaces.tailscale0 = {
       network = "tailscale";

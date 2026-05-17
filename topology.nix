@@ -11,10 +11,16 @@
           topologyPkgs = (import "${inputs.nix-topology}/pkgs/default.nix") final prev;
 
           # Let nodes grow to fit ports + port labels instead of being pinned
-          # to the SVG card's minimum size.
+          # to the SVG card's minimum size. Also hardcode Ioskeley Mono so the
+          # upstream --font/--font-bold CLI args are effectively ignored.
+          ioskeley = final.ioskeley-mono.normal;
           elk-to-svg-grow = topologyPkgs.elk-to-svg.overrideAttrs (old: {
             postPatch = (old.postPatch or "") + ''
               sed -i 's|"\[MINIMUM_SIZE\]"|"[MINIMUM_SIZE, PORTS, PORT_LABELS]"|' main.js
+              sed -i \
+                -e 's|options\.font\b|"${ioskeley}/share/fonts/truetype/IoskeleyMono-Regular.ttf"|g' \
+                -e 's|options\.fontBold\b|"${ioskeley}/share/fonts/truetype/IoskeleyMono-Bold.ttf"|g' \
+                main.js
             '';
           });
 
@@ -32,16 +38,6 @@
         in
         topologyPkgs
         // {
-          # Shim pkgs.jetbrains-mono so the renderer (which references this
-          # attr by name) embeds Ioskeley Mono glyphs instead.
-          jetbrains-mono = final.runCommand "ioskeley-as-jetbrains-mono" { } ''
-            mkdir -p $out/share/fonts/truetype
-            cp ${final.ioskeley-mono.normal-NF}/share/fonts/truetype/IoskeleyMonoNerdFont-Regular.ttf \
-               $out/share/fonts/truetype/JetBrainsMono-Regular.ttf
-            cp ${final.ioskeley-mono.normal-NF}/share/fonts/truetype/IoskeleyMonoNerdFont-Bold.ttf \
-               $out/share/fonts/truetype/JetBrainsMono-Bold.ttf
-          '';
-
           elk-to-svg = final.writeShellApplication {
             name = "elk-to-svg";
             runtimeInputs = [
@@ -54,7 +50,8 @@
               patched=$(mktemp)
               trap 'rm -f "$patched"' EXIT
 
-              spacing='
+              # Spacing tuned for port labels.
+              sharedLayout='
                 .layoutOptions["org.eclipse.elk.spacing.nodeNode"] = 60
                 | .layoutOptions["org.eclipse.elk.spacing.labelLabel"] = 8
                 | .layoutOptions["org.eclipse.elk.spacing.labelPort"] = 6
@@ -62,11 +59,25 @@
                 | .layoutOptions["org.eclipse.elk.spacing.portPort"] = 12
               '
 
+              # Main-diagram-only: top-to-bottom flow direction.
+              mainLayout='.layoutOptions["org.eclipse.elk.direction"] = "DOWN"'
+
+              # Globally swap edge source/target so connections render leaf->root
+              # by default. Equivalent to renderer.reverse=true on every edge.
+              # Only swap port-to-port edges; leave guest/containment edges alone.
+              reverse='
+                def isPortRef: type == "string" and contains(".ports.interface:");
+                def isPortEdge: type == "object" and has("sources") and has("targets")
+                  and ([.sources[], .targets[]] | all(isPortRef));
+                def swapEnds: . + {sources: .targets, targets: .sources};
+                walk(if isPortEdge then swapEnds else . end)
+              '
+
               if [[ "$input" == *main.elk.json ]]; then
-                jq "$spacing | .layoutOptions[\"org.eclipse.elk.direction\"] = \"DOWN\"" "$input" > "$patched"
+                jq "$sharedLayout | $mainLayout | $reverse" "$input" > "$patched"
                 exec ${patched-elk-to-svg}/bin/elk-to-svg "$patched" "$@"
               else
-                jq "$spacing" "$input" > "$patched"
+                jq "$sharedLayout" "$input" > "$patched"
                 exec ${elk-to-svg-grow}/bin/elk-to-svg "$patched" "$@"
               fi
             '';
@@ -84,7 +95,6 @@
               mkSwitch
               mkDevice
               mkConnection
-              mkConnectionRev
               ;
           in
           {
@@ -136,7 +146,7 @@
             networks.oracle.style = {
               primaryColor = "#fb923c";
               secondaryColor = null;
-              pattern = "dashed";
+              pattern = "dotted";
             };
 
             networks.celest.name = "Celest Subnet";
@@ -145,10 +155,10 @@
             networks.celest.style = {
               primaryColor = "#fdba74";
               secondaryColor = null;
-              pattern = "solid";
+              pattern = "dotted";
             };
 
-            nodes.internet = lib.recursiveUpdate (mkInternet { connections = mkConnection "ont" "pon"; }) { interfaces."*".network = "internet"; };
+            nodes.internet = lib.recursiveUpdate (mkInternet { connections = [ ]; }) { interfaces."*".network = "internet"; };
 
             nodes.ont = mkDevice "Airtel ONT-RG" {
               info = "ISP-provided optical network terminal/router";
@@ -164,6 +174,7 @@
                 type = "wifi";
                 network = "upstream";
               };
+              connections.pon = mkConnection "internet" "*";
             };
 
             nodes.re200 = mkDevice "Range Extender" {
@@ -181,7 +192,6 @@
                   {
                     node = "ont";
                     interface = "wifi";
-                    renderer.reverse = true;
                   }
                 ];
               };
@@ -189,7 +199,6 @@
                 type = "ethernet";
                 network = "upstream";
               };
-              connections.eth = mkConnection "hex" "ether1";
             };
 
             nodes.re305 = mkDevice "Range Extender" {
@@ -207,7 +216,6 @@
                   {
                     node = "ont";
                     interface = "wifi";
-                    renderer.reverse = true;
                   }
                 ];
               };
@@ -215,7 +223,6 @@
                 type = "ethernet";
                 network = "upstream";
               };
-              connections.eth = mkConnection "hex" "ether2";
             };
 
             nodes.hex = mkRouter "Router" {
@@ -236,6 +243,8 @@
               interfaces.ether3.network = "nyx";
               interfaces.ether4.network = "nyx";
               interfaces.ether5.network = "nyx";
+              connections.ether1 = mkConnection "re200" "eth";
+              connections.ether2 = mkConnection "re305" "eth";
             };
 
             nodes.ap = mkRouter "Wi-Fi AP" {
@@ -256,7 +265,6 @@
                   {
                     node = "hex";
                     interface = "ether3";
-                    renderer.reverse = true;
                   }
                 ];
               };
@@ -281,7 +289,6 @@
                 {
                   node = "hex";
                   interface = "ether4";
-                  renderer.reverse = true;
                 }
               ];
             };
@@ -304,7 +311,6 @@
                 {
                   node = "hex";
                   interface = "ether5";
-                  renderer.reverse = true;
                 }
               ];
             };
@@ -315,13 +321,12 @@
                 [ "wan" ]
                 [ "lan" ]
               ];
-              connections.wan = mkConnectionRev "internet" "*";
+              connections.wan = mkConnection "internet" "*";
               interfaces.wan.network = "internet";
               interfaces.lan = {
                 network = "oracle";
                 virtual = true;
               };
-              connections.lan = mkConnection "celest" "uplink";
             };
 
             nodes.celest = mkRouter "Celest VCN" {
@@ -338,7 +343,7 @@
                 network = "celest";
                 virtual = true;
               };
-              connections.lan1 = mkConnection "scry" "enp0s6";
+              connections.uplink = mkConnection "igw" "lan";
             };
           }
         )

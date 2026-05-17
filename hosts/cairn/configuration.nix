@@ -90,7 +90,6 @@
         {
           node = "sg1008d";
           interface = "lan3";
-          renderer.reverse = true;
         }
       ];
     };

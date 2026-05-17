@@ -63,7 +63,6 @@
         {
           node = "ap";
           interface = "wifi";
-          renderer.reverse = true;
         }
       ];
     };
