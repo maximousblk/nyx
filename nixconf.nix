@@ -30,6 +30,19 @@ in
           });
         })
         (_final: prev: {
+          # https://github.com/NixOS/nixpkgs/pull/507430
+          fleet = prev.fleet.overrideAttrs (_: rec {
+            version = "4.85.0";
+            src = prev.fetchFromGitHub {
+              owner = "fleetdm";
+              repo = "fleet";
+              tag = "fleet-v${version}";
+              hash = "sha256-MXqUfDGk0u2+eCvP1dmb4dxF+LPJQ+YudqMAxAVPZJc=";
+            };
+            vendorHash = "sha256-Zu5VxrH+MnxqDEZj2gljfaKyCqGDQSLZqjsDjeCJ2h8=";
+          });
+        })
+        (_final: prev: {
           # https://github.com/NixOS/nixpkgs/issues/426717
           openldap = prev.openldap.overrideAttrs (_: {
             doCheck = !prev.stdenv.hostPlatform.isi686;
