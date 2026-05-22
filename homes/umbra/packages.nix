@@ -49,7 +49,6 @@
     nixd
     nixfmt
     nodejs_24
-    opencode
     openssl.dev
     openstack-rs
     openstackclient-full

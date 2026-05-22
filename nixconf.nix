@@ -5,6 +5,7 @@ let
     "https://cache.garnix.io" = "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g=";
     "https://attic.xuyh0120.win/lantian" = "lantian:EeAUQ+W+6r7EtwnmYjeVwx5kOGEBpjlBfPlzGlTNvHc=";
     "https://numtide.cachix.org" = "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE=";
+    "https://cache.numtide.com" = "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g=";
     "https://vicinae.cachix.org" = "vicinae.cachix.org-1:1kDrfienkGHPYbkpNj1mWTr7Fm1+zcenzgTizIcI3oc=";
     "https://hyprland.cachix.org" = "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=";
     "https://nix-community.cachix.org" = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
@@ -20,15 +21,7 @@ in
         inputs.nix-topology.overlays.default
         inputs.fenix.overlays.default
         inputs.nix-cachyos-kernel.overlays.pinned
-        inputs.opencode.overlays.default
-        (_final: prev: {
-          # https://github.com/NixOS/nixpkgs/pull/508770
-          opencode = prev.opencode.overrideAttrs (old: {
-            postPatch = (old.postPatch or "") + ''
-              substituteInPlace package.json --replace-fail 'bun@1.3.13' 'bun@1.3.11'
-            '';
-          });
-        })
+        inputs.llm-agents.overlays.default
         (_final: prev: {
           # https://github.com/NixOS/nixpkgs/pull/507430
           fleet = prev.fleet.overrideAttrs (_: rec {

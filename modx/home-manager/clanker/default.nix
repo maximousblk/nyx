@@ -6,21 +6,12 @@
 }:
 let
   cfg = config.optx.clanker;
-  jsonFormat = pkgs.formats.json { };
 in
 {
+  imports = [ ./pi.nix ];
   options.optx.clanker = {
     opencode.enable = lib.mkEnableOption "opencode with MCP integration";
     claude.enable = lib.mkEnableOption "claude-code with MCP integration";
-    pi = {
-      enable = lib.mkEnableOption "pi-coding-agent";
-      package = lib.mkPackageOption pkgs "pi-coding-agent" { };
-      settings = lib.mkOption {
-        type = jsonFormat.type;
-        default = { };
-        description = "Settings written to ~/.pi/agent/settings.json.";
-      };
-    };
     ollama = {
       enable = lib.mkEnableOption "Ollama local LLM service";
       acceleration = lib.mkOption {
@@ -42,7 +33,7 @@ in
     (lib.mkIf (cfg.opencode.enable || cfg.claude.enable) {
       home.sessionVariables.CLAUDE_CODE_NO_FLICKER = "1";
 
-      home.packages = [ pkgs.crush ];
+      home.packages = [ pkgs.llm-agents.crush ];
 
       programs.mcp = {
         enable = true;
@@ -61,6 +52,7 @@ in
     (lib.mkIf cfg.opencode.enable {
       programs.opencode = {
         enable = true;
+        package = pkgs.llm-agents.opencode;
         enableMcpIntegration = true;
 
         tui.theme = "system";
@@ -122,6 +114,7 @@ in
     (lib.mkIf cfg.claude.enable {
       programs.claude-code = {
         enable = true;
+        package = pkgs.llm-agents.claude-code;
         enableMcpIntegration = true;
 
         settings = {
@@ -133,19 +126,6 @@ in
           };
         };
       };
-    })
-
-    (lib.mkIf cfg.pi.enable {
-      home.packages = [ cfg.pi.package ];
-
-      home.file.".pi/agent/settings.json".source = jsonFormat.generate "pi-settings.json" (
-        {
-          defaultProvider = "openai-codex";
-          defaultModel = "gpt-5.5";
-          defaultThinkingLevel = "medium";
-        }
-        // cfg.pi.settings
-      );
     })
 
     (lib.mkIf cfg.ollama.enable {

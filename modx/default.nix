@@ -6,7 +6,7 @@
   };
 
   hm = {
-    clanker = ./home-manager/clanker.nix;
+    clanker = ./home-manager/clanker;
     wallpaper = ./home-manager/wallpaper.nix;
   };
 
