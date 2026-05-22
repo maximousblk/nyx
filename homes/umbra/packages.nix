@@ -90,6 +90,7 @@
       google-cloud-sdk.components.package-go-module
     ])
 
+    process-compose
     pkgx.mermaid-ascii
   ];
 }
