@@ -2,11 +2,39 @@
   lib,
   pkgs,
   config,
+  pkgx,
   ...
 }:
 let
   cfg = config.optx.clanker.pi;
   jsonFormat = pkgs.formats.json { };
+  baseSettings = {
+    defaultProvider = "openai-codex";
+    defaultModel = "gpt-5.5";
+    defaultThinkingLevel = "medium";
+    enableInstallTelemetry = false;
+    theme = "terminal-tinted";
+  };
+  globalExtensionSettings = {
+    extensions = [
+      pkgx.pi-commandcode-provider.extention
+      pkgx.pi-mcp-adapter.extention
+      pkgx.pi-web-access.extention
+      pkgx.pi-context-mode.extention
+    ]
+    ++ (cfg.settings.extensions or [ ]);
+    skills = [
+      pkgx.pi-web-access.skills
+      pkgx.pi-context-mode.skills
+    ]
+    ++ (cfg.settings.skills or [ ]);
+    themes = [ pkgx.pi-terminal-theme.themes ] ++ (cfg.settings.themes or [ ]);
+  };
+  userSettingsSansGlobalResources = builtins.removeAttrs cfg.settings [
+    "extensions"
+    "skills"
+    "themes"
+  ];
 in
 {
   options.optx.clanker.pi = {
@@ -29,15 +57,7 @@ in
     };
 
     home.file = {
-      ".pi/agent/settings.json".source = jsonFormat.generate "pi-settings.json" (
-        {
-          defaultProvider = "openai-codex";
-          defaultModel = "gpt-5.5";
-          defaultThinkingLevel = "medium";
-          enableInstallTelemetry = false;
-        }
-        // cfg.settings
-      );
+      ".pi/agent/settings.json".source = jsonFormat.generate "pi-settings.json" (baseSettings // userSettingsSansGlobalResources // globalExtensionSettings);
 
       ".pi/agent/AGENTS.md".source = ./AGENTS.md;
       ".pi/agent/skills".source = ./skills;
