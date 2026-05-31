@@ -9,9 +9,15 @@ let
   cfg = config.optx.clanker.pi;
   jsonFormat = pkgs.formats.json { };
   baseSettings = {
-    defaultProvider = "openai-codex";
-    defaultModel = "gpt-5.5";
+    defaultProvider = "opencode-go";
+    defaultModel = "deepseek-v4-pro";
     defaultThinkingLevel = "medium";
+    enabledModels = [
+      "openai-codex/gpt-5.5"
+      "commandcode/deepseek/deepseek-v4-pro"
+      "opencode-go/deepseek-v4-pro"
+      "opencode-go/mimo-v2.5-pro"
+    ];
     enableInstallTelemetry = false;
   };
   globalExtensionSettings = {
@@ -50,7 +56,6 @@ in
     home.packages = [ pkgs.llm-agents.pi ];
 
     home.sessionVariables = {
-      PI_CODING_AGENT_SESSION_DIR = "${config.xdg.stateHome}/pi/sessions";
       PI_TELEMETRY = "0";
       PI_SKIP_VERSION_CHECK = "1";
     };
