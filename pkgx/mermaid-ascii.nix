@@ -1,14 +1,14 @@
-{ pkgs, lib }:
+{ pkgs }:
 
-pkgs.buildGoModule {
+pkgs.buildGoModule rec {
   pname = "mermaid-ascii";
-  version = "1.2.0";
+  version = "1.2.0+nix.${builtins.substring 0 8 src.rev}";
 
   src = pkgs.fetchFromGitHub {
     owner = "AlexanderGrooff";
     repo = "mermaid-ascii";
-    rev = "a307c1a69097c9b2fccef050a94198c9b43e2c60";
-    hash = "sha256-PbYqYy0jHQb+qvkp+lp/Wlde50dhdg7Ri2eNExXeoQ4=";
+    rev = "6fffb8e2714acab2c4cb41c78894fabbc62cee56";
+    hash = "sha256-PhiZecH4hksRMrnfmUIL7O2q0LEXW0LiOQLJ5o0dRs0=";
   };
 
   vendorHash = "sha256-aB9sbTtlHbptM2995jizGFtSmEIg3i8zWkXz1zzbIek=";
@@ -27,7 +27,7 @@ pkgs.buildGoModule {
   meta = {
     description = "Render Mermaid diagrams as ASCII art";
     homepage = "https://github.com/AlexanderGrooff/mermaid-ascii";
-    license = lib.licenses.mit;
+    license = pkgs.lib.licenses.mit;
     mainProgram = "mermaid-ascii";
   };
 }
