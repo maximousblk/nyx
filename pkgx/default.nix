@@ -44,13 +44,4 @@
       extention = "${package}/build/adapters/pi/extension.js";
       skills = "${package}/skills";
     };
-
-  pi-terminal-theme =
-    let
-      package = pkgs.callPackage ./pi-terminal-theme.nix { };
-    in
-    {
-      inherit package;
-      themes = "${package}/themes";
-    };
 }

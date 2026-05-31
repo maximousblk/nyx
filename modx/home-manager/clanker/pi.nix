@@ -13,7 +13,6 @@ let
     defaultModel = "gpt-5.5";
     defaultThinkingLevel = "medium";
     enableInstallTelemetry = false;
-    theme = "terminal-tinted";
   };
   globalExtensionSettings = {
     extensions = [
@@ -28,7 +27,7 @@ let
       pkgx.pi-context-mode.skills
     ]
     ++ (cfg.settings.skills or [ ]);
-    themes = [ pkgx.pi-terminal-theme.themes ] ++ (cfg.settings.themes or [ ]);
+    themes = cfg.settings.themes or [ ];
   };
   userSettingsSansGlobalResources = builtins.removeAttrs cfg.settings [
     "extensions"
