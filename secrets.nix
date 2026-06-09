@@ -62,6 +62,22 @@ in
         packages.agenix = config.agenix-rekey.package;
         packages.agenix-rules = agenixRulesFile;
 
+        checks.secrets = pkgs.runCommand "secrets-check" { } ''
+          echo "Checking rekeyed secret paths..."
+          ${lib.concatMapStringsSep "\n" (
+            host:
+            lib.concatStringsSep "\n" (
+              lib.mapAttrsToList (name: secret: ''
+                test -e ${lib.escapeShellArg secret.file} || {
+                  echo "Missing rekeyed secret for ${host}:${name}: ${secret.file}" >&2
+                  exit 1
+                }
+              '') inputs.self.nixosConfigurations.${host}.config.age.secrets
+            )
+          ) hostsWithSecrets}
+          touch $out
+        '';
+
         # Force rekeyed secret paths into the nix store per host.
         # Required after `agenix rekey` for `nix flake check --no-build` to work
         # with storageMode = "local".
@@ -92,7 +108,7 @@ in
           program = "${pkgs.writeShellScript "secrets-rekey" ''
             ${agenixEnv}
             ${config.agenix-rekey.package}/bin/agenix rekey -a "$@" \
-              && exec ${config.apps.secrets-materialise.program}
+              && exec nix run .#secrets-materialise
           ''}";
         };
       };
