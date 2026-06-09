@@ -10,29 +10,24 @@
       ...
     }:
     {
-      files.files = [
-        {
-          path = ".github/main.svg";
-          drv = pkgs.runCommand "main.svg" { } ''
+      files = {
+        writer.app = true;
+
+        file = {
+          ".github/main.svg".source = pkgs.runCommand "main.svg" { } ''
             cp ${self.topology.${system}.config.output}/main.svg $out
           '';
-        }
-        {
-          path = ".github/network.svg";
-          drv = pkgs.runCommand "network.svg" { } ''
+
+          ".github/network.svg".source = pkgs.runCommand "network.svg" { } ''
             cp ${self.topology.${system}.config.output}/network.svg $out
           '';
-        }
-        {
-          path = ".github/README.md";
-          drv = pkgs.writeText "README.md" ''
+
+          ".github/README.md".text = ''
             # nyx
 
             ![Topology](main.svg)
           '';
-        }
-      ];
-
-      packages.write-files = config.files.writer.drv;
+        };
+      };
     };
 }
