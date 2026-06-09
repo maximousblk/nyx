@@ -2,13 +2,17 @@
   lib,
   pkgs,
   config,
+  pkgx,
   ...
 }:
 let
   cfg = config.optx.clanker;
 in
 {
-  imports = [ ./pi.nix ];
+  imports = [
+    ./pi.nix
+    ./omp.nix
+  ];
   options.optx.clanker = {
     opencode.enable = lib.mkEnableOption "opencode with MCP integration";
     claude.enable = lib.mkEnableOption "claude-code with MCP integration";
@@ -29,12 +33,9 @@ in
   };
 
   config = lib.mkMerge [
+    (lib.mkIf cfg.claude.enable { home.sessionVariables.CLAUDE_CODE_NO_FLICKER = "1"; })
 
-    (lib.mkIf (cfg.opencode.enable || cfg.claude.enable) {
-      home.sessionVariables.CLAUDE_CODE_NO_FLICKER = "1";
-
-      home.packages = [ pkgs.llm-agents.crush ];
-
+    {
       programs.mcp = {
         enable = true;
         servers = {
@@ -47,7 +48,7 @@ in
           };
         };
       };
-    })
+    }
 
     (lib.mkIf cfg.opencode.enable {
       programs.opencode = {

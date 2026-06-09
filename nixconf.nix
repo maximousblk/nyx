@@ -36,6 +36,12 @@ in
           });
         })
         (_final: prev: {
+          # https://github.com/NixOS/nixpkgs/issues/468388
+          # google-cloud-sdk >= 565 ships Python 3.14 bundled; components.nix
+          # hardcodes tcl-8_6 but 3.14 needs tcl9. Pin to older nixpkgs.
+          google-cloud-sdk = inputs.nixpkgs-google-cloud-sdk-552.legacyPackages.${prev.stdenv.hostPlatform.system}.google-cloud-sdk;
+        })
+        (_final: prev: {
           # https://github.com/NixOS/nixpkgs/issues/426717
           openldap = prev.openldap.overrideAttrs (_: {
             doCheck = !prev.stdenv.hostPlatform.isi686;

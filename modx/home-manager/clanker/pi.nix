@@ -8,51 +8,14 @@
 let
   cfg = config.optx.clanker.pi;
   jsonFormat = pkgs.formats.json { };
-  baseSettings = {
-    defaultProvider = "opencode-go";
-    defaultModel = "deepseek-v4-pro";
-    defaultThinkingLevel = "medium";
-    enabledModels = [
-      "openai-codex/gpt-5.5"
-      "commandcode/deepseek/deepseek-v4-pro"
-      "opencode-go/deepseek-v4-pro"
-      "opencode-go/mimo-v2.5-pro"
-    ];
-    enableInstallTelemetry = false;
-  };
-  globalExtensionSettings = {
-    extensions = [
-      pkgx.pi-commandcode-provider.extention
-      pkgx.pi-mcp-adapter.extention
-      pkgx.pi-web-access.extention
-      pkgx.pi-context-mode.extention
-    ]
-    ++ (cfg.settings.extensions or [ ]);
-    skills = [
-      pkgx.pi-web-access.skills
-      pkgx.pi-context-mode.skills
-    ]
-    ++ (cfg.settings.skills or [ ]);
-    themes = cfg.settings.themes or [ ];
-  };
-  userSettingsSansGlobalResources = builtins.removeAttrs cfg.settings [
-    "extensions"
-    "skills"
-    "themes"
-  ];
 in
 {
   options.optx.clanker.pi = {
-    enable = lib.mkEnableOption "pi-coding-agent";
-
-    settings = lib.mkOption {
-      type = jsonFormat.type;
-      default = { };
-      description = "Extra settings merged into ~/.pi/agent/settings.json.";
-    };
+    enable = lib.mkEnableOption "pi coding agent";
   };
 
   config = lib.mkIf cfg.enable {
+
     home.packages = [ pkgs.llm-agents.pi ];
 
     home.sessionVariables = {
@@ -61,13 +24,26 @@ in
     };
 
     home.file = {
-      ".pi/agent/settings.json".source = jsonFormat.generate "pi-settings.json" (baseSettings // userSettingsSansGlobalResources // globalExtensionSettings);
+      ".pi/agent/settings.json".source = jsonFormat.generate "pi-settings.json" {
+        defaultProvider = "opencode-go";
+        defaultModel = "deepseek-v4-pro";
+        defaultThinkingLevel = "medium";
+        enabledModels = [
+          "openai-codex/gpt-5.5"
+          "commandcode/deepseek/deepseek-v4-pro"
+          "opencode-go/deepseek-v4-pro"
+          "opencode-go/mimo-v2.5-pro"
+        ];
+        enableInstallTelemetry = false;
+        extensions = [
+          pkgx.pi-commandcode-provider.extention
+          pkgx.pi-mcp-adapter.extention
+          pkgx.pi-web-access.extention
+          pkgx.pi-context-mode.extention
+        ];
+      };
 
-      ".pi/agent/AGENTS.md".source = ./AGENTS.md;
-      ".pi/agent/skills".source = ./skills;
-      ".pi/agent/extensions".source = ./extensions;
-      ".pi/agent/prompts".source = ./prompts;
-      ".pi/agent/themes".source = ./themes;
+      ".pi/agent/extensions".source = ./pi-extensions;
     };
   };
 }

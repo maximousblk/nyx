@@ -1,6 +1,8 @@
 { pkgs, pkgx, ... }:
 {
   home.packages = with pkgs; [
+    ansible
+    awscli2
     bat
     binutils
     btop
