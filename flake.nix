@@ -202,12 +202,15 @@
             };
 
             pre-commit.check.enable = false;
-            pre-commit.settings.hooks.flake-check = {
-              enable = true;
-              name = "nix flake check";
-              entry = "nix flake check --no-build --keep-going";
-              pass_filenames = false;
-              always_run = true;
+            pre-commit.settings.hooks = {
+              treefmt.enable = true;
+              flake-check = {
+                enable = true;
+                name = "flake check nobuild";
+                entry = "nix flake check --no-build --keep-going";
+                pass_filenames = false;
+                always_run = true;
+              };
             };
 
             apps.install-git-hooks = {
