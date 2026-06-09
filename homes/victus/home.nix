@@ -43,6 +43,7 @@
     duf
     exfatprogs
     felix-fm
+    freecad
     gh
     hicolor-icon-theme
     hyprpwcenter
