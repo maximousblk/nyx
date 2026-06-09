@@ -1,5 +1,4 @@
-{ pkgs, lib, ... }:
-{
+{ pkgs, lib, ... }: {
   config = {
     home.sessionVariables = {
       VISUAL = "zeditor --wait";

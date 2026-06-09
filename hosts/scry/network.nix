@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   networking.hostName = "scry";
   networking.wireless.enable = false;
   networking.useDHCP = false;

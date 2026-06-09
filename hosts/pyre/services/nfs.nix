@@ -1,5 +1,4 @@
-{ config, lib, ... }:
-{
+{ config, lib, ... }: {
   config = {
     # NFSv4.2 server for media library
     services.nfs.server = {

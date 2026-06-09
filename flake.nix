@@ -159,8 +159,7 @@
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
-      { self, ... }:
-      {
+      { self, ... }: {
         imports = [
           inputs.treefmt-nix.flakeModule
           inputs.git-hooks.flakeModule

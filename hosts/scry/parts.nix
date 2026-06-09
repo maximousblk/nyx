@@ -7,8 +7,7 @@
 }:
 {
   flake = withSystem "aarch64-linux" (
-    { system, ... }:
-    {
+    { system, ... }: {
       nixosConfigurations.scry = mkNixos {
         inherit system;
         modules = [ ./configuration.nix ];

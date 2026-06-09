@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
 
   services.blueman.enable = true;
   services.openssh.enable = true;

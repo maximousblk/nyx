@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
 
   home.file."wallpapers" = {
     enable = true;

@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   config = {
 
     powerManagement.enable = true;

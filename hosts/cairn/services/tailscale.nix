@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   config = {
     networking.firewall.checkReversePath = "loose";
 

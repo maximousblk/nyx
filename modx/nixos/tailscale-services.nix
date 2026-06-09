@@ -44,25 +44,23 @@ let
       message = "optx.tailscale.services.${svcName}.serve: invalid key '${frontend}' — must be {${lib.concatStringsSep "," validProtocols}}:{1-65535}";
     };
 
-  serviceOpts =
-    { ... }:
-    {
-      options = {
-        serve = lib.mkOption {
-          type = lib.types.attrsOf lib.types.str;
-          description = "Endpoint map: frontend (protocol:port) → backend target";
-          example = {
-            "https:443" = "http://localhost:8096";
-          };
-        };
-
-        backends = lib.mkOption {
-          type = lib.types.listOf lib.types.str;
-          description = "Systemd units backing this service. Sidecar drains when any stops.";
-          example = [ "jellyfin.service" ];
+  serviceOpts = { ... }: {
+    options = {
+      serve = lib.mkOption {
+        type = lib.types.attrsOf lib.types.str;
+        description = "Endpoint map: frontend (protocol:port) → backend target";
+        example = {
+          "https:443" = "http://localhost:8096";
         };
       };
+
+      backends = lib.mkOption {
+        type = lib.types.listOf lib.types.str;
+        description = "Systemd units backing this service. Sidecar drains when any stops.";
+        example = [ "jellyfin.service" ];
+      };
     };
+  };
 
   # "https:443" → "--https=443"
   serveFlag =

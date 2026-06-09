@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
 
   services.gnome-keyring.enable = true;
   services.polkit-gnome.enable = true;

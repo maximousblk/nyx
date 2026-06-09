@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
   imports = [
     ./disko.nix
     ./network.nix

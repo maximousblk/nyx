@@ -7,8 +7,7 @@
 }:
 {
   flake = withSystem "x86_64-linux" (
-    { system, ... }:
-    {
+    { system, ... }: {
       nixosConfigurations.cairn = mkNixos {
         inherit system;
         modules = [ ./configuration.nix ];

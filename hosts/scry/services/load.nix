@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   # OCI Always-Free Ampere instances are reclaimed if CPU stays under 20% AND
   # memory under 20% AND network under 20% for ~7 consecutive days. Keep a
   # small floor of CPU + RAM activity so the box is never a reclaim candidate.

@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   config = {
     networking.hostName = "cairn";
     networking.wireless.enable = false;

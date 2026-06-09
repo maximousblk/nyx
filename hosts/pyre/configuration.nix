@@ -1,5 +1,4 @@
-{ inputs, modx, ... }:
-{
+{ inputs, modx, ... }: {
   imports = [
     modx.nixos.secrets
     ./intel.nix

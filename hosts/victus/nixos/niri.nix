@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   services.displayManager.sessionPackages = [ pkgs.niri ];
   programs.xwayland.enable = true;
 

@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   services.resolved.enable = false;
 
   services.dnscrypt-proxy = {

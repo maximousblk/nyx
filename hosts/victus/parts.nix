@@ -7,8 +7,7 @@
 }:
 {
   flake = withSystem "x86_64-linux" (
-    { system, ... }:
-    {
+    { system, ... }: {
       nixosConfigurations.victus = mkNixos {
         inherit system;
         modules = [ ./configuration.nix ];

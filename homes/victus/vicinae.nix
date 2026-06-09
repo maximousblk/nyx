@@ -1,5 +1,4 @@
-{ pkgs, inputs, ... }:
-{
+{ pkgs, inputs, ... }: {
   services.vicinae = {
     enable = true;
     package = pkgs.vicinae;

@@ -94,25 +94,21 @@ in
 
   age.secrets.zerobyte-env-app-secret = {
     mode = "0400";
-    generator.script =
-      { pkgs, ... }:
-      ''
-        echo -n "APP_SECRET="
-        ${pkgs.openssl}/bin/openssl rand -hex 32
-      '';
+    generator.script = { pkgs, ... }: ''
+      echo -n "APP_SECRET="
+      ${pkgs.openssl}/bin/openssl rand -hex 32
+    '';
   };
 
   age.secrets.zerobyte-rclone-conf.mode = "0400";
   age.secrets.zerobyte-sftp-ssh-private-key = {
     mode = "0400";
-    generator.script =
-      { pkgs, ... }:
-      ''
-        tmpdir=$(mktemp -d)
-        trap 'rm -rf "$tmpdir"' EXIT
-        ${pkgs.openssh}/bin/ssh-keygen -q -t ed25519 -N "" -f "$tmpdir/key" >/dev/null
-        cat "$tmpdir/key"
-      '';
+    generator.script = { pkgs, ... }: ''
+      tmpdir=$(mktemp -d)
+      trap 'rm -rf "$tmpdir"' EXIT
+      ${pkgs.openssh}/bin/ssh-keygen -q -t ed25519 -N "" -f "$tmpdir/key" >/dev/null
+      cat "$tmpdir/key"
+    '';
   };
 
   topology.self.services.zerobyte = {

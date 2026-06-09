@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   services.displayManager = {
     defaultSession = "niri";
     autoLogin = {

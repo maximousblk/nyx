@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   networking.firewall.checkReversePath = "loose";
 
   services.tailscale = {

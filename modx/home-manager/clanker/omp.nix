@@ -34,7 +34,7 @@ in
           skills.enableClaudeProject = false;
           skills.enablePiUser = false;
           skills.enablePiProject = false;
-          skills.includeSkills = [];
+          skills.includeSkills = [ ];
           skills.customDirectories = [ "~/.agent/skills" ];
           display.tabWidth = 2;
           todo.eager = true;

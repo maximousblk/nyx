@@ -22,23 +22,19 @@ in
   # NEXTAUTH_SECRET - used by karakeep only
   age.secrets.karakeep-env-nextauth-secret = {
     mode = "0400";
-    generator.script =
-      { pkgs, ... }:
-      ''
-        echo -n "NEXTAUTH_SECRET="
-        ${pkgs.pwgen}/bin/pwgen -s 48 1
-      '';
+    generator.script = { pkgs, ... }: ''
+      echo -n "NEXTAUTH_SECRET="
+      ${pkgs.pwgen}/bin/pwgen -s 48 1
+    '';
   };
 
   # MEILI_MASTER_KEY - used by both meilisearch and karakeep
   age.secrets.karakeep-env-meili-master-key = {
     mode = "0400";
-    generator.script =
-      { pkgs, ... }:
-      ''
-        echo -n "MEILI_MASTER_KEY="
-        ${pkgs.pwgen}/bin/pwgen -s 48 1
-      '';
+    generator.script = { pkgs, ... }: ''
+      echo -n "MEILI_MASTER_KEY="
+      ${pkgs.pwgen}/bin/pwgen -s 48 1
+    '';
   };
 
   topology.self.services.karakeep = {

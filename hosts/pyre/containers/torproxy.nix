@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   # HTTP proxy bridge over Tor SOCKS5 — for apps that only support HTTP proxies (e.g. Seerr)
   services.privoxy = {
     enable = true;

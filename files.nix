@@ -1,5 +1,4 @@
-{ self, inputs, ... }:
-{
+{ self, inputs, ... }: {
   imports = [ (inputs.files + "/flake-module.nix") ];
 
   perSystem =

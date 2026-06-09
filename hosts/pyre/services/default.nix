@@ -1,5 +1,4 @@
-{ modx, ... }:
-{
+{ modx, ... }: {
   imports = [
     ./dns.nix
     ./ssh.nix

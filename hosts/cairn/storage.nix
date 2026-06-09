@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   system.fsPackages = [ pkgs.mergerfs ];
 
   programs.fuse.userAllowOther = true;

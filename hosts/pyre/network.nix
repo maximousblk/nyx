@@ -1,5 +1,4 @@
-{ ... }:
-{
+{ ... }: {
   config = {
     networking.hostName = "pyre";
     networking.wireless.enable = false;

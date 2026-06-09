@@ -1,5 +1,4 @@
-{ modx, ... }:
-{
+{ modx, ... }: {
   imports = [
     modx.nixos.opentelemetry-agent
     ./load.nix

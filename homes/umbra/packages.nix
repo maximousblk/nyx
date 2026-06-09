@@ -1,5 +1,4 @@
-{ pkgs, pkgx, ... }:
-{
+{ pkgs, pkgx, ... }: {
   home.packages = with pkgs; [
     ansible
     awscli2

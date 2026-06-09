@@ -23,12 +23,10 @@ in
   # PAPERLESS_SECRET_KEY - session signing key
   age.secrets.paperless-env-secret-key = {
     mode = "0400";
-    generator.script =
-      { pkgs, ... }:
-      ''
-        echo -n "PAPERLESS_SECRET_KEY="
-        ${pkgs.pwgen}/bin/pwgen -s 64 1
-      '';
+    generator.script = { pkgs, ... }: ''
+      echo -n "PAPERLESS_SECRET_KEY="
+      ${pkgs.pwgen}/bin/pwgen -s 64 1
+    '';
   };
 
   topology.self.services.paperless = {
