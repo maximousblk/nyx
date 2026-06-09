@@ -42,6 +42,17 @@ in
           google-cloud-sdk = inputs.nixpkgs-google-cloud-sdk-552.legacyPackages.${prev.stdenv.hostPlatform.system}.google-cloud-sdk;
         })
         (_final: prev: {
+          # https://github.com/NixOS/nixpkgs/issues/526914
+          # https://github.com/bitwarden/clients/pull/20448
+          bitwarden-desktop = prev.bitwarden-desktop.override {
+            electron_39 = prev.electron_39.overrideAttrs (old: {
+              meta = old.meta // {
+                knownVulnerabilities = prev.lib.remove "Electron version 39.8.10 is EOL" old.meta.knownVulnerabilities;
+              };
+            });
+          };
+        })
+        (_final: prev: {
           # https://github.com/NixOS/nixpkgs/issues/426717
           openldap = prev.openldap.overrideAttrs (_: {
             doCheck = !prev.stdenv.hostPlatform.isi686;
