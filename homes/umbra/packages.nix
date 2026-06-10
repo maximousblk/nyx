@@ -1,6 +1,7 @@
 { pkgs, pkgx, ... }: {
   home.packages = with pkgs; [
     ansible
+    aria2
     awscli2
     bat
     binutils
