@@ -7,6 +7,7 @@
 let
   cfg = config.optx.clanker.omp;
   yamlFormat = pkgs.formats.yaml { };
+  skillsDir = ./skills;
 in
 {
   options.optx.clanker.omp = {
@@ -35,7 +36,10 @@ in
           skills.enablePiUser = false;
           skills.enablePiProject = false;
           skills.includeSkills = [ ];
-          skills.customDirectories = [ "~/.agent/skills" ];
+          skills.customDirectories = [
+            "~/.agent/skills"
+            "${skillsDir}"
+          ];
           display.tabWidth = 2;
           todo.eager = true;
           task.eager = false;

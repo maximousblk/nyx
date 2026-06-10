@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  pkgx,
   ...
 }:
 let
@@ -135,6 +134,5 @@ in
         acceleration = cfg.ollama.acceleration;
       };
     })
-
   ];
 }
