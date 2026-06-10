@@ -1,3 +1,5 @@
+include optional=true "noctalia.kdl"
+
 // Input Devices
 input {
     keyboard {
@@ -117,8 +119,8 @@ recent-windows {
 // Layer Rules
 layer-rule {
     // Make the wallpaper stationary, rather than moving with workspaces.
-    // match namespace="^noctalia-overview*"
-    match namespace="^noctalia-wallpaper*"
+    match namespace="^noctalia-backdrop"
+    match namespace="^noctalia-wallpaper"
     match namespace="^swww-daemon$"
     place-within-backdrop true
 }
@@ -218,10 +220,10 @@ binds {
 
     // Session Controls
     Mod+Shift+slash { show-hotkey-overlay; }                                      // Mod + ?         : Help
-    Mod+Shift+Q     { quit; }                                                     // Mod + Shift + E : Exit Niri
-    Mod+Tab         { toggle-overview; }                                          // Mod + Tab       : Show overview
-    Mod+L           { spawn "noctalia-shell" "ipc" "call" "lockScreen" "lock"; }  // Mod + L         : Lock the screen
-    Mod+I           { spawn "noctalia-shell" "ipc" "call" "settings" "toggle"; }  // Mod + I         : Noctalia settings
+    Mod+Shift+Q     { quit; }                                      // Mod + Shift + E : Exit Niri
+    Mod+Tab         { toggle-overview; }                           // Mod + Tab       : Show overview
+    Mod+L           { spawn "noctalia" "msg" "session" "lock"; }   // Mod + L         : Lock the screen
+    Mod+I           { spawn "noctalia" "msg" "settings-toggle"; }  // Mod + I         : Noctalia settings
 
     // Screencast
     Mod+Shift+S { screenshot; }                 // Mod + Shift + S   : Upen screenshot ui

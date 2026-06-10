@@ -11,6 +11,8 @@
     unrar
     ncdu
 
+    ddcutil
+
     cudaPackages.cudatoolkit
   ];
 
