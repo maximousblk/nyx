@@ -67,7 +67,7 @@ in
         };
 
         receivers = {
-          # Host metrics: CPU, memory, disk, filesystem, load, network, paging
+          # Host metrics: CPU, memory, disk, filesystem, load, network, paging, uptime
           hostmetrics = {
             collection_interval = "60s";
             scrapers = {
@@ -148,8 +148,12 @@ in
                 mute_process_cgroup_error = true;
               };
               processes = { };
+              system = { };
             };
           };
+
+          # Systemd unit states
+          systemd = { };
 
           # Journald logs (includes all systemd units and container logs)
           journald = {
@@ -338,12 +342,15 @@ in
           extensions = [ "health_check" ];
           telemetry = {
             logs.level = "info";
-            metrics.address = "0.0.0.0:8888";
           };
 
           pipelines = {
             metrics = {
-              receivers = [ "hostmetrics" ] ++ containerMetricReceivers;
+              receivers = [
+                "hostmetrics"
+                "systemd"
+              ]
+              ++ containerMetricReceivers;
               processors = [
                 "resourcedetection"
                 "resource"
