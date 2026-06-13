@@ -14,7 +14,7 @@
     niri
     xwayland-satellite
     gnome-keyring
-    nemo
+    kdePackages.dolphin
   ];
 
   xdg.portal = {

@@ -187,8 +187,8 @@
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
-      "inode/directory" = "nemo.desktop";
-      "application/x-gnome-saved-search" = "nemo.desktop";
+      "inode/directory" = "org.kde.dolphin.desktop";
+      "application/x-gnome-saved-search" = "org.kde.dolphin.desktop";
     };
   };
 
