@@ -60,12 +60,15 @@ in
           startup.setupWizard = false;
           enabledModels = [
             "openai-codex/gpt-5.5"
-            "opencode-go/deepseek-v4-pro"
-            "opencode-go/mimo-v2.5-pro"
             "openai-codex/gpt-5.4-mini"
+
+            "opencode-go/deepseek-v4-pro"
             "opencode-go/deepseek-v4-flash"
+            "opencode-go/glm-5.1"
+            "opencode-go/minimax-m3"
+
             "opencode-zen/big-pickle"
-            "opencode-zen/minimax-m3-free"
+            "opencode-zen/nemotron-3-ultra-free"
           ];
         };
       }
