@@ -59,6 +59,22 @@ in
             doCheck = !prev.stdenv.hostPlatform.isi686;
           });
         })
+        (_final: prev: {
+          # https://github.com/NixOS/nixpkgs/issues/513195
+          # https://github.com/NixOS/nixpkgs/pull/531346
+          # https://github.com/OrcaSlicer/OrcaSlicer/pull/12308
+          # OrcaSlicer's wxGLCanvas uses GLX; EGL-enabled GLEW trips
+          # "Missing GL version" and leaves the 3D workspace blank.
+          orca-slicer = prev.symlinkJoin {
+            name = "orca-slicer-glx";
+            paths = [ prev.orca-slicer ];
+            nativeBuildInputs = [ prev.makeWrapper ];
+            postBuild = ''
+              wrapProgram $out/bin/orca-slicer \
+                --set LD_PRELOAD "${(prev.glew.override { enableEGL = false; }).out}/lib/libGLEW.so.2.3"
+            '';
+          };
+        })
       ];
     };
 
