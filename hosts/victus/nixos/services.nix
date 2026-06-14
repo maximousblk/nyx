@@ -18,6 +18,11 @@
     collect.diskStats = true;
   };
 
+  services.nohang = {
+    enable = true;
+    configPath = "desktop";
+  };
+
   services.scx = {
     scheduler = "scx_bpfland";
     enable = true;
