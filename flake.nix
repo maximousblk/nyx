@@ -60,7 +60,7 @@
     };
 
     nix-cachyos-kernel = {
-      url = "github:xddxdd/nix-cachyos-kernel/c57a7ab46f5e9b4eb32ed74ba6e7cd5bcd3a6e64";
+      url = "github:xddxdd/nix-cachyos-kernel/release";
       inputs.flake-compat.follows = "flake-compat";
       inputs.flake-parts.follows = "flake-parts";
     };
