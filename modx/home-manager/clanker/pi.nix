@@ -30,13 +30,11 @@ in
         defaultThinkingLevel = "medium";
         enabledModels = [
           "openai-codex/gpt-5.5"
-          "commandcode/deepseek/deepseek-v4-pro"
           "opencode-go/deepseek-v4-pro"
           "opencode-go/mimo-v2.5-pro"
         ];
         enableInstallTelemetry = false;
         extensions = [
-          pkgx.pi-commandcode-provider.extention
           pkgx.pi-mcp-adapter.extention
           pkgx.pi-web-access.extention
           pkgx.pi-context-mode.extention
