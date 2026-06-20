@@ -24,7 +24,7 @@ let
 
     outputHashAlgo = "sha256";
     outputHashMode = "recursive";
-    outputHash = "sha256-7Omc73iQqqBd8L0CvC6anQXsF806ro5RvCSzfQYmrlI=";
+    outputHash = "sha256-PMYRVq2hyrnL3heuxzoGmEZIfBMaheq4sxFHgJ657Wc=";
 
     buildPhase = ''
       runHook preBuild
