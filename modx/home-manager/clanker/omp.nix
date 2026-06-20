@@ -20,47 +20,76 @@ in
     home.file = lib.mkMerge [
       {
         ".omp/agent/config.yml".source = yamlFormat.generate "omp-config.yml" {
-          browser.enabled = false;
-          renderMermaid.enabled = true;
-          bash.autoBackground.enabled = true;
           async.enabled = true;
           async.pollWaitDuration = "10m";
-          hideThinkingBlock = true;
-          lsp.enabled = false;
-          task.enableLsp = false;
-          marketplace.autoUpdate = "off";
+          autolearn.enabled = true;
+          bash.autoBackground.enabled = true;
+          bashInterceptor.enabled = true;
+          browser.enabled = false;
+          commands.enableClaudeProject = false;
+          commands.enableClaudeUser = false;
+          commands.enableOpencodeProject = false;
+          commands.enableOpencodeUser = false;
+          compaction.handoffSaveToDisk = true;
+          compaction.strategy = "shake";
+          contextPromotion.enabled = false;
           dev.autoqa.consent = "denied";
-          skills.enableCodexUser = false;
-          skills.enableClaudeUser = false;
+          display.shimmer = "kitt";
+          display.tabWidth = 2;
+          edit.fuzzyThreshold = 0.98;
+          edit.mode = "patch";
+          github.enabled = true;
+          hideThinkingBlock = true;
+          images.autoResize = true;
+          inspect_image.enabled = true;
+          lsp.diagnosticsOnWrite = false;
+          lsp.enabled = false;
+          lsp.lazy = false;
+          marketplace.autoUpdate = "off";
+          mcp.enableProjectConfig = false;
+          memory.backend = "mnemopi";
+          mnemopi.scoping = "global";
+          model.advisor.enabled = true;
+          model.advisor.syncBacklog = 5;
+          model.includeModelInPrompt = false;
+          model.personality = "pragmatic";
+          modelRoles.commit = "opencode-go/deepseek-v4-flash";
+          modelRoles.default = "minimax-code/MiniMax-M3";
+          modelRoles.plan = "minimax-code/MiniMax-M3";
+          modelRoles.slow = "minimax-code/MiniMax-M3";
+          modelRoles.smol = "opencode-go/deepseek-v4-flash";
+          plan.defaultOnStartup = true;
+          readLineNumbers = true;
+          showHardwareCursor = true;
           skills.enableClaudeProject = false;
-          skills.enablePiUser = false;
+          skills.enableClaudeUser = false;
+          skills.enableCodexUser = false;
           skills.enablePiProject = false;
+          skills.enablePiUser = false;
           skills.includeSkills = [ ];
+          startup.checkUpdate = false;
+          startup.setupWizard = false;
+          statusLine.preset = "nerd";
+          statusLine.separator = "powerline-thin";
+          task.eager = "default";
+          task.enableLsp = false;
+          task.maxConcurrency = 4;
+          task.maxRecursionDepth = 0;
+          task.showResolvedModelBadge = true;
+          terminal.showImages = true;
+          todo.eager = "always";
+          tools.discoveryMode = "all";
+          treeFilterMode = "no-tools";
+
           skills.customDirectories = [
             "~/.agent/skills"
             "${skillsDir}"
           ];
-          display.tabWidth = 2;
-          todo.eager = true;
-          task.eager = false;
-          inspect_image.enabled = true;
-          commands.enableClaudeUser = false;
-          commands.enableClaudeProject = false;
-          commands.enableOpencodeUser = false;
-          commands.enableOpencodeProject = false;
-          modelRoles.default = "opencode-go/deepseek-v4-pro";
-          modelRoles.smol = "opencode-go/deepseek-v4-flash";
-          modelRoles.plan = "opencode-go/deepseek-v4-pro";
-          modelRoles.slow = "opencode-go/deepseek-v4-pro";
-          modelRoles.commit = "opencode-go/deepseek-v4-flash";
-          enableMCP = false;
-          memory.backend = "mnemopi";
-          mnemopi.scoping = "global";
-          startup.checkUpdate = false;
-          startup.setupWizard = false;
           enabledModels = [
             "openai-codex/gpt-5.5"
             "openai-codex/gpt-5.4-mini"
+
+            "minimax-code/MiniMax-M3"
 
             "opencode-go/deepseek-v4-pro"
             "opencode-go/deepseek-v4-flash"
