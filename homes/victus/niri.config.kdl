@@ -230,6 +230,11 @@ binds {
     Mod+Ctrl+W  { set-dynamic-cast-window; }    // Mod + Control + W : Set focused window as dynamic cast target
     Mod+Ctrl+D  { set-dynamic-cast-monitor; }   // Mod + Control + M : Set focused display as dynamic cast target
     Mod+Ctrl+X  { clear-dynamic-cast-target; }  // Mod + Control + X : Clear dynamic cast target
+
+    // Screen Annotations (Chameleos)
+    Mod+F1 { spawn "chamel" "toggle"; }  // Mod + F1 : Toggle drawing input
+    Mod+F2 { spawn "chamel" "undo"; }    // Mod + F2 : Undo last stroke
+    Mod+F3 { spawn "chamel" "clear"; }   // Mod + F3 : Clear all strokes
 }
 
 debug {

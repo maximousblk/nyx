@@ -40,6 +40,7 @@
     bitwarden-desktop
     btop-cuda
     chafa
+    chameleos
     duf
     exfatprogs
     felix-fm
@@ -208,6 +209,19 @@
     Install.WantedBy = [ "niri-session.target" ];
     Service = {
       ExecStart = "${pkgs.uxplay}/bin/uxplay";
+      Restart = "on-failure";
+    };
+  };
+
+  systemd.user.services.chameleos = {
+    Unit = {
+      Description = "Chameleos screen annotation daemon";
+      After = [ "niri-session.target" ];
+      Wants = [ "niri-session.target" ];
+    };
+    Install.WantedBy = [ "niri-session.target" ];
+    Service = {
+      ExecStart = "${pkgs.chameleos}/bin/chameleos";
       Restart = "on-failure";
     };
   };
