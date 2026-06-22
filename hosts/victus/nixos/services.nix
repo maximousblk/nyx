@@ -9,15 +9,6 @@
   services.fstrim.enable = true;
   services.hdapsd.enable = false;
 
-  services.below = {
-    enable = true;
-    retention.size = 8 * 1000 * 1000 * 1000;
-    compression.enable = true;
-    collect.ioStats = true;
-    collect.exitStats = true;
-    collect.diskStats = true;
-  };
-
   services.nohang = {
     enable = true;
     configPath = "desktop";
