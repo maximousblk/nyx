@@ -35,7 +35,6 @@ in
         ];
         enableInstallTelemetry = false;
         extensions = [
-          pkgx.pi-mcp-adapter.extention
           pkgx.pi-web-access.extention
           pkgx.pi-context-mode.extention
         ];
