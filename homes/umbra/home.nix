@@ -54,6 +54,21 @@
     programs.nix-index.enable = true;
     programs.lazydocker.enable = true;
 
+    programs.herdr = {
+      enable = true;
+
+      settings = {
+        keys.prefix = "ctrl+b";
+        keys.new_worktree = "prefix+shift+g";
+        keys.open_worktree = "prefix+shift+o";
+        keys.remove_worktree = "prefix+alt+d";
+        keys.previous_workspace = "prefix+shift+left";
+        keys.next_workspace = "prefix+shift+right";
+        keys.focus_agent = "prefix+alt+1..9";
+        terminal.default_shell = "${config.programs.fish.package}/bin/fish";
+      };
+    };
+
     programs.sesh = {
       enable = true;
       enableTmuxIntegration = false;
