@@ -35,6 +35,7 @@ in
         ];
         enableInstallTelemetry = false;
         extensions = [
+          "${pkgs.herdr.src}/src/integration/assets/pi/herdr-agent-state.ts"
           pkgx.pi-web-access.extention
           pkgx.pi-context-mode.extention
         ];

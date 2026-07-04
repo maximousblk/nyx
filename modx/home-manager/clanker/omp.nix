@@ -135,6 +135,12 @@ in
           ];
         };
       }
+      {
+        ".omp/agent/skills/herdr/SKILL.md".source = pkgs.herdr.src + "/SKILL.md";
+      }
+      {
+        ".omp/agent/extensions/herdr-omp-agent-state.ts".source = pkgs.herdr.src + "/src/integration/assets/omp/herdr-agent-state.ts";
+      }
     ];
   };
 }
