@@ -25,7 +25,9 @@ in
           autolearn.enabled = true;
           bash.autoBackground.enabled = true;
           bashInterceptor.enabled = true;
+          browser.cmux = false;
           browser.enabled = false;
+          browser.headless = false;
           commands.enableClaudeProject = false;
           commands.enableClaudeUser = false;
           commands.enableOpencodeProject = false;
@@ -33,14 +35,24 @@ in
           compaction.handoffSaveToDisk = true;
           compaction.strategy = "shake";
           contextPromotion.enabled = false;
-          dev.autoqa.consent = "denied";
+          dev.autoqa.consent = "no";
+          display.cacheMissMarker = true;
           display.shimmer = "kitt";
           display.tabWidth = 2;
+          edit.fuzzyMatch = false;
           edit.fuzzyThreshold = 0.98;
           edit.mode = "patch";
+          eval.jl = true;
+          eval.js = true;
+          eval.py = true;
+          eval.rb = true;
+          features.unexpectedStopDetection = true;
+          grep.contextAfter = 5;
+          grep.contextBefore = 5;
           github.enabled = true;
           hideThinkingBlock = true;
           images.autoResize = true;
+          includeModelInPrompt = false;
           inspect_image.enabled = true;
           lsp.diagnosticsOnWrite = false;
           lsp.enabled = false;
@@ -49,16 +61,21 @@ in
           mcp.enableProjectConfig = false;
           memory.backend = "mnemopi";
           mnemopi.scoping = "global";
-          model.advisor.enabled = true;
-          model.advisor.syncBacklog = 5;
-          model.includeModelInPrompt = false;
-          model.personality = "pragmatic";
-          modelRoles.commit = "opencode-go/deepseek-v4-flash";
+          advisor.enabled = true;
+          advisor.syncBacklog = "5";
+          personality = "pragmatic";
+          modelRoles.advisor = "openai-codex/gpt-5.5";
+          modelRoles.commit = "opencode-zen/deepseek-v4-flash-free";
           modelRoles.default = "minimax-code/MiniMax-M3";
-          modelRoles.plan = "minimax-code/MiniMax-M3";
+          modelRoles.designer = "openai-codex/gpt-5.5";
+          modelRoles.plan = "openai-codex/gpt-5.5";
           modelRoles.slow = "minimax-code/MiniMax-M3";
-          modelRoles.smol = "opencode-go/deepseek-v4-flash";
-          plan.defaultOnStartup = true;
+          modelRoles.smol = "opencode-zen/deepseek-v4-flash-free";
+          modelRoles.task = "minimax-code/MiniMax-M3";
+          modelRoles.tiny = "opencode-zen/deepseek-v4-flash-free";
+          modelRoles.vision = "minimax-code/MiniMax-M3";
+          plan.defaultOnStartup = false;
+          plan.enabled = false;
           readLineNumbers = true;
           showHardwareCursor = true;
           skills.enableClaudeProject = false;
@@ -69,17 +86,37 @@ in
           skills.includeSkills = [ ];
           startup.checkUpdate = false;
           startup.setupWizard = false;
-          statusLine.preset = "nerd";
+          symbolPreset = "nerd";
+          statusLine.preset = "custom";
           statusLine.separator = "powerline-thin";
+          statusLine.compactThinkingLevel = true;
+          statusLine.leftSegments = [
+            "pi"
+            "model"
+            "mode"
+            "path"
+            "git"
+            "pr"
+            "subagents"
+          ];
+          statusLine.rightSegments = [
+            "session_name"
+            "cost"
+            "context_pct"
+          ];
           task.eager = "default";
           task.enableLsp = false;
           task.maxConcurrency = 4;
           task.maxRecursionDepth = 0;
           task.showResolvedModelBadge = true;
+          terminal.showProgress = true;
           terminal.showImages = true;
-          todo.eager = "always";
+          todo.eager = "preferred";
           tools.discoveryMode = "all";
           treeFilterMode = "no-tools";
+          tui.hyperlinks = "always";
+          tui.tight = true;
+          worktree.base = "~/projects";
 
           skills.customDirectories = [
             "~/.agent/skills"
@@ -87,16 +124,13 @@ in
           ];
           enabledModels = [
             "openai-codex/gpt-5.5"
-            "openai-codex/gpt-5.4-mini"
 
             "minimax-code/MiniMax-M3"
 
-            "opencode-go/deepseek-v4-pro"
-            "opencode-go/deepseek-v4-flash"
-            "opencode-go/glm-5.1"
-            "opencode-go/minimax-m3"
+            "opencode-go/glm-5.2"
 
             "opencode-zen/big-pickle"
+            "opencode-zen/deepseek-v4-flash-free"
             "opencode-zen/nemotron-3-ultra-free"
           ];
         };
