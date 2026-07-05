@@ -150,6 +150,15 @@
 
   programs.nix-index-database.comma.enable = true;
 
+  programs.herdr = {
+    enable = true;
+
+    settings = {
+      keys.prefix = "ctrl+b";
+      terminal.default_shell = "${config.programs.fish.package}/bin/fish";
+    };
+  };
+
   programs.fish = {
     enable = true;
     interactiveShellInit = ''
