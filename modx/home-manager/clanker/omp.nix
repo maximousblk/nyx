@@ -124,6 +124,9 @@ in
           ];
           enabledModels = [
             "openai-codex/gpt-5.5"
+            "openai-codex/gpt-5.6-luna"
+            "openai-codex/gpt-5.6-sol"
+            "openai-codex/gpt-5.6-terra"
 
             "minimax-code/MiniMax-M3"
 
