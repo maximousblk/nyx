@@ -3,6 +3,7 @@
   pkgs,
   config,
   pkgx,
+  inputs,
   ...
 }:
 let
@@ -16,7 +17,7 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = [ pkgs.llm-agents.pi ];
+    home.packages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi ];
 
     home.sessionVariables = {
       PI_TELEMETRY = "0";

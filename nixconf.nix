@@ -23,7 +23,6 @@ in
         inputs.nix-topology.overlays.default
         inputs.fenix.overlays.default
         inputs.nix-cachyos-kernel.overlays.pinned
-        inputs.llm-agents.overlays.default
         (_final: prev: {
           # https://github.com/NixOS/nixpkgs/pull/507430
           fleet = prev.fleet.overrideAttrs (_: rec {

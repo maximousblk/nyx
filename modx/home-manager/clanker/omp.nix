@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }:
 let
@@ -15,7 +16,8 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.llm-agents.omp ];
+
+    home.packages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp ];
 
     home.file = lib.mkMerge [
       {

@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  inputs,
   ...
 }:
 let
@@ -52,7 +53,7 @@ in
     (lib.mkIf cfg.opencode.enable {
       programs.opencode = {
         enable = true;
-        package = pkgs.llm-agents.opencode;
+        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.opencode;
         enableMcpIntegration = true;
 
         tui.theme = "system";
@@ -114,7 +115,7 @@ in
     (lib.mkIf cfg.claude.enable {
       programs.claude-code = {
         enable = true;
-        package = pkgs.llm-agents.claude-code;
+        package = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.claude-code;
         enableMcpIntegration = true;
 
         settings = {
