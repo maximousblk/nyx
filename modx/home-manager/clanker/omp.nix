@@ -64,9 +64,9 @@ in
           advisor.enabled = true;
           advisor.syncBacklog = "5";
           personality = "pragmatic";
-          modelRoles.advisor = "openai-codex/gpt-5.5";
+          modelRoles.advisor = "openai-codex/gpt-5.6-sol:low";
           modelRoles.commit = "opencode-zen/deepseek-v4-flash-free";
-          modelRoles.default = "minimax-code/MiniMax-M3";
+          modelRoles.default = "openai-codex/gpt-5.6-luna:medium";
           modelRoles.designer = "openai-codex/gpt-5.5";
           modelRoles.plan = "openai-codex/gpt-5.5";
           modelRoles.slow = "minimax-code/MiniMax-M3";
