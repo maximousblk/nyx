@@ -10,6 +10,7 @@ let
 in
 {
   imports = [
+    ./llama-cpp.nix
     ./pi.nix
     ./omp.nix
   ];

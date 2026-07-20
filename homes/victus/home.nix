@@ -23,6 +23,7 @@
     pi.enable = true;
     ollama.enable = true;
     ollama.acceleration = "cuda";
+    llama-cpp.enable = false;
   };
 
   optx.wallpapers = {

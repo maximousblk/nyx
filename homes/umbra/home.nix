@@ -22,6 +22,7 @@
       omp.enable = true;
       pi.enable = true;
       ollama.enable = true;
+      llama-cpp.enable = false;
     };
 
     home.stateVersion = "25.05";
