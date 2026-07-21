@@ -109,7 +109,7 @@ in
           task.eager = "default";
           task.enableLsp = false;
           task.maxConcurrency = 4;
-          task.maxRecursionDepth = 0;
+          task.maxRecursionDepth = 1;
           task.showResolvedModelBadge = true;
           terminal.showProgress = true;
           terminal.showImages = true;
