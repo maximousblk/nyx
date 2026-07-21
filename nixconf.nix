@@ -23,19 +23,27 @@ in
         inputs.nix-topology.overlays.default
         inputs.fenix.overlays.default
         inputs.nix-cachyos-kernel.overlays.pinned
-        (_final: prev: {
-          # https://github.com/NixOS/nixpkgs/pull/507430
-          fleet = prev.fleet.overrideAttrs (_: rec {
-            version = "4.85.0";
-            src = prev.fetchFromGitHub {
-              owner = "fleetdm";
-              repo = "fleet";
-              tag = "fleet-v${version}";
-              hash = "sha256-MXqUfDGk0u2+eCvP1dmb4dxF+LPJQ+YudqMAxAVPZJc=";
-            };
-            vendorHash = "sha256-Zu5VxrH+MnxqDEZj2gljfaKyCqGDQSLZqjsDjeCJ2h8=";
-          });
-        })
+        (
+          _final: prev:
+          let
+            buildGoModule = prev.buildGoModule.override { go = prev.go_1_27; };
+            fleet = (prev.fleet.override { inherit buildGoModule; }).overrideAttrs (old: rec {
+              version = "4.89.1";
+              src = prev.fetchFromGitHub {
+                owner = "fleetdm";
+                repo = "fleet";
+                tag = "fleet-v${version}";
+                hash = "sha256-YdKCJoMFX1W9E+o8/st0s29SyHgGy2Tp6Lc045MJUFg=";
+              };
+              vendorHash = "sha256-caUn3G+rThZ5KOggIHskDk39nPOe4/7DipzDLAEmezU=";
+            });
+          in
+          {
+            # https://github.com/NixOS/nixpkgs/pull/507430
+            inherit fleet;
+            fleetctl = prev.fleetctl.override { inherit buildGoModule fleet; };
+          }
+        )
         (_final: prev: {
           # https://github.com/NixOS/nixpkgs/issues/468388
           # google-cloud-sdk >= 565 ships Python 3.14 bundled; components.nix
