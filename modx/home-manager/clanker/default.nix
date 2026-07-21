@@ -11,6 +11,7 @@ in
 {
   imports = [
     ./llama-cpp.nix
+    ./stable-diffusion-cpp.nix
     ./pi.nix
     ./omp.nix
   ];

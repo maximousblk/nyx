@@ -24,6 +24,10 @@
     ollama.enable = true;
     ollama.acceleration = "cuda";
     llama-cpp.enable = false;
+    stable-diffusion-cpp = {
+      enable = true;
+      backend = "cuda";
+    };
   };
 
   optx.wallpapers = {
