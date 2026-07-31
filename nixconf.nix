@@ -56,6 +56,50 @@ in
             doCheck = !prev.stdenv.hostPlatform.isi686;
           });
         })
+        (
+          _final: prev:
+          let
+            glewZip = prev.fetchurl {
+              url = "https://github.com/nigels-com/glew/releases/download/glew-2.2.0/glew-2.2.0.zip";
+              hash = "sha256-qQRqkTd0OVoJXtzAsKwtgcOqzKYXh7OYOblB6b4U4NQ=";
+            };
+          in
+          {
+            # Expose glibc startup objects and libgcc_s to Arc's Jnigen linker.
+            # https://github.com/NixOS/nixpkgs/issues/544566
+            # https://github.com/NixOS/nixpkgs/commit/2b169ebe89d6fad56a1c84298d15f2c9ee5d8c60
+            # https://github.com/NixOS/nixpkgs/pull/542111
+            mindustry-wayland = prev.mindustry-wayland.overrideAttrs (old: {
+              buildInputs = old.buildInputs ++ [
+                prev.libGLU.dev
+                prev.libglvnd.dev
+                prev.libX11.dev
+                prev.xorgproto
+              ];
+              postPatch = old.postPatch + ''
+                      cp ${glewZip} ../Arc/backends/backend-sdl/build/jnigen/sources/glew.zip
+                      ${prev.unzip}/bin/unzip -qq -d ../Arc/backends/backend-sdl/build/jnigen/sources ${glewZip}
+                      substituteInPlace ../Arc/arc-core/build.gradle \
+                        --replace-fail 'linkerFlags += ["-flto"]' \
+                        'linkerFlags += ["-flto", "-B${prev.stdenv.cc.libc}/lib", "-L${prev.stdenv.cc.cc.libgcc}/lib"]'
+                      substituteInPlace ../Arc/backends/backend-sdl/build.gradle \
+                        --replace-fail 'headerDirs = ["$mainRoot/glew-2.2.0/include"]' \
+                        'headerDirs = ["$mainRoot/glew-2.2.0/include"]
+                headerDirs += ["${prev.libGLU.dev}/include", "${prev.libglvnd.dev}/include", "${prev.libX11.dev}/include", "${prev.xorgproto}/include"]' \
+                        --replace-fail 'linkerFlags = "-shared -m64".split(" ")' \
+                        'linkerFlags = "-shared -m64 -B${prev.stdenv.cc.libc}/lib -L${prev.stdenv.cc.cc.libgcc}/lib".split(" ")'
+                      substituteInPlace ../Arc/extensions/filedialogs/build.gradle \
+                        --replace-fail 'cIncludes = ["csrc/tinyfiledialogs.c"]' \
+                        'cIncludes = ["csrc/tinyfiledialogs.c"]
+                linkerFlags += "-B${prev.stdenv.cc.libc}/lib -L${prev.stdenv.cc.cc.libgcc}/lib".split(" ")'
+                      substituteInPlace ../Arc/extensions/freetype/build.gradle \
+                        --replace-fail 'cppFlags += "-DFT2_BUILD_LIBRARY"' \
+                        'cppFlags += "-DFT2_BUILD_LIBRARY"
+                linkerFlags += "-B${prev.stdenv.cc.libc}/lib -L${prev.stdenv.cc.cc.libgcc}/lib".split(" ")'
+              '';
+            });
+          }
+        )
       ];
     };
 
