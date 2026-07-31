@@ -15,8 +15,6 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
-    nixpkgs-google-cloud-sdk-552.url = "github:NixOS/nixpkgs/1a78a349635f5ef781af5f7383cbf9a9d714c23f";
-
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";

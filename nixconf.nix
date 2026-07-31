@@ -45,12 +45,6 @@ in
           }
         )
         (_final: prev: {
-          # https://github.com/NixOS/nixpkgs/issues/468388
-          # google-cloud-sdk >= 565 ships Python 3.14 bundled; components.nix
-          # hardcodes tcl-8_6 but 3.14 needs tcl9. Pin to older nixpkgs.
-          google-cloud-sdk = inputs.nixpkgs-google-cloud-sdk-552.legacyPackages.${prev.stdenv.hostPlatform.system}.google-cloud-sdk;
-        })
-        (_final: prev: {
           # https://github.com/NixOS/nixpkgs/issues/526914
           # https://github.com/bitwarden/clients/pull/20448
           bitwarden-desktop = prev.bitwarden-desktop.override {
