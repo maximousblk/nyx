@@ -45,37 +45,10 @@ in
           }
         )
         (_final: prev: {
-          # https://github.com/NixOS/nixpkgs/issues/526914
-          # https://github.com/bitwarden/clients/pull/20448
-          bitwarden-desktop = prev.bitwarden-desktop.override {
-            electron_39 = prev.electron_39.overrideAttrs (old: {
-              meta = old.meta // {
-                knownVulnerabilities = prev.lib.remove "Electron version 39.8.10 is EOL" old.meta.knownVulnerabilities;
-              };
-            });
-          };
-        })
-        (_final: prev: {
           # https://github.com/NixOS/nixpkgs/issues/426717
           openldap = prev.openldap.overrideAttrs (_: {
             doCheck = !prev.stdenv.hostPlatform.isi686;
           });
-        })
-        (_final: prev: {
-          # https://github.com/NixOS/nixpkgs/issues/513195
-          # https://github.com/NixOS/nixpkgs/pull/531346
-          # https://github.com/OrcaSlicer/OrcaSlicer/pull/12308
-          # OrcaSlicer's wxGLCanvas uses GLX; EGL-enabled GLEW trips
-          # "Missing GL version" and leaves the 3D workspace blank.
-          orca-slicer = prev.symlinkJoin {
-            name = "orca-slicer-glx";
-            paths = [ prev.orca-slicer ];
-            nativeBuildInputs = [ prev.makeWrapper ];
-            postBuild = ''
-              wrapProgram $out/bin/orca-slicer \
-                --set LD_PRELOAD "${(prev.glew.override { enableEGL = false; }).out}/lib/libGLEW.so.2.3"
-            '';
-          };
         })
       ];
     };
