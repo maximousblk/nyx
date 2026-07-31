@@ -204,7 +204,7 @@
               flake-check = {
                 enable = true;
                 name = "flake check nobuild";
-                entry = "nix flake check --no-build --keep-going";
+                entry = "nix flake check --no-build --no-write-lock-file --keep-going";
                 pass_filenames = false;
                 always_run = true;
               };
