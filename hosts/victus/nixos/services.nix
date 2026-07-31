@@ -10,7 +10,7 @@
   services.hdapsd.enable = false;
 
   services.nohang = {
-    enable = true;
+    enable = false;
     configPath = "desktop";
   };
 
