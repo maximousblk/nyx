@@ -169,6 +169,11 @@
     enable = true;
 
     settings = {
+      onboarding = false;
+      update.version_check = false;
+      update.manifest_check = false;
+      session.resume_agents_on_restore = true;
+      experimental.pane_history = true;
       keys.prefix = "ctrl+b";
       terminal.default_shell = "${config.programs.fish.package}/bin/fish";
     };
