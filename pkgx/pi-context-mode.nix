@@ -56,12 +56,12 @@ let
     installPhase = ''
       runHook preInstall
 
-      mkdir -p $out
-      cp -r build $out/
-      cp server.bundle.mjs package.json $out/
-      test -f $out/package.json
-      cp -r skills $out/
-      cp -r hooks $out/
+      mkdir -p $out/pi-context-mode
+      cp -r build $out/pi-context-mode/
+      cp server.bundle.mjs package.json $out/pi-context-mode/
+      test -f $out/pi-context-mode/package.json
+      cp -r skills $out/pi-context-mode/
+      cp -r hooks $out/pi-context-mode/
 
       runHook postInstall
     '';
@@ -76,6 +76,6 @@ let
 in
 {
   inherit package;
-  extention = "${package}/build/adapters/pi/extension.js";
-  skills = "${package}/skills";
+  extension = "${package}/pi-context-mode/build/adapters/pi/extension.js";
+  skills = "${package}/pi-context-mode/skills";
 }

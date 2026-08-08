@@ -59,9 +59,9 @@ let
     installPhase = ''
       runHook preInstall
 
-      mkdir -p $out
-      cp index.js $out/
-      cp -r skills $out/
+      mkdir -p $out/pi-web-access
+      cp index.js $out/pi-web-access/
+      cp -r skills $out/pi-web-access/
 
       runHook postInstall
     '';
@@ -76,6 +76,6 @@ let
 in
 {
   inherit package;
-  extention = "${package}/index.js";
-  skills = "${package}/skills";
+  extension = "${package}/pi-web-access/index.js";
+  skills = "${package}/pi-web-access/skills";
 }
