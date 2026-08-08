@@ -9,6 +9,10 @@ let
   cfg = config.optx.clanker.omp;
   yamlFormat = pkgs.formats.yaml { };
   skillsDir = ./skills;
+  herdrSkills = pkgs.runCommand "herdr-omp-skills" { } ''
+    mkdir -p $out/herdr
+    cp ${pkgs.herdr.src}/SKILL.md $out/herdr/SKILL.md
+  '';
 in
 {
   options.optx.clanker.omp = {
@@ -55,27 +59,29 @@ in
           hideThinkingBlock = true;
           images.autoResize = true;
           includeModelInPrompt = false;
-          inspect_image.enabled = true;
+          inspect_image.mode = "auto";
           lsp.diagnosticsOnWrite = false;
           lsp.enabled = false;
           lsp.lazy = false;
           marketplace.autoUpdate = "off";
           mcp.enableProjectConfig = false;
+          tools.xdev = true;
+          tools.xdevDocs = "catalog";
           memory.backend = "mnemopi";
           mnemopi.scoping = "global";
-          advisor.enabled = true;
+          advisor.enabled = false;
           advisor.syncBacklog = "5";
           personality = "pragmatic";
-          modelRoles.advisor = "openai-codex/gpt-5.6-sol:low";
-          modelRoles.commit = "opencode-zen/deepseek-v4-flash-free";
-          modelRoles.default = "openai-codex/gpt-5.6-luna:medium";
-          modelRoles.designer = "openai-codex/gpt-5.5";
-          modelRoles.plan = "openai-codex/gpt-5.5";
-          modelRoles.slow = "minimax-code/MiniMax-M3";
-          modelRoles.smol = "opencode-zen/deepseek-v4-flash-free";
-          modelRoles.task = "minimax-code/MiniMax-M3";
-          modelRoles.tiny = "opencode-zen/deepseek-v4-flash-free";
-          modelRoles.vision = "minimax-code/MiniMax-M3";
+          modelRoles.advisor = "openai-codex/gpt-5.6-terra:low";
+          modelRoles.commit = "openai-codex/gpt-5.6-luna:low";
+          modelRoles.default = "openai-codex/gpt-5.6-luna:low";
+          modelRoles.designer = "openai-codex/gpt-5.6-terra:low";
+          modelRoles.plan = "openai-codex/gpt-5.6-terra:low";
+          modelRoles.slow = "openai-codex/gpt-5.6-terra:low";
+          modelRoles.smol = "opencode-zen/laguna-s-2.1-free";
+          modelRoles.task = "openai-codex/gpt-5.6-luna:low";
+          modelRoles.tiny = "opencode-zen/laguna-s-2.1-free";
+          modelRoles.vision = "openai-codex/gpt-5.6-luna:low";
           plan.defaultOnStartup = false;
           plan.enabled = false;
           readLineNumbers = true;
@@ -121,27 +127,21 @@ in
           worktree.base = "~/projects";
 
           skills.customDirectories = [
-            "~/.agent/skills"
             "${skillsDir}"
+            "${herdrSkills}"
+          ];
+          extensions = [
+            "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts"
           ];
           enabledModels = [
-            "openai-codex/gpt-5.5"
             "openai-codex/gpt-5.6-luna"
-            "openai-codex/gpt-5.6-sol"
             "openai-codex/gpt-5.6-terra"
 
-            "minimax-code/MiniMax-M3"
-
-            "opencode-go/glm-5.2"
-
             "opencode-zen/big-pickle"
-            "opencode-zen/deepseek-v4-flash-free"
-            "opencode-zen/nemotron-3-ultra-free"
+            "opencode-zen/laguna-s-2.1-free"
           ];
         };
       }
-      { ".omp/agent/skills/herdr/SKILL.md".source = pkgs.herdr.src + "/SKILL.md"; }
-      { ".omp/agent/extensions/herdr-omp-agent-state.ts".source = pkgs.herdr.src + "/src/integration/assets/omp/herdr-agent-state.ts"; }
     ];
   };
 }
