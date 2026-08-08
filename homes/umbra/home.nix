@@ -58,6 +58,11 @@
       enable = true;
 
       settings = {
+        onboarding = false;
+        update.version_check = false;
+        update.manifest_check = false;
+        session.resume_agents_on_restore = true;
+        experimental.pane_history = true;
         keys.prefix = "ctrl+b";
         keys.new_worktree = "prefix+shift+g";
         keys.open_worktree = "prefix+shift+o";
