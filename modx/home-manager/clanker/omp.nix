@@ -89,6 +89,8 @@ in
           skills.enableClaudeProject = false;
           skills.enableClaudeUser = false;
           skills.enableCodexUser = false;
+          skills.enableAgentsProject = false;
+          skills.enableAgentsUser = false;
           skills.enablePiProject = false;
           skills.enablePiUser = false;
           skills.includeSkills = [ ];
