@@ -23,10 +23,18 @@
     pi.enable = true;
     ollama.enable = true;
     ollama.acceleration = "cuda";
-    llama-cpp.enable = false;
+    llama-cpp = {
+      enable = true;
+      hfRepo = "HauhauCS/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive";
+      hfFile = "Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf";
+    };
     stable-diffusion-cpp = {
       enable = true;
-      backend = "cuda";
+      backend = "cuda0";
+      modelsDir = "%h/models/krea2";
+      diffusionModel = "krea2_turbo-Q4_K_M.gguf";
+      llmModel = "Qwen3VL-4B-Instruct-Q4_K_M.gguf";
+      vaeModel = "wan_2.1_vae.safetensors";
     };
   };
 

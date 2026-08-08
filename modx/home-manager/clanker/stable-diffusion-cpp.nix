@@ -6,60 +6,13 @@
 }:
 let
   cfg = config.optx.clanker.stable-diffusion-cpp;
-  source = pkgs.fetchFromGitHub {
-    owner = "leejet";
-    repo = "stable-diffusion.cpp";
-    rev = "8caa3f908ae6d4a4bef531e73b9a969f266a3d1f";
-    hash = "sha256-voybvJQrG6/Puogf9vBr/3jzHBcl1MnIAsRQtswUw2U=";
-    fetchSubmodules = true;
-  };
   package =
     {
       cpu = pkgs.stable-diffusion-cpp;
-      vulkan = pkgs.stable-diffusion-cpp-vulkan;
-      cuda = pkgs.stable-diffusion-cpp-cuda;
-    }
-    .${cfg.backend}.overrideAttrs
-      (_: {
-        version = "krea2-8caa3f9";
-        inherit source;
-        src = source;
-      });
-  backend =
-    {
-      cpu = "cpu";
-      vulkan = "diffusion=vulkan0,te=vulkan0,vae=vulkan0";
-      cuda = "diffusion=cuda0,te=cuda0,vae=cuda0";
+      vulkan0 = pkgs.stable-diffusion-cpp-vulkan;
+      cuda0 = pkgs.stable-diffusion-cpp-cuda;
     }
     .${cfg.backend};
-  optimizationArgs = ''
-    --backend '${backend}' \
-    --eager-load \
-    --mmap \
-    --fa \
-    --diffusion-fa \
-    --diffusion-conv-direct \
-    --vae-conv-direct \
-    --cache-mode easycache \
-    --cache-option threshold=0.1 \
-    --cfg-scale 1 \
-    --steps 4 \
-    --extra-sample-args mu=1.15
-  '';
-  optimizedCli = pkgs.writeShellApplication {
-    name = "sd-cli-krea2-optimized";
-    runtimeInputs = [ package ];
-    text = ''
-      exec ${lib.getExe package} ${optimizationArgs} "$@"
-    '';
-  };
-  optimizedServer = pkgs.writeShellApplication {
-    name = "sd-server-krea2-optimized";
-    runtimeInputs = [ package ];
-    text = ''
-      exec ${package}/bin/sd-server ${optimizationArgs} "$@"
-    '';
-  };
 in
 {
   options.optx.clanker.stable-diffusion-cpp = {
@@ -68,19 +21,101 @@ in
     backend = lib.mkOption {
       type = lib.types.enum [
         "cpu"
-        "vulkan"
-        "cuda"
+        "vulkan0"
+        "cuda0"
       ];
       default = "cpu";
-      description = "Compute backend used by stable-diffusion.cpp.";
+      description = "stable-diffusion.cpp backend device used for inference.";
+    };
+
+    modelsDir = lib.mkOption {
+      type = lib.types.str;
+      default = "%h/models/krea2";
+      description = "Directory containing the stable-diffusion.cpp models.";
+    };
+
+    diffusionModel = lib.mkOption {
+      type = lib.types.str;
+      description = "Diffusion model filename.";
+    };
+
+    llmModel = lib.mkOption {
+      type = lib.types.str;
+      description = "Text encoder model filename.";
+    };
+
+    vaeModel = lib.mkOption {
+      type = lib.types.str;
+      description = "VAE model filename.";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = [
-      package
-      optimizedCli
-      optimizedServer
-    ];
+    home.packages = [ package ];
+    systemd.user.services.sd-server = {
+      Unit = {
+        Description = "stable-diffusion.cpp HTTP server";
+        BindsTo = [ "sd-server-proxy.service" ];
+        PartOf = [ "sd-server-proxy.service" ];
+      };
+      Service = {
+        WorkingDirectory = cfg.modelsDir;
+        ExecStart = lib.escapeShellArgs [
+          "${package}/bin/sd-server"
+          "--listen-ip"
+          "127.0.0.1"
+          "--listen-port"
+          "11234"
+          "--backend"
+          cfg.backend
+          "--offload-to-cpu"
+          "--max-vram"
+          "-0.5"
+          "--stream-layers"
+          "--fa"
+          "--diffusion-fa"
+          "--diffusion-conv-direct"
+          "--vae-conv-direct"
+          "--diffusion-model"
+          "./${cfg.diffusionModel}"
+          "--llm"
+          "./${cfg.llmModel}"
+          "--vae"
+          "./${cfg.vaeModel}"
+          "--lora-model-dir"
+          "."
+        ];
+        Restart = "on-failure";
+        StopWhenUnneeded = true;
+      };
+    };
+
+    systemd.user.sockets.sd-server = {
+      Unit.Description = "stable-diffusion.cpp HTTP socket";
+      Socket = {
+        ListenStream = 1234;
+        Service = "sd-server-proxy.service";
+      };
+      Install.WantedBy = [ "sockets.target" ];
+    };
+
+    systemd.user.services.sd-server-proxy = {
+      Unit = {
+        Description = "stable-diffusion.cpp HTTP socket proxy";
+        Requires = [
+          "sd-server.service"
+          "sd-server.socket"
+        ];
+        After = [
+          "sd-server.service"
+          "sd-server.socket"
+        ];
+      };
+      Service = {
+        ExecStartPre = "${pkgs.wait4x}/bin/wait4x tcp 127.0.0.1:11234";
+        ExecStart = "${pkgs.systemd}/lib/systemd/systemd-socket-proxyd --exit-idle-time=20min 127.0.0.1:11234";
+        Restart = "on-failure";
+      };
+    };
   };
 }

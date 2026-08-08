@@ -1,6 +1,5 @@
 {
   pkgs,
-  pkgx,
   modx,
   config,
   umbra,
@@ -22,11 +21,6 @@
       omp.enable = true;
       pi.enable = true;
       ollama.enable = true;
-      llama-cpp.enable = false;
-      stable-diffusion-cpp = {
-        enable = true;
-        backend = "vulkan";
-      };
     };
 
     home.stateVersion = "25.05";
