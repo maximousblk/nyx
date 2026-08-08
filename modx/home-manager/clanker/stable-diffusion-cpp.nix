@@ -6,26 +6,24 @@
 }:
 let
   cfg = config.optx.clanker.stable-diffusion-cpp;
-  package =
-    {
-      cpu = pkgs.stable-diffusion-cpp;
-      vulkan0 = pkgs.stable-diffusion-cpp-vulkan;
-      cuda0 = pkgs.stable-diffusion-cpp-cuda;
-    }
-    .${cfg.backend};
+  package = (
+    if (cfg.backend == "cpu") then
+      pkgs.stable-diffusion-cpp
+    else if (lib.hasPrefix "vulkan" cfg.backend) then
+      pkgs.stable-diffusion-cpp-vulkan
+    else if (lib.hasPrefix "cuda" cfg.backend) then
+      pkgs.stable-diffusion-cpp-cuda
+    else
+      throw "Unsupported stable-diffusion.cpp backend device: ${cfg.backend}"
+  );
 in
 {
   options.optx.clanker.stable-diffusion-cpp = {
     enable = lib.mkEnableOption "stable-diffusion.cpp image generation tools";
 
     backend = lib.mkOption {
-      type = lib.types.enum [
-        "cpu"
-        "vulkan0"
-        "cuda0"
-      ];
-      default = "cpu";
-      description = "stable-diffusion.cpp backend device used for inference.";
+      type = lib.types.str;
+      description = "stable-diffusion.cpp backend device passed directly to --backend; package is selected from its prefix.";
     };
 
     modelsDir = lib.mkOption {

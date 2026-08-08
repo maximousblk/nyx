@@ -6,11 +6,27 @@
 }:
 let
   cfg = config.optx.clanker.llama-cpp;
-  llama-cpp = pkgs.llama-cpp;
+  package = (
+    if (cfg.backend == "none") then
+      pkgs.llama-cpp
+    else if (lib.hasPrefix "Vulkan" cfg.backend) then
+      pkgs.llama-cpp-vulkan
+    else if (lib.hasPrefix "ROCm" cfg.backend) then
+      pkgs.llama-cpp-rocm
+    else if (lib.hasPrefix "CUDA" cfg.backend) then
+      pkgs.llama-cpp.override { cudaSupport = true; }
+    else
+      throw "Unsupported llama.cpp backend device: ${cfg.backend}"
+  );
 in
 {
   options.optx.clanker.llama-cpp = {
     enable = lib.mkEnableOption "llama.cpp local LLM service";
+
+    backend = lib.mkOption {
+      type = lib.types.str;
+      description = "llama.cpp device passed directly to --device; backend package is selected from its prefix.";
+    };
 
     hfRepo = lib.mkOption {
       type = lib.types.str;
@@ -41,7 +57,7 @@ in
       Service = {
         ExecStart = lib.escapeShellArgs (
           [
-            "${llama-cpp}/bin/llama-server"
+            "${package}/bin/llama-server"
             "--hf-repo"
             cfg.hfRepo
             "--hf-file"
@@ -85,9 +101,15 @@ in
             "--min-p"
             "0"
             "--device"
-            "none"
+            cfg.backend
             "--n-gpu-layers"
-            "0"
+            (if cfg.backend == "none" then "0" else "auto")
+          ]
+          ++ lib.optionals (cfg.backend != "none") [
+            "--fit"
+            "on"
+          ]
+          ++ [
             "--reasoning"
             "on"
             "--jinja"

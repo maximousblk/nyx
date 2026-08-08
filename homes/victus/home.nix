@@ -25,6 +25,7 @@
     ollama.acceleration = "cuda";
     llama-cpp = {
       enable = true;
+      backend = "none";
       hfRepo = "HauhauCS/Gemma-4-E4B-Uncensored-HauhauCS-Aggressive";
       hfFile = "Gemma-4-E4B-Uncensored-HauhauCS-Aggressive-Q4_K_M.gguf";
     };
