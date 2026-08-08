@@ -51,6 +51,7 @@
     nixd
     nixfmt
     nodejs_24
+    officecli
     openssl.dev
     openstack-rs
     openstackclient-full
@@ -62,6 +63,7 @@
     podman
     podman-compose
     ripgrep
+    sentry-cli
     sops
     ssh-to-age
     strace
@@ -87,6 +89,8 @@
 
     (google-cloud-sdk.withExtraComponents [
       google-cloud-sdk.components.kubectl
+      google-cloud-sdk.components.cloud-run-proxy
+      google-cloud-sdk.components.cloud-sql-proxy
       google-cloud-sdk.components.gke-gcloud-auth-plugin
       google-cloud-sdk.components.package-go-module
     ])
