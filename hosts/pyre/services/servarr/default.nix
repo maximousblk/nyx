@@ -55,7 +55,7 @@ in
   virtualisation.quadlet.containers.flaresolverr = {
     autoStart = true;
     containerConfig = {
-      image = "ghcr.io/flaresolverr/flaresolverr:latest";
+      image = "ghcr.io/flaresolverr/flaresolverr:v3.4.6";
       publishPorts = [ "127.0.0.1:8191:8191" ];
       environments = common.env // {
         LOG_LEVEL = "info";
