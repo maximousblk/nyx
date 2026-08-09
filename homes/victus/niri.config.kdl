@@ -87,7 +87,7 @@ overview {
     workspace-shadow {
         off
     }
-    backdrop-color "#FF00FF"
+    backdrop-color "#000000"
     zoom 0.3
 }
 
