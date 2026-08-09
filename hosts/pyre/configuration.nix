@@ -1,4 +1,11 @@
-{ inputs, modx, ... }: {
+{
+  inputs,
+  modx,
+  pkgs,
+  self,
+  ...
+}:
+{
   imports = [
     modx.nixos.secrets
     ./intel.nix
@@ -15,6 +22,7 @@
   # Boot
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-server;
 
   # Hardware configuration
   facter.reportPath = ./facter.json;
