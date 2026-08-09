@@ -75,7 +75,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "gcr.io/zenika-hub/alpine-chrome:124";
-          pull = "always";
+          pull = "newer";
 
           exec = [
             "--no-sandbox"
@@ -97,8 +97,8 @@ in
       karakeep-meilisearch = {
         autoStart = true;
         containerConfig = {
-          image = "getmeili/meilisearch:v1.13.3";
-          pull = "always";
+          image = "getmeili/meilisearch:v1.41.0";
+          pull = "newer";
 
           networks = [ net.ref ];
           networkAliases = [ "karakeep-meilisearch" ];
@@ -120,8 +120,8 @@ in
       karakeep = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/karakeep-app/karakeep:release";
-          pull = "always";
+          image = "ghcr.io/karakeep-app/karakeep:0.33.1";
+          pull = "newer";
           publishPorts = [ "127.0.0.1:3000:3000" ];
 
           networks = [
