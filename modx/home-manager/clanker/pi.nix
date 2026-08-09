@@ -28,11 +28,12 @@ in
       ".pi/agent/settings.json".source = jsonFormat.generate "pi-settings.json" {
         defaultProvider = "opencode-go";
         defaultModel = "deepseek-v4-pro";
-        defaultThinkingLevel = "medium";
+        defaultThinkingLevel = "low";
         enabledModels = [
-          "openai-codex/gpt-5.5"
-          "opencode-go/deepseek-v4-pro"
-          "opencode-go/mimo-v2.5-pro"
+          "openai-codex/gpt-5.6-luna"
+          "openai-codex/gpt-5.6-terra"
+          "opencode-zen/big-pickle"
+          "opencode-zen/laguna-s-2.1-free"
         ];
         enableInstallTelemetry = false;
         extensions = [
