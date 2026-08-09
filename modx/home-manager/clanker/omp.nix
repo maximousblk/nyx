@@ -23,6 +23,8 @@ in
 
     home.packages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp ];
 
+    home.sessionVariables.PUPPETEER_EXECUTABLE_PATH = lib.getExe pkgs.brave-origin;
+
     home.file = lib.mkMerge [
       {
         ".omp/agent/config.yml".source = yamlFormat.generate "omp-config.yml" {
@@ -32,8 +34,8 @@ in
           bash.autoBackground.enabled = true;
           bashInterceptor.enabled = true;
           browser.cmux = false;
-          browser.enabled = false;
-          browser.headless = false;
+          browser.enabled = true;
+          browser.headless = true;
           commands.enableClaudeProject = false;
           commands.enableClaudeUser = false;
           commands.enableOpencodeProject = false;
@@ -132,9 +134,7 @@ in
             "${skillsDir}"
             "${herdrSkills}"
           ];
-          extensions = [
-            "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts"
-          ];
+          extensions = [ "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts" ];
           enabledModels = [
             "openai-codex/gpt-5.6-luna"
             "openai-codex/gpt-5.6-terra"
