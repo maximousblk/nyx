@@ -11,8 +11,8 @@
   virtualisation.quadlet.containers.torproxy = {
     autoStart = true;
     containerConfig = {
-      image = "docker.io/dockurr/tor:latest";
-      pull = "always";
+      image = "docker.io/dockurr/tor:0.4.9";
+      pull = "newer";
       publishPorts = [
         "127.0.0.1:9050:9050" # host loopback
         "10.88.0.1:9050:9050" # podman bridge (for containers)
