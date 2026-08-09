@@ -67,7 +67,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "docker.io/valkey/valkey:9";
-          pull = "always";
+          pull = "newer";
 
           networks = [ net.ref ];
           networkAliases = [ "immich-valkey" ];
@@ -83,7 +83,7 @@ in
         autoStart = true;
         containerConfig = {
           image = "ghcr.io/immich-app/postgres:14-vectorchord0.4.3-pgvectors0.2.0";
-          pull = "always";
+          pull = "newer";
 
           networks = [ net.ref ];
           networkAliases = [ "immich-postgres" ];
@@ -109,8 +109,8 @@ in
       immich-ml = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/immich-app/immich-machine-learning:v2-openvino";
-          pull = "always";
+          image = "ghcr.io/immich-app/immich-machine-learning:v3-openvino";
+          pull = "newer";
 
           networks = [ net.ref ];
           networkAliases = [ "immich-ml" ];
@@ -139,8 +139,8 @@ in
       immich = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/immich-app/immich-server:v2";
-          pull = "always";
+          image = "ghcr.io/immich-app/immich-server:v3";
+          pull = "newer";
           publishPorts = [ "127.0.0.1:2283:2283" ];
 
           networks = [
