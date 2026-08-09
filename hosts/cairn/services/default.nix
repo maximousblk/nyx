@@ -2,6 +2,7 @@
   imports = [
     modx.nixos.opentelemetry-agent
     ./ssh.nix
+    ./rustfs.nix
     ./tailscale.nix
     ./zerobyte.nix
   ];
