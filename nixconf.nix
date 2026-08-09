@@ -118,6 +118,7 @@ in
         ];
         auto-optimise-store = true;
         connect-timeout = 5;
+        fallback = true;
         narinfo-cache-negative-ttl = 86400;
         commit-lockfile-summary = "chore(flake): nix flake update";
       };
