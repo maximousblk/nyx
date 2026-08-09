@@ -22,6 +22,7 @@ let
   organizationId = "019d8e05-2e3c-7000-a0eb-616e99014397";
 
   appSecretEnv = config.age.secrets.zerobyte-env-app-secret.path;
+  rustfsEnvironment = config.age.secrets.rustfs-environment.path;
   rcloneConfig = config.age.secrets.zerobyte-rclone-conf.path;
   sftpSshPrivateKey = config.age.secrets.zerobyte-sftp-ssh-private-key.path;
 
@@ -30,46 +31,21 @@ let
       version = 1;
       repositories = [
         {
-          delete = true;
-          id = "victus-zen-default-repo";
+          id = "cairn-rustfs";
           inherit organizationId;
-          name = "Victus Zen Default";
-          backend = "local";
+          name = "Cairn RustFS";
+          backend = "s3";
           compressionMode = "auto";
           config = {
-            backend = "local";
-            path = "${containerStorageDir}/repositories/victus-zen-default";
-          };
-        }
-        {
-          id = "victus-home-repo";
-          inherit organizationId;
-          name = "Victus Home";
-          backend = "local";
-          compressionMode = "auto";
-          config = {
-            backend = "local";
-            path = "${containerStorageDir}/repositories/victus-home";
+            backend = "s3";
+            endpoint = "http://host.docker.internal:9000";
+            bucket = "zerobyte";
+            accessKeyId = "env://RUSTFS_ACCESS_KEY";
+            secretAccessKey = "env://RUSTFS_SECRET_KEY";
           };
         }
       ];
       volumes = [
-        {
-          delete = true;
-          id = "victus-zen-default-volume";
-          inherit organizationId;
-          name = "Victus Zen Default";
-          backend = "sftp";
-          config = {
-            backend = "sftp";
-            host = "victus.pony-clownfish.ts.net";
-            port = 22;
-            username = "maximousblk";
-            privateKey = "file://zerobyte_sftp_ssh_private_key";
-            path = "/home/maximousblk/.config/zen/default";
-            skipHostKeyCheck = true;
-          };
-        }
         {
           id = "victus-home-volume";
           inherit organizationId;
@@ -168,7 +144,10 @@ in
     image = "ghcr.io/nicotsx/zerobyte:v0.41.0";
     autoStart = true;
 
-    environmentFiles = [ appSecretEnv ];
+    environmentFiles = [
+      appSecretEnv
+      rustfsEnvironment
+    ];
     environment = common.env // {
       BASE_URL = "https://zerobyte.pony-clownfish.ts.net";
       PROVISIONING_PATH = containerProvisioningPath;
@@ -190,6 +169,7 @@ in
     ];
 
     extraOptions = [
+      "--add-host=host.docker.internal:host-gateway"
       "--pull=always"
       "--cap-add=SYS_ADMIN"
       "--device=/dev/fuse:/dev/fuse"
