@@ -25,8 +25,8 @@ in
         share = "disabled";
         default_agent = "plan";
         snapshot = false;
-        model = "openai/gpt-5.5";
-        small_model = "openai/gpt-5.4-mini";
+        model = "openai-codex/gpt-5.6-luna";
+        small_model = "opencode-go/deepseek-v4-flash";
         lsp.rust.disabled = true;
         watcher.ignore = [
           "node_modules/**"

@@ -31,8 +31,10 @@ in
       enabledModels = [
         "openai-codex/gpt-5.6-luna"
         "openai-codex/gpt-5.6-terra"
-        "opencode-zen/big-pickle"
-        "opencode-zen/laguna-s-2.1-free"
+
+        "opencode-go/deepseek-v4-flash"
+
+        "opencode-zen/deepseek-v4-flash-free"
       ];
       mcpServers = lib.mapAttrs (_: server: {
         type = "http";

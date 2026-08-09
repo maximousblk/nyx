@@ -80,9 +80,9 @@ in
           modelRoles.designer = "openai-codex/gpt-5.6-terra:low";
           modelRoles.plan = "openai-codex/gpt-5.6-terra:low";
           modelRoles.slow = "openai-codex/gpt-5.6-terra:low";
-          modelRoles.smol = "opencode-zen/laguna-s-2.1-free";
+          modelRoles.smol = "opencode-go/deepseek-v4-flash:high";
           modelRoles.task = "openai-codex/gpt-5.6-luna:low";
-          modelRoles.tiny = "opencode-zen/laguna-s-2.1-free";
+          modelRoles.tiny = "opencode-go/deepseek-v4-flash:high";
           modelRoles.vision = "openai-codex/gpt-5.6-luna:low";
           plan.defaultOnStartup = false;
           plan.enabled = false;
@@ -139,8 +139,9 @@ in
             "openai-codex/gpt-5.6-luna"
             "openai-codex/gpt-5.6-terra"
 
-            "opencode-zen/big-pickle"
-            "opencode-zen/laguna-s-2.1-free"
+            "opencode-go/deepseek-v4-flash"
+
+            "opencode-zen/deepseek-v4-flash-free"
           ];
         };
       }

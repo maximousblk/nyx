@@ -26,14 +26,16 @@ in
 
     home.file = {
       ".pi/agent/settings.json".source = jsonFormat.generate "pi-settings.json" {
-        defaultProvider = "opencode-go";
-        defaultModel = "deepseek-v4-pro";
+        defaultProvider = "openai-codex";
+        defaultModel = "gpt-5.6-luna";
         defaultThinkingLevel = "low";
         enabledModels = [
           "openai-codex/gpt-5.6-luna"
           "openai-codex/gpt-5.6-terra"
-          "opencode-zen/big-pickle"
-          "opencode-zen/laguna-s-2.1-free"
+
+          "opencode-go/deepseek-v4-flash"
+
+          "opencode-zen/deepseek-v4-flash-free"
         ];
         enableInstallTelemetry = false;
         extensions = [
