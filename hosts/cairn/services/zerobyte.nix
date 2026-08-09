@@ -61,6 +61,21 @@ let
             skipHostKeyCheck = true;
           };
         }
+        {
+          id = "pyre-root-volume";
+          inherit organizationId;
+          name = "Pyre Root";
+          backend = "sftp";
+          config = {
+            backend = "sftp";
+            host = "pyre.pony-clownfish.ts.net";
+            port = 22;
+            username = "root";
+            privateKey = "file://zerobyte_sftp_ssh_private_key";
+            path = "/";
+            skipHostKeyCheck = true;
+          };
+        }
       ];
     }
   );
