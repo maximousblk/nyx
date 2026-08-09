@@ -2,6 +2,8 @@
   services.displayManager.sessionPackages = [ pkgs.niri ];
   programs.xwayland.enable = true;
 
+  services.gnome.at-spi2-core.enable = true;
+
   services.xserver = {
     enable = true;
     xkb = {
