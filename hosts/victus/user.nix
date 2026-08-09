@@ -21,10 +21,9 @@
         "video"
       ];
 
-      openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
-      openssh.authorizedKeys.keys = [
-        # Dedicated Zerobyte SFTP key from cairn for pull-based source access.
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFNtBMxtsvxn6H7wPhSULYDVjagLo/KKcREs/obCz/4K maximousblk@victus"
+      openssh.authorizedKeys.keyFiles = [
+        inputs.ssh-keys-maximousblk
+        (self + "/hosts/cairn/zerobyte.pub")
       ];
     };
 

@@ -30,7 +30,10 @@
   # Users
   users.users = {
     root = {
-      openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
+      openssh.authorizedKeys.keyFiles = [
+        inputs.ssh-keys-maximousblk
+        (self + "/hosts/cairn/zerobyte.pub")
+      ];
     };
 
     maximousblk = {
