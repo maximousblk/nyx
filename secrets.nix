@@ -57,30 +57,35 @@ in
         agenixRulesFile = pkgs.writeText "agenix-rules.nix" (pkgs.lib.generators.toPretty { } inputs.self.agenixRules);
         hasSecrets = _: cfg: lib.hasAttr "age" cfg.config && lib.hasAttr "rekey" cfg.config.age;
         hostsWithSecrets = lib.attrNames (lib.filterAttrs hasSecrets inputs.self.nixosConfigurations);
+        expectedRekeyedPath =
+          host: secret:
+          let
+            hostConfig = inputs.self.nixosConfigurations.${host}.config;
+            pubkeyHash = builtins.hashString "sha256" hostConfig.age.rekey.hostPubkey;
+            identHash = builtins.substring 0 32 (builtins.hashString "sha256" (pubkeyHash + builtins.hashFile "sha256" secret.rekeyFile));
+          in
+          hostConfig.age.rekey.localStorageDir + "/${identHash}-${secret.name}.age";
+        checkedRekeyedPath =
+          host: name: secret:
+          let
+            rekeyedPath = expectedRekeyedPath host secret;
+          in
+          assert lib.assertMsg (builtins.pathExists rekeyedPath) "Missing rekeyed secret for ${host}:${name}: ${rekeyedPath}";
+          rekeyedPath;
+        rekeyedSecretPaths = lib.concatMap (
+          host:
+          lib.mapAttrsToList (name: secret: checkedRekeyedPath host name secret) (
+            lib.filterAttrs (_: secret: secret.rekeyFile != null && !secret.intermediary) inputs.self.nixosConfigurations.${host}.config.age.secrets
+          )
+        ) hostsWithSecrets;
       in
       {
         packages.agenix = config.agenix-rekey.package;
         packages.agenix-rules = agenixRulesFile;
 
-        checks.secrets = pkgs.runCommand "secrets-check" { } ''
-          echo "Checking rekeyed secret paths..."
-          ${lib.concatMapStringsSep "\n" (
-            host:
-            lib.concatStringsSep "\n" (
-              lib.mapAttrsToList (name: secret: ''
-                test -e ${lib.escapeShellArg secret.file} || {
-                  echo "Missing rekeyed secret for ${host}:${name}: ${secret.file}" >&2
-                  exit 1
-                }
-              '') inputs.self.nixosConfigurations.${host}.config.age.secrets
-            )
-          ) hostsWithSecrets}
-          touch $out
-        '';
+        checks.secrets = builtins.deepSeq rekeyedSecretPaths (pkgs.runCommand "secrets-check" { } "touch $out");
 
-        # Force rekeyed secret paths into the nix store per host.
-        # Required after `agenix rekey` for `nix flake check --no-build` to work
-        # with storageMode = "local".
+        # Explicitly materialise rekeyed secret paths for callers that need secret.file before a system build.
         apps.secrets-materialise = {
           type = "app";
           meta.description = "Materialise rekeyed secret paths into the nix store";
