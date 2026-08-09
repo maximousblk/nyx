@@ -15,6 +15,7 @@ in
     ./omp.nix
     ./opencode.nix
     ./claude-code.nix
+    ./prime-agent.nix
   ];
 
   options.optx.clanker.ollama = {

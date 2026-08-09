@@ -21,6 +21,7 @@
     claude.enable = true;
     omp.enable = true;
     pi.enable = true;
+    prime-agent.enable = true;
     ollama.enable = true;
     ollama.acceleration = "cuda";
     llama-cpp = {
