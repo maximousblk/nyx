@@ -5,6 +5,7 @@
     ./signoz.nix
     ./ssh.nix
     ./tailscale.nix
+    ./torproxy.nix
   ];
 
   optx.opentelemetry.agent = {

@@ -3,7 +3,6 @@
     ./immich.nix
     ./karakeep.nix
     ./paperless.nix
-    ./torproxy.nix
   ];
 
   config = {
