@@ -16,9 +16,9 @@ let
   yaml = pkgs.formats.yaml { };
 
   # Version tags
-  clickhouseVersion = "25.5.6";
-  signozVersion = "v0.122.0";
-  otelcolVersion = "v0.144.3";
+  clickhouseVersion = "25.12.5";
+  signozVersion = "v0.136.1";
+  otelcolVersion = "v0.144.7";
   zookeeperVersion = "3.7.1";
 
   clickhouseConfig = xml.generate "clickhouse-config.xml" {
