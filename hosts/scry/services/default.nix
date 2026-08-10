@@ -2,6 +2,7 @@
   imports = [
     modx.nixos.opentelemetry-agent
     ./load.nix
+    ./flaresolverr.nix
     ./signoz.nix
     ./ssh.nix
     ./tailscale.nix
