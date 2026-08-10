@@ -6,6 +6,7 @@
     ./signoz.nix
     ./ssh.nix
     ./tailscale.nix
+    ./proxy.nix
     ./torproxy.nix
   ];
 
