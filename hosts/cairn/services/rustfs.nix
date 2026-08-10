@@ -34,4 +34,13 @@
     serve."https:443" = "http://localhost:9001";
     backends = [ "rustfs.service" ];
   };
+
+  topology.self.services.rustfs = {
+    name = "RustFS";
+    info = "S3-compatible object storage";
+    icon = builtins.fetchurl {
+      url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/rustfs.svg";
+      sha256 = "0fwadkbgkax2gj0vzsv6pw5l5in73sglaxl05vkqvpa73rz2kaqg";
+    };
+  };
 }
