@@ -80,7 +80,10 @@ in
         ) hostsWithSecrets;
       in
       {
-        packages.agenix = config.agenix-rekey.package;
+        packages.agenyx = pkgs.writeShellScriptBin "agenyx" ''
+          ${agenixEnv}
+          exec ${config.agenix-rekey.package}/bin/agenix "$@"
+        '';
         packages.agenix-rules = agenixRulesFile;
 
         checks.secrets = builtins.deepSeq rekeyedSecretPaths (pkgs.runCommand "secrets-check" { } "touch $out");

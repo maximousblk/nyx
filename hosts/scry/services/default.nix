@@ -3,6 +3,7 @@
     modx.nixos.opentelemetry-agent
     ./load.nix
     ./flaresolverr.nix
+    ./tsidp.nix
     ./signoz.nix
     ./ssh.nix
     ./tailscale.nix

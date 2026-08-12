@@ -16,6 +16,7 @@
       RUSTFS_ADDRESS = "0.0.0.0:9000";
       RUSTFS_CONSOLE_ADDRESS = "0.0.0.0:9001";
       RUSTFS_CONSOLE_ENABLE = "true";
+      RUSTFS_OUTBOUND_ALLOW_ORIGINS = "https://idp.pony-clownfish.ts.net";
       RUSTFS_VOLUMES = "/mnt/data/rustfs";
     };
   };

@@ -165,6 +165,7 @@ in
     ];
     environment = common.env // {
       BASE_URL = "https://zerobyte.pony-clownfish.ts.net";
+      TRUSTED_ORIGINS = "https://idp.pony-clownfish.ts.net";
       PROVISIONING_PATH = containerProvisioningPath;
       ZEROBYTE_DATABASE_URL = "/var/lib/zerobyte/data/zerobyte.db";
       RESTIC_PASS_FILE = "/var/lib/zerobyte/data/restic.pass";
