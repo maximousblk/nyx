@@ -33,6 +33,12 @@ in
       example = [ "podman" ];
     };
 
+    extraReceivers = lib.mkOption {
+      type = lib.types.attrs;
+      default = { };
+      description = "Additional OpenTelemetry receivers for the metrics pipeline.";
+    };
+
     serviceDependencies = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ ];
@@ -302,7 +308,8 @@ in
             collection_interval = "60s";
             timeout = "10s";
           };
-        };
+        }
+        // cfg.extraReceivers;
 
         processors = {
           batch = {
@@ -350,7 +357,8 @@ in
                 "hostmetrics"
                 "systemd"
               ]
-              ++ containerMetricReceivers;
+              ++ containerMetricReceivers
+              ++ builtins.attrNames cfg.extraReceivers;
               processors = [
                 "resourcedetection"
                 "resource"

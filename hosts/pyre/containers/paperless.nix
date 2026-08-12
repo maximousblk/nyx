@@ -35,6 +35,18 @@ in
     icon = "services.paperless-ngx";
   };
 
+  optx.opentelemetry.agent = {
+    extraReceivers."prometheus/paperless_flower" = {
+      config.scrape_configs = [
+        {
+          job_name = "paperless-flower";
+          scrape_interval = "15s";
+          static_configs = [ { targets = [ "127.0.0.1:5555" ]; } ];
+        }
+      ];
+    };
+  };
+
   systemd.tmpfiles.settings."10-paperless" = {
     "${data_dir}".d = {
       mode = "0755";
@@ -118,7 +130,10 @@ in
         containerConfig = {
           image = "ghcr.io/paperless-ngx/paperless-ngx:3.0";
           pull = "newer";
-          publishPorts = [ "127.0.0.1:8000:8000" ];
+          publishPorts = [
+            "127.0.0.1:8000:8000"
+            "127.0.0.1:5555:5555"
+          ];
 
           networks = [ net.ref ];
           networkAliases = [ "paperless" ];
@@ -139,6 +154,7 @@ in
             # URL & access
             PAPERLESS_URL = "https://paperless.pony-clownfish.ts.net";
             PAPERLESS_ACCOUNT_ALLOW_SIGNUPS = "false";
+            PAPERLESS_ENABLE_FLOWER = "1";
 
             # Timezone (override common.env TZ format)
             PAPERLESS_TIME_ZONE = "Asia/Kolkata";
