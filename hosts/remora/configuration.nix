@@ -3,10 +3,15 @@
   self,
   config,
   pkgs,
+  lib,
+  modx,
   ...
 }:
 {
-  imports = [ inputs.nixos-wsl.nixosModules.default ];
+  imports = [
+    inputs.nixos-wsl.nixosModules.default
+    modx.nixos.windows-files
+  ];
 
   system.stateVersion = "25.11";
   networking.hostName = "remora";
@@ -135,4 +140,33 @@
       })
     ];
   };
+  windowsFiles."/mnt/c/Users/ashwin_y/.wslconfig".text = pkgs.writeText "wslconfig" (
+    lib.generators.toINI { } {
+      wsl2 = {
+        kernel = ''C:\\Users\\ashwin_y\\.wsl\\bzImage-x64v3'';
+        kernelModules = ''C:\\Users\\ashwin_y\\.wsl\\bzImage-x64v3-addons.vhdx'';
+        networkingMode = "mirrored";
+        firewall = false;
+        autoProxy = false;
+        dnsTunneling = true;
+      };
+      experimental = {
+        bestEffortDnsParsing = true;
+        hostAddressLoopback = true;
+        initialAutoProxyTimeout = 10000;
+        sparseVhd = true;
+      };
+    }
+  );
+
+  windowsFiles."/mnt/c/Users/ashwin_y/.wslgconfig".text = pkgs.writeText "wslgconfig" (
+    lib.generators.toINI { } {
+      "system-distro-env" = {
+        WESTON_RDP_FRACTIONAL_HI_DPI_SCALING = true;
+        WESTON_RDP_FRACTIONAL_HI_DPI_SCALING_ROUNDUP = true;
+        WESTON_RDP_DEBUG_DESKTOP_SCALING_FACTOR = 175;
+      };
+    }
+  );
+
 }
