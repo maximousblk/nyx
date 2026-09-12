@@ -10,6 +10,7 @@
 {
   imports = [
     inputs.nixos-wsl.nixosModules.default
+    inputs.paseo.nixosModules.default
     modx.nixos.windows-files
   ];
 
@@ -107,6 +108,24 @@
     enable = true;
     autoPrune.enable = true;
   };
+
+  services.paseo = {
+    enable = true;
+    user = config.wsl.defaultUser;
+    group = "users";
+    listenAddress = "0.0.0.0";
+    hostnames = true;
+    relay.enable = false;
+  };
+
+  systemd.services.paseo.environment.PATH = lib.mkOverride 40 (
+    lib.concatStringsSep ":" [
+      config.security.wrapperDir
+      "/home/${config.wsl.defaultUser}/.nix-profile/bin"
+      "/home/${config.wsl.defaultUser}/.local/state/nix/profile/bin"
+      "${config.system.path}/bin"
+    ]
+  );
 
   # GPU/Vulkan support via WSL2 GPU paravirtualization
   hardware.graphics.enable = true;
