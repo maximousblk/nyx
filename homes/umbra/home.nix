@@ -65,6 +65,7 @@
       enable = true;
 
       settings = {
+        theme.name = "rose-pine-dawn";
         onboarding = false;
         update.version_check = false;
         update.manifest_check = false;
