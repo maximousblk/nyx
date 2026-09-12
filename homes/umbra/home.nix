@@ -20,6 +20,7 @@
       claude.enable = true;
       omp.enable = true;
       pi.enable = true;
+      omp-auth.enable = true;
       ollama.enable = true;
     };
 
