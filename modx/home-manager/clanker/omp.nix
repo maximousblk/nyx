@@ -65,10 +65,10 @@ in
             commands.enableOpencodeProject = false;
             commands.enableOpencodeUser = false;
             compaction.handoffSaveToDisk = true;
-            compaction.strategy = "shake";
+            compaction.strategy = "snapcompact";
             contextPromotion.enabled = false;
-            dev.autoqa.consent = "no";
-            display.tabWidth = 2;
+            dev.autoqa = false;
+            dev.autoqaConsent = "denied";
             display.cacheMissMarker = true;
             display.shimmer = "kitt";
             edit.fuzzyMatch = false;
@@ -99,13 +99,13 @@ in
             personality = "pragmatic";
             modelRoles.advisor = "openai-codex/gpt-5.6-terra:low";
             modelRoles.commit = "openai-codex/gpt-5.6-luna:low";
-            modelRoles.default = "openai-codex/gpt-5.6-luna:low";
+            modelRoles.default = "openai-codex/gpt-5.6-terra:low";
             modelRoles.designer = "openai-codex/gpt-5.6-terra:low";
             modelRoles.plan = "openai-codex/gpt-5.6-terra:low";
-            modelRoles.slow = "openai-codex/gpt-5.6-terra:low";
-            modelRoles.smol = "opencode-go/deepseek-v4-flash:high";
-            modelRoles.task = "openai-codex/gpt-5.6-luna:low";
-            modelRoles.tiny = "opencode-go/deepseek-v4-flash:high";
+            modelRoles.slow = "openai-codex/gpt-5.6-sol:low";
+            modelRoles.smol = "openai-codex/gpt-5.6-luna:low";
+            modelRoles.task = "openai-codex/gpt-5.6-terra:low";
+            modelRoles.tiny = "openai-codex/gpt-5.6-luna:low";
             modelRoles.vision = "openai-codex/gpt-5.6-luna:low";
             plan.defaultOnStartup = false;
             plan.enabled = false;
@@ -147,7 +147,6 @@ in
             terminal.showProgress = true;
             terminal.showImages = true;
             todo.eager = "preferred";
-            tools.discoveryMode = "all";
             treeFilterMode = "no-tools";
             tui.hyperlinks = "always";
             tui.tight = true;
@@ -159,13 +158,6 @@ in
               paseoSkills
             ];
             extensions = [ "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts" ];
-            enabledModels = [
-              "openai-codex/gpt-5.6-luna"
-              "openai-codex/gpt-5.6-terra"
-
-              "opencode-go/deepseek-v4-flash"
-              "opencode-zen/deepseek-v4-flash-free"
-            ];
           }
           // lib.optionalAttrs (cfg.memory.backend == "mnemopi") { mnemopi.scoping = "global"; }
           // lib.optionalAttrs (cfg.memory.backend == "hindsight") {
