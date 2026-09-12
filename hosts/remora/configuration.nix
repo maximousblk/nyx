@@ -170,4 +170,7 @@
     }
   );
 
+  windowsFiles."/mnt/c/Users/ashwin_y/AppData/Roaming/Zed/settings.json".text =
+    config.home-manager.users.${config.wsl.defaultUser}.xdg.configFile."zed/settings.json".source;
+
 }
