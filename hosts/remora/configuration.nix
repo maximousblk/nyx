@@ -15,6 +15,7 @@
 
   system.stateVersion = "25.11";
   networking.hostName = "remora";
+  networking.firewall.enable = false;
   documentation.man.cache.enable = false;
 
   topology =
