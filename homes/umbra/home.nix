@@ -18,7 +18,13 @@
     optx.clanker = {
       opencode.enable = true;
       claude.enable = true;
-      omp.enable = true;
+      omp = {
+        enable = true;
+        memory = {
+          backend = "hindsight";
+          hindsightApiUrl = "http://heimdall-dev:8888";
+        };
+      };
       pi.enable = true;
       omp-auth.enable = true;
       ollama.enable = true;
