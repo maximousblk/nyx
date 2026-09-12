@@ -41,6 +41,7 @@ in
         servers = {
           gh_grep.url = "https://mcp.grep.app";
           context7.url = "https://mcp.context7.com/mcp";
+          heimdall.url = "https://heimdall.aftershoot.dev/mcp";
           lightpanda = {
             command = lib.getExe pkgs.nur.repos.xddxdd.lightpanda;
             args = [ "mcp" ];
