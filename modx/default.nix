@@ -4,6 +4,7 @@
     secrets = ./nixos/secrets.nix;
     tailscale-services = ./nixos/tailscale-services.nix;
     windows-files = ./nixos/windows-files.nix;
+    tsdproxy = ./nixos/tsdproxy.nix;
   };
 
   hm = {
