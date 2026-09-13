@@ -8,6 +8,7 @@
     ./signoz.nix
     ./ssh.nix
     ./tailscale.nix
+    ./omp-auth.nix
     ./proxy.nix
     ./torproxy.nix
   ];
