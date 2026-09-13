@@ -34,6 +34,11 @@ in
         description = "Hindsight API URL when using the Hindsight memory backend.";
       };
     };
+    modelRoles = lib.mkOption {
+      type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
+      default = null;
+      description = "Model selectors assigned to OMP roles, if any.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -98,16 +103,6 @@ in
             advisor.enabled = false;
             advisor.syncBacklog = "5";
             personality = "pragmatic";
-            modelRoles.advisor = "openai-codex/gpt-5.6-terra:low";
-            modelRoles.commit = "openai-codex/gpt-5.6-luna:low";
-            modelRoles.default = "openai-codex/gpt-5.6-terra:low";
-            modelRoles.designer = "openai-codex/gpt-5.6-terra:low";
-            modelRoles.plan = "openai-codex/gpt-5.6-terra:low";
-            modelRoles.slow = "openai-codex/gpt-5.6-sol:low";
-            modelRoles.smol = "openai-codex/gpt-5.6-luna:low";
-            modelRoles.task = "openai-codex/gpt-5.6-terra:low";
-            modelRoles.tiny = "openai-codex/gpt-5.6-luna:low";
-            modelRoles.vision = "openai-codex/gpt-5.6-luna:low";
             plan.defaultOnStartup = false;
             plan.enabled = false;
             readLineNumbers = true;
@@ -160,6 +155,7 @@ in
             ];
             extensions = [ "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts" ];
           }
+          // lib.optionalAttrs (cfg.modelRoles != null) { inherit (cfg) modelRoles; }
           // lib.optionalAttrs (cfg.memory.backend == "mnemopi") { mnemopi.scoping = "global"; }
           // lib.optionalAttrs (cfg.memory.backend == "hindsight") {
             hindsight.apiUrl = cfg.memory.hindsightApiUrl;
