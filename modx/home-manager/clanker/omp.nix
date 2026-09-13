@@ -7,6 +7,7 @@
 }:
 let
   cfg = config.optx.clanker.omp;
+  jsonFormat = pkgs.formats.json { };
   yamlFormat = pkgs.formats.yaml { };
   skillsDir = ./skills;
   paseoSkills = "${inputs.paseo}/skills";
@@ -180,6 +181,26 @@ in
             hindsight.mentalModelAutoSeed = true;
           }
         );
+
+        ".omp/agent/mcp.json".source = jsonFormat.generate "omp-mcp.json" {
+          mcpServers = lib.mapAttrs (
+            _: server:
+            lib.hm.mcp.transformMcpServer {
+              inherit server;
+              extraTransforms = [ lib.hm.mcp.addType ];
+              exclude = [ "serverUrl" ];
+            }
+          ) config.programs.mcp.servers;
+        };
+
+        ".omp/agent/models.yml".source = yamlFormat.generate "omp-models.yml" {
+          providers.aperture-responses = {
+            baseUrl = "https://aperture.pony-clownfish.ts.net/v1";
+            auth = "none";
+            api = "openai-responses";
+            discovery.type = "openai-models-list";
+          };
+        };
       }
     ];
   };

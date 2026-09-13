@@ -39,6 +39,7 @@ in
       programs.mcp = {
         enable = true;
         servers = {
+          aperture.url = "https://aperture.pony-clownfish.ts.net/v1/mcp";
           gh_grep.url = "https://mcp.grep.app";
           context7.url = "https://mcp.context7.com/mcp";
           heimdall.url = "https://heimdall.aftershoot.dev/mcp";
