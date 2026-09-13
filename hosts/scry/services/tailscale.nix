@@ -1,4 +1,9 @@
-{ ... }: {
+{ modx, ... }: {
+  imports = [
+    modx.nixos.tailscale-services
+    modx.nixos.tsdproxy
+  ];
+
   networking.firewall.trustedInterfaces = [ "tailscale0" ];
   networking.firewall.checkReversePath = "loose";
 
@@ -14,5 +19,10 @@
       "--report-posture"
     ];
     openFirewall = true;
+  };
+
+  optx.tailscale.tsdproxy.settings = {
+    http.port = 8081;
+    adminAllowLocalhost = true;
   };
 }
