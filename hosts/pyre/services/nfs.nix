@@ -1,5 +1,11 @@
 { config, lib, ... }: {
   config = {
+    topology.self.services.nfs = {
+      name = "NFS";
+      info = "Read-only media library";
+      icon = "devices.cloud-server";
+    };
+
     # NFSv4.2 server for media library
     services.nfs.server = {
       enable = true;

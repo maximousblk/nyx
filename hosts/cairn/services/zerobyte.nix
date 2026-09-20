@@ -3,6 +3,7 @@
   common,
   lib,
   modx,
+  pkgx,
   ...
 }:
 let
@@ -139,10 +140,7 @@ in
   topology.self.services.zerobyte = {
     name = "Zerobyte";
     info = "Backup automation";
-    icon = builtins.fetchurl {
-      url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/zerobyte.svg";
-      sha256 = "1pn9shc37fv0dxnv5bsk1va799z0ax389n56p6ayj4li2yv1jiys";
-    };
+    icon = pkgx.topology-icons.zerobyte;
   };
 
   systemd.tmpfiles.settings."10-zerobyte" = {

@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgx, ... }: {
   services.sing-box = {
     enable = true;
     settings = {
@@ -36,9 +36,6 @@
   topology.self.services.proxy = {
     name = "Network Proxy";
     info = "Direct HTTP and SOCKS5 proxy";
-    icon = builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/SagerNet/sing-box/testing/docs/assets/icon.svg";
-      sha256 = "0jsp5kis87cdg141gaff1jsbxfimw117qd0yimy5ygkrnhmli6z5";
-    };
+    icon = pkgx.topology-icons.proxy;
   };
 }

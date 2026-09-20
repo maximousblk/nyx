@@ -2,6 +2,7 @@
   config,
   common,
   modx,
+  pkgx,
   ...
 }:
 let
@@ -40,10 +41,7 @@ in
   topology.self.services.karakeep = {
     name = "Karakeep";
     info = "Bookmark manager";
-    icon = builtins.fetchurl {
-      url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/karakeep-light.svg";
-      sha256 = "06mic8gs6ca36rkwh20sq3ykw5dlqj2nsz760j78pfg5g2krhrrg";
-    };
+    icon = pkgx.topology-icons.karakeep;
   };
 
   systemd.tmpfiles.settings."10-karakeep" = {

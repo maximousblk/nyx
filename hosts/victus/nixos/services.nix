@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, pkgx, ... }: {
 
   boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
@@ -48,6 +48,11 @@
     openFirewall = true;
 
     package = pkgs.sunshine.override { cudaSupport = false; };
+  };
+  topology.self.services.sunshine = {
+    name = "Sunshine";
+    info = "Game streaming host";
+    icon = pkgx.topology-icons.sunshine;
   };
   systemd.user.services.sunshine = {
     after = [ "niri-session.target" ];

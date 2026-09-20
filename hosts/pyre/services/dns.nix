@@ -1,4 +1,10 @@
 { ... }: {
+  topology.self.services.dnscrypt-proxy = {
+    name = "DNSCrypt Proxy";
+    info = "Encrypted DNS resolver";
+    icon = "services.dnsmasq";
+  };
+
   services.resolved.enable = false;
 
   services.dnscrypt-proxy = {

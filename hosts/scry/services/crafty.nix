@@ -1,4 +1,17 @@
-{ modx, ... }: {
+{ modx, pkgx, ... }: {
+  topology.self.services = {
+    crafty = {
+      name = "Crafty Controller";
+      info = "Minecraft server management";
+      icon = pkgx.topology-icons.crafty;
+    };
+    minecraft = {
+      name = "Minecraft";
+      info = "Java game server";
+      icon = "services.minecraft";
+    };
+  };
+
   virtualisation.docker.enable = true;
   virtualisation.oci-containers.backend = "docker";
 

@@ -3,6 +3,7 @@
   lib,
   modx,
   pkgs,
+  pkgx,
   ...
 }:
 let
@@ -385,10 +386,7 @@ in
   topology.self.services.signoz = {
     name = "SigNoz";
     info = "Observability platform";
-    icon = builtins.fetchurl {
-      url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/signoz.svg";
-      sha256 = "1k60vdiwd8gifag1rfany9bkrip73q3a76rcx4dpyz8qx7ry3m3a";
-    };
+    icon = pkgx.topology-icons.signoz;
   };
 
   virtualisation.quadlet.enable = false;

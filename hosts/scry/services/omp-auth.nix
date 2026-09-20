@@ -2,6 +2,7 @@
   inputs,
   modx,
   pkgs,
+  pkgx,
   ...
 }:
 let
@@ -9,6 +10,12 @@ let
 in
 {
   imports = [ modx.nixos.tailscale-services ];
+
+  topology.self.services.omp = {
+    name = "Oh My Pi";
+    info = "Tailnet authentication gateway";
+    icon = pkgx.topology-icons.omp;
+  };
 
   systemd.services = {
     omp-auth-broker = {

@@ -3,6 +3,7 @@
   self,
   config,
   pkgs,
+  pkgx,
   lib,
   modx,
   ...
@@ -57,6 +58,11 @@
       self = {
         parent = "apex";
         guestType = "wsl";
+        services.paseo = {
+          name = "Paseo";
+          info = "Coding agent orchestration";
+          icon = pkgx.topology-icons.paseo;
+        };
         interfaces.eth0 = {
           type = "ethernet";
           network = "wsl";

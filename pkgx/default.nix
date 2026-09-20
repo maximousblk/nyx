@@ -5,5 +5,6 @@
   pi-web-access = pkgs.callPackage ./pi-web-access.nix { };
   pi-context-mode = pkgs.callPackage ./pi-context-mode.nix { };
   pi-mcp-adapter = pkgs.callPackage ./pi-mcp-adapter.nix { };
+  topology-icons = pkgs.callPackage ./topology-icons.nix { };
   tsdproxy = pkgs.callPackage ./tsdproxy.nix { };
 }

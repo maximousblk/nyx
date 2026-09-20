@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgx,
   lib,
   config,
   inputs,
@@ -67,6 +68,12 @@ in
     listenAddress = "0.0.0.0";
     hostnames = true;
     relay.enable = false;
+  };
+
+  topology.self.services.paseo = {
+    name = "Paseo";
+    info = "Coding agent orchestration";
+    icon = pkgx.topology-icons.paseo;
   };
 
   # Paseo's Home Manager PATH fix leaves NixOS wrappers after system binaries:
