@@ -56,6 +56,13 @@ in
             doCheck = !prev.stdenv.hostPlatform.isi686;
           });
         })
+        (_final: prev: {
+          # https://github.com/NixOS/nixpkgs/issues/564449
+          # Node.js 26.9.0's test-fs-cp-async-file-modes.mjs fails in the Nix sandbox with EPERM.
+          nodejs-slim_26 = prev.nodejs-slim_26.overrideAttrs (_old: {
+            doCheck = false;
+          });
+        })
         (
           _final: prev:
           let
