@@ -24,6 +24,7 @@ in
     ./remora/parts.nix
     ./cairn/parts.nix
     ./scry/parts.nix
+    ./wisp/parts.nix
   ];
 
   options = {
