@@ -21,16 +21,17 @@
       omp = {
         enable = true;
         modelRoles = {
-          advisor = "openai-codex/gpt-5.6-terra:low";
-          commit = "openai-codex/gpt-5.6-luna:low";
-          default = "openai-codex/gpt-5.6-terra:low";
-          designer = "openai-codex/gpt-5.6-terra:low";
-          plan = "openai-codex/gpt-5.6-terra:low";
-          slow = "openai-codex/gpt-5.6-sol:low";
-          smol = "openai-codex/gpt-5.6-luna:low";
-          task = "openai-codex/gpt-5.6-terra:low";
-          tiny = "openai-codex/gpt-5.6-luna:low";
-          vision = "openai-codex/gpt-5.6-luna:low";
+          advisor = "openai-codex/gpt-6-sol:low";
+          commit = "openai-codex/gpt-6-luna:low";
+          default = "openai-codex/gpt-5.6-luna:medium";
+          designer = "openai-codex/gpt-6-sol:low";
+          frontier = "openai-codex/gpt-6-astra";
+          plan = "openai-codex/gpt-6-sol:low";
+          slow = "openai-codex/gpt-6-sol:low";
+          smol = "openai-codex/gpt-6-luna:low";
+          task = "openai-codex/gpt-6-luna:low";
+          tiny = "openai-codex/gpt-6-luna:low";
+          vision = "openai-codex/gpt-6-luna:low";
         };
         memory = {
           backend = "hindsight";
