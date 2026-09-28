@@ -73,6 +73,12 @@ in
               commands.enableOpencodeUser = false;
               compaction.handoffSaveToDisk = true;
               compaction.strategy = "snapcompact";
+              cycleOrder = [
+                "smol"
+                "default"
+                "slow"
+                "frontier"
+              ];
               contextPromotion.enabled = false;
               dev.autoqa = false;
               dev.autoqaConsent = "denied";
