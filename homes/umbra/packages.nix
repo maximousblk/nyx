@@ -63,7 +63,7 @@
     podman
     podman-compose
     ripgrep
-    sentry-cli
+    nur.repos.congee.sentry
     sops
     ssh-to-age
     strace
