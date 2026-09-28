@@ -54,10 +54,10 @@ in
 
     home.sessionVariables.PUPPETEER_EXECUTABLE_PATH = lib.getExe pkgs.brave-origin;
 
-    home.file = lib.mkMerge [
-      {
-        ".omp/agent/config.yml" = {
-          source = yamlFormat.generate "omp-config.yml" (
+    home.file = lib.mkMerge (
+      map (lib.mapAttrs (_: file: file // { force = true; })) [
+        {
+          ".omp/agent/config.yml".source = yamlFormat.generate "omp-config.yml" (
             {
               async.enabled = true;
               async.pollWaitDuration = "10m";
@@ -178,29 +178,30 @@ in
               hindsight.mentalModelAutoSeed = true;
             }
           );
-          force = true;
-        };
+        }
 
-        ".omp/agent/mcp.json".source = jsonFormat.generate "omp-mcp.json" {
-          mcpServers = lib.mapAttrs (
-            _: server:
-            lib.hm.mcp.transformMcpServer {
-              inherit server;
-              extraTransforms = [ lib.hm.mcp.addType ];
-              exclude = [ "serverUrl" ];
-            }
-          ) config.programs.mcp.servers;
-        };
-
-        ".omp/agent/models.yml".source = yamlFormat.generate "omp-models.yml" {
-          providers.aperture-responses = {
-            baseUrl = "https://aperture.pony-clownfish.ts.net/v1";
-            auth = "none";
-            api = "openai-responses";
-            discovery.type = "openai-models-list";
+        {
+          ".omp/agent/mcp.json".source = jsonFormat.generate "omp-mcp.json" {
+            mcpServers = lib.mapAttrs (
+              _: server:
+              lib.hm.mcp.transformMcpServer {
+                inherit server;
+                extraTransforms = [ lib.hm.mcp.addType ];
+                exclude = [ "serverUrl" ];
+              }
+            ) config.programs.mcp.servers;
           };
-        };
-      }
-    ];
+
+          ".omp/agent/models.yml".source = yamlFormat.generate "omp-models.yml" {
+            providers.aperture-responses = {
+              baseUrl = "https://aperture.pony-clownfish.ts.net/v1";
+              auth = "none";
+              api = "openai-responses";
+              discovery.type = "openai-models-list";
+            };
+          };
+        }
+      ]
+    );
   };
 }

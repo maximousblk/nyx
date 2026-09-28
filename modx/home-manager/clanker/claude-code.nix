@@ -26,5 +26,7 @@ in
         };
       };
     };
+
+    home.file."${config.home.homeDirectory}/.claude/settings.json".force = true;
   };
 }
