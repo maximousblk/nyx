@@ -23,16 +23,17 @@
     omp = {
       enable = true;
       modelRoles = {
-        advisor = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        commit = "aperture-responses/openai-codex/gpt-5.6-luna:low";
-        default = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        designer = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        plan = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        slow = "aperture-responses/openai-codex/gpt-5.6-sol:low";
-        smol = "aperture-responses/openai-codex/gpt-5.6-luna:low";
-        task = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        tiny = "aperture-responses/openai-codex/gpt-5.6-luna:low";
-        vision = "aperture-responses/openai-codex/gpt-5.6-luna:low";
+        advisor = "aperture-responses/openai-codex/gpt-6-sol:low";
+        commit = "aperture-responses/openai-codex/gpt-6-luna:low";
+        default = "aperture-responses/openai-codex/gpt-5.6-luna:medium";
+        designer = "aperture-responses/openai-codex/gpt-6-sol:low";
+        frontier = "aperture-responses/openai-codex/gpt-6-astra";
+        plan = "aperture-responses/openai-codex/gpt-6-sol:low";
+        slow = "aperture-responses/openai-codex/gpt-6-sol:low";
+        smol = "aperture-responses/openai-codex/gpt-6-luna:low";
+        task = "aperture-responses/openai-codex/gpt-6-luna:low";
+        tiny = "aperture-responses/openai-codex/gpt-6-luna:low";
+        vision = "aperture-responses/openai-codex/gpt-6-luna:low";
       };
     };
     pi.enable = true;
