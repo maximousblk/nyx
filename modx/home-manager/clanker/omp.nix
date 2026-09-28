@@ -107,6 +107,7 @@ in
               plan.defaultOnStartup = false;
               plan.enabled = false;
               readLineNumbers = true;
+              secrets.enabled = true;
               showHardwareCursor = true;
               skills.enableClaudeProject = false;
               skills.enableClaudeUser = false;
