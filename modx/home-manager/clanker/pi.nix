@@ -27,11 +27,11 @@ in
     home.file = {
       ".pi/agent/settings.json".source = jsonFormat.generate "pi-settings.json" {
         defaultProvider = "openai-codex";
-        defaultModel = "gpt-5.6-luna";
+        defaultModel = "gpt-6-luna";
         defaultThinkingLevel = "low";
         enabledModels = [
-          "openai-codex/gpt-5.6-luna"
-          "openai-codex/gpt-5.6-terra"
+          "openai-codex/gpt-6-luna"
+          "openai-codex/gpt-6-sol"
 
           "opencode-go/deepseek-v4-flash"
 

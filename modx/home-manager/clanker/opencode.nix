@@ -25,7 +25,7 @@ in
         share = "disabled";
         default_agent = "plan";
         snapshot = false;
-        model = "openai-codex/gpt-5.6-luna";
+        model = "openai-codex/gpt-6-sol";
         small_model = "opencode-go/deepseek-v4-flash";
         lsp.rust.disabled = true;
         watcher.ignore = [

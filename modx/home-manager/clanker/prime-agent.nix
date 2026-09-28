@@ -29,8 +29,8 @@ in
       collapseChangelog = true;
       defaultThinkingLevel = "low";
       enabledModels = [
-        "openai-codex/gpt-5.6-luna"
-        "openai-codex/gpt-5.6-terra"
+        "openai-codex/gpt-6-luna"
+        "openai-codex/gpt-6-sol"
 
         "opencode-go/deepseek-v4-flash"
 
