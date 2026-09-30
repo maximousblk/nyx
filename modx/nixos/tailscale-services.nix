@@ -90,7 +90,6 @@ let
     name:
     pkgs.writeShellScript "tailscale-svc-${name}-stop" ''
       ${flock} ${lockFile} ${tailscale} serve drain svc:${name} || true
-      ${flock} ${lockFile} ${tailscale} serve clear svc:${name} || true
     '';
 
   mkServiceUnit =
