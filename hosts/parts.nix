@@ -63,6 +63,18 @@ in
                 nixpkgs.hostPlatform = system;
               }
 
+              {
+                topology.extractors = {
+                  kea.enable = false;
+                  microvm.enable = false;
+                  networking.interface.enable = false;
+                  nix-minecraft.enable = false;
+                  nixos-container.enable = false;
+                  services.enable = false;
+                  systemd-network.enable = false;
+                };
+              }
+
               { nix = self.nixconf.nix; }
 
               {

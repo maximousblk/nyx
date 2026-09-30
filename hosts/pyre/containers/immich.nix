@@ -2,6 +2,7 @@
   config,
   common,
   modx,
+  pkgx,
   ...
 }:
 let
@@ -30,7 +31,7 @@ in
   topology.self.services.immich = {
     name = "Immich";
     info = "Photo & video management";
-    icon = "services.immich";
+    icon = pkgx.topology-icons.immich;
   };
 
   systemd.tmpfiles.settings."10-immich" = {

@@ -1,4 +1,9 @@
-{ config, servarr, ... }:
+{
+  config,
+  pkgx,
+  servarr,
+  ...
+}:
 let
   port = 8096;
 in
@@ -21,6 +26,6 @@ in
   topology.self.services.jellyfin = {
     name = "Jellyfin";
     info = "Media server";
-    icon = "services.jellyfin";
+    icon = pkgx.topology-icons.jellyfin;
   };
 }

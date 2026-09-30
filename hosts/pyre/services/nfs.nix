@@ -1,9 +1,15 @@
-{ config, lib, ... }: {
+{
+  config,
+  lib,
+  pkgx,
+  ...
+}:
+{
   config = {
     topology.self.services.nfs = {
       name = "NFS";
       info = "Read-only media library";
-      icon = "devices.cloud-server";
+      icon = pkgx.topology-icons.nfs;
     };
 
     # NFSv4.2 server for media library

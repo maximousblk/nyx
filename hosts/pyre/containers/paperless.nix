@@ -2,6 +2,7 @@
   config,
   common,
   modx,
+  pkgx,
   ...
 }:
 let
@@ -32,7 +33,7 @@ in
   topology.self.services.paperless = {
     name = "Paperless-ngx";
     info = "Document management system";
-    icon = "services.paperless-ngx";
+    icon = pkgx.topology-icons.paperless;
   };
 
   optx.opentelemetry.agent = {

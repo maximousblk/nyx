@@ -1,8 +1,8 @@
-{ ... }: {
+{ pkgx, ... }: {
   topology.self.services.dnscrypt-proxy = {
     name = "DNSCrypt Proxy";
     info = "Encrypted DNS resolver";
-    icon = "services.dnsmasq";
+    icon = pkgx.topology-icons.dnscrypt-proxy;
   };
 
   services.resolved.enable = false;
