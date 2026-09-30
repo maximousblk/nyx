@@ -16,7 +16,7 @@
       deploy.nodes.scry = {
         hostname = "scry";
         sshUser = "root";
-        remoteBuild = true;
+        remoteBuild = false;
         profiles.system = {
           user = "root";
           path = inputs.deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.scry;
