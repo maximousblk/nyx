@@ -26,6 +26,24 @@ in
       config.allowUnfree = true;
       overlays = [
         inputs.nur.overlays.default
+        (
+          final: prev:
+          lib.optionalAttrs prev.stdenv.hostPlatform.isAarch64 {
+            # NUR pins a stale ARM asset under the 0.4.1 URL; the current release reports 0.4.1.
+            nur = prev.nur // {
+              repos = prev.nur.repos // {
+                xddxdd = prev.nur.repos.xddxdd // {
+                  lightpanda = prev.nur.repos.xddxdd.lightpanda.overrideAttrs (old: {
+                    src = final.fetchurl {
+                      url = "https://github.com/lightpanda-io/browser/releases/download/${old.version}/lightpanda-aarch64-linux";
+                      hash = "sha256-Zkd1x/WracwxiZVMf5NF4lwWfLTazgFhc+Yp+aXoLEI=";
+                    };
+                  });
+                };
+              };
+            };
+          }
+        )
         inputs.nix-topology.overlays.default
         inputs.fenix.overlays.default
         inputs.nix-cachyos-kernel.overlays.pinned
