@@ -5,7 +5,11 @@
     networking.useDHCP = false;
     networking.useNetworkd = true;
 
-    networking.firewall.enable = false;
+    networking.firewall = {
+      enable = true;
+      trustedInterfaces = [ "tailscale0" ];
+      interfaces.enp0s31f6.allowedTCPPorts = [ 22 ];
+    };
 
     systemd.network.networks."10-enp0s31f6" = {
       matchConfig.Name = "enp0s31f6";
