@@ -555,7 +555,7 @@ in
           ])
         ];
         environment = {
-          OTEL_RESOURCE_ATTRIBUTES = "host.name=signoz-host,os.type=linux";
+          OTEL_RESOURCE_ATTRIBUTES = "host.name=scry,os.type=linux";
           LOW_CARDINAL_EXCEPTION_GROUPING = "false";
           SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_DSN = "tcp://signoz-clickhouse:9000";
           SIGNOZ_OTEL_COLLECTOR_CLICKHOUSE_CLUSTER = "cluster";
