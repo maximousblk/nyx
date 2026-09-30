@@ -9,6 +9,11 @@
       network = "tailscale";
       virtual = true;
     };
+    interfaces.eth0 = {
+      type = "ethernet";
+      network = "incus";
+      addresses = [ "10.77.0.40/24" ];
+    };
   };
 
   networking = {

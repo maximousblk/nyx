@@ -1,4 +1,14 @@
 { ... }: {
+  topology.networks.incus = {
+    name = "Incus";
+    cidrv4 = "10.77.0.0/24";
+    style = {
+      primaryColor = "#c4b5fd";
+      secondaryColor = null;
+      pattern = "dotted";
+    };
+  };
+
   topology.self = {
     name = "erebus";
     hardware.info = "Raspberry Pi 4 Incus host";
@@ -19,6 +29,12 @@
           interface = "lan3";
         }
       ];
+    };
+    interfaces.incusbr0 = {
+      type = "bridge";
+      network = "incus";
+      virtual = true;
+      addresses = [ "10.77.0.1/24" ];
     };
   };
 

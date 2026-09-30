@@ -88,7 +88,7 @@
       physicalConnections = [
         {
           node = "sg1008d";
-          interface = "lan3";
+          interface = "lan7";
         }
       ];
     };
