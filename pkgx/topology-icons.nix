@@ -59,6 +59,10 @@
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/signoz.svg";
     sha256 = "1k60vdiwd8gifag1rfany9bkrip73q3a76rcx4dpyz8qx7ry3m3a";
   };
+  scrutiny = builtins.fetchurl {
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/scrutiny.svg";
+    sha256 = "0hl55xplhkwjj8xd84r7h08vbz6if5mf7is1nxsz5a86xbkccm32";
+  };
   sunshine = builtins.fetchurl {
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/sunshine.svg";
     sha256 = "0fhg4vx9x8b4ayn7micc6v3bc8a3kcz1pc4ld3v8qn3dgcmlqyqv";

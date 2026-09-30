@@ -3,6 +3,7 @@
     modx.nixos.opentelemetry-agent
     ./ssh.nix
     ./rustfs.nix
+    ./scrutiny.nix
     ./tailscale.nix
     ./zerobyte.nix
   ];
