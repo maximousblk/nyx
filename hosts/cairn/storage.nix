@@ -38,26 +38,11 @@
       "/mnt/disk1/snapraid.content"
       "/mnt/disk2/snapraid.content"
     ];
-    exclude = [
-      "*.unrecoverable"
-      "*.part"
-      "*.tmp"
-      "/tmp/"
-      "/lost+found/"
-      "/.Trash-*/"
-      "/.recycle/"
-      "/@eaDir/"
-    ];
-
     sync.interval = "01:00";
     scrub = {
       interval = "Sun *-*-* 06:00:00";
       plan = 12;
       olderThan = 14;
     };
-
-    extraConfig = ''
-      nohidden
-    '';
   };
 }
