@@ -6,6 +6,7 @@
       generic-extlinux-compatible.enable = true;
     };
     kernelParams = [ "console=tty1" ];
+    supportedFilesystems.zfs = false;
   };
 
   hardware = {

@@ -1,20 +1,19 @@
 {
   inputs,
   modulesPath,
+  modx,
   pkgx,
   pkgs,
   ...
 }:
 {
-  boot.zfs = {
-    forceImportRoot = false;
-  };
-
   imports = [
+    modx.nixos.secrets
     "${modulesPath}/installer/sd-card/sd-image-aarch64.nix"
     ./hardware.nix
     ./incus.nix
     ./network.nix
+    ./k3s
   ];
 
   users.users = {
@@ -32,10 +31,7 @@
 
   security.sudo.wheelNeedsPassword = false;
   nix.settings.max-jobs = 1;
-  environment = {
-    systemPackages = [ pkgs.incus ];
-    variables.INCUS_PROJECT = "erebus";
-  };
+  environment.systemPackages = [ pkgs.incus ];
   documentation.nixos.enable = false;
   system.stateVersion = "26.05";
 }
