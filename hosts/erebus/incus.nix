@@ -73,6 +73,12 @@
               source = "wisp-tailscale";
               path = "/var/lib/tailscale";
             };
+            orca = {
+              type = "disk";
+              pool = "default";
+              source = "wisp-orca";
+              path = "/var/lib/orca";
+            };
             tun = {
               type = "unix-char";
               path = "/dev/net/tun";

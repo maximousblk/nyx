@@ -59,6 +59,10 @@
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/signoz.svg";
     sha256 = "1k60vdiwd8gifag1rfany9bkrip73q3a76rcx4dpyz8qx7ry3m3a";
   };
+  orca = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/stablyai/orca/main/resources/icon.png";
+    sha256 = "1ky40i3zlcjs6qfw959q047kjrs7rahcvy5hf1xs5dcmsrbabqvg";
+  };
   scrutiny = builtins.fetchurl {
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/scrutiny.svg";
     sha256 = "0hl55xplhkwjj8xd84r7h08vbz6if5mf7is1nxsz5a86xbkccm32";

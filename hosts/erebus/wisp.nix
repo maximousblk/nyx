@@ -12,6 +12,12 @@
       project = "default";
       type = "custom";
     }
+    {
+      name = "wisp-orca";
+      pool = "default";
+      project = "default";
+      type = "custom";
+    }
   ];
 
   system.build.wispImage = pkgs.runCommand "wisp-image" { nativeBuildInputs = [ pkgs.xz ]; } ''

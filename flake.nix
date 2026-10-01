@@ -157,6 +157,11 @@
 
     paseo.url = "github:getpaseo/paseo";
 
+    orca = {
+      url = "github:stablyai/orca";
+      flake = false;
+    };
+
     ssh-keys-maximousblk = {
       url = "https://github.com/maximousblk.keys";
       flake = false;

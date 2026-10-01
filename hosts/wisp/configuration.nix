@@ -8,6 +8,7 @@
   imports = [
     ./incus.nix
     ./network.nix
+    ./orca.nix
   ];
 
   environment.defaultPackages = lib.mkForce [ ];
