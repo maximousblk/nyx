@@ -62,7 +62,32 @@
             };
           };
         }
-
+        {
+          name = "wisp";
+          project = "default";
+          config."security.nesting" = "true";
+          devices = {
+            tailscale = {
+              type = "disk";
+              pool = "default";
+              source = "wisp-tailscale";
+              path = "/var/lib/tailscale";
+            };
+            tun = {
+              type = "unix-char";
+              path = "/dev/net/tun";
+            };
+            incus = {
+              type = "proxy";
+              bind = "instance";
+              connect = "unix:/var/lib/incus/unix.socket";
+              listen = "unix:/etc/incus/unix.socket";
+              mode = "0660";
+              uid = "0";
+              gid = "1";
+            };
+          };
+        }
       ];
     };
   };

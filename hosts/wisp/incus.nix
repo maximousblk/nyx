@@ -15,6 +15,10 @@
         public: false
   '';
 
+  security.sudo.extraConfig = ''
+    Defaults env_keep += "INCUS_SOCKET INCUS_CONF"
+  '';
+
   environment = {
     systemPackages = [
       pkgs.bashInteractive

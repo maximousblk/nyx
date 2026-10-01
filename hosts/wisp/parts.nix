@@ -1,6 +1,7 @@
 {
   inputs,
   mkNixos,
+  self,
   withSystem,
   ...
 }:
@@ -15,6 +16,16 @@
           ./configuration.nix
           { system.nixos.label = "wisp-lxc-${inputs.nixpkgs.lib.version}"; }
         ];
+      };
+
+      deploy.nodes.wisp = {
+        hostname = "wisp";
+        sshUser = "root";
+        remoteBuild = false;
+        profiles.system = {
+          user = "root";
+          path = inputs.deploy-rs.lib.${system}.activate.nixos self.nixosConfigurations.wisp;
+        };
       };
     }
   );

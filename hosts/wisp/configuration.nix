@@ -5,10 +5,6 @@
   ...
 }:
 {
-  boot.zfs = {
-    forceImportRoot = false;
-  };
-
   imports = [
     ./incus.nix
     ./network.nix
@@ -20,6 +16,8 @@
     pkgs.uutils-coreutils
   ];
 
+  security.sudo.wheelNeedsPassword = false;
+
   users = {
     mutableUsers = false;
     users.root = {
@@ -27,6 +25,7 @@
       shell = pkgs.bashInteractive;
       openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
     };
+
   };
 
   documentation.enable = false;
