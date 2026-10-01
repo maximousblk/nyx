@@ -92,8 +92,8 @@ in
     nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
     nerd-fonts.zed-mono
-    ioskeley-mono.normal-NF
-    ioskeley-mono.normal-term-NF
+    ioskeley-mono.nf
+    ioskeley-mono.term-nf
   ];
 
   services.xserver.videoDrivers = [ "nvidia" ];

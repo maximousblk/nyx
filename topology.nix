@@ -10,13 +10,13 @@
         # Let nodes grow to fit ports + port labels instead of being pinned
         # to the SVG card's minimum size. Also hardcode Ioskeley Mono so the
         # upstream --font/--font-bold CLI args are effectively ignored.
-        ioskeley = final.ioskeley-mono.normal;
+        ioskeley = final.ioskeley-mono.nf;
         elk-to-svg-grow = topologyPkgs.elk-to-svg.overrideAttrs (old: {
           postPatch = (old.postPatch or "") + ''
             sed -i 's|"\[MINIMUM_SIZE\]"|"[MINIMUM_SIZE, PORTS, PORT_LABELS]"|' main.js
             sed -i \
-              -e 's|options\.font\b|"${ioskeley}/share/fonts/truetype/IoskeleyMono-Regular.ttf"|g' \
-              -e 's|options\.fontBold\b|"${ioskeley}/share/fonts/truetype/IoskeleyMono-Bold.ttf"|g' \
+              -e 's|options\.font\b|"${ioskeley}/share/fonts/truetype/IoskeleyMonoNerdFontMono-Regular.ttf"|g' \
+              -e 's|options\.fontBold\b|"${ioskeley}/share/fonts/truetype/IoskeleyMonoNerdFontMono-Bold.ttf"|g' \
               main.js
           '';
         });

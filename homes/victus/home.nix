@@ -80,8 +80,8 @@
     gh
     hicolor-icon-theme
     hyprpwcenter
-    ioskeley-mono.normal-NF
-    ioskeley-mono.normal-term-NF
+    ioskeley-mono.nf
+    ioskeley-mono.term-nf
     jq
     kdePackages.ark
     kdePackages.breeze-icons
