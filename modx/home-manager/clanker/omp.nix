@@ -87,7 +87,7 @@ in
               display.shimmer = "kitt";
               edit.fuzzyMatch = false;
               edit.fuzzyThreshold = 0.98;
-              edit.mode = "patch";
+              edit.mode = "hashline";
               eval.jl = true;
               eval.js = true;
               eval.py = true;
