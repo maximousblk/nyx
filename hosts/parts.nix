@@ -8,7 +8,6 @@
 let
   nixosModules = [
     inputs.disko.nixosModules.disko
-    inputs.nixarr.nixosModules.default
     inputs.quadlet-nix.nixosModules.quadlet
     inputs.home-manager.nixosModules.home-manager
     inputs.impermanence.nixosModules.impermanence

@@ -10,7 +10,10 @@
     { system, ... }: {
       nixosConfigurations.pyre = mkNixos {
         inherit system;
-        modules = [ ./configuration.nix ];
+        modules = [
+          ./configuration.nix
+          inputs.nixflix.nixosModules.default
+        ];
       };
 
       deploy.nodes.pyre = {

@@ -71,9 +71,6 @@
     agenix = {
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.darwin.follows = "";
-      inputs.systems.follows = "systems";
-      inputs.home-manager.follows = "home-manager";
     };
 
     agenix-rekey = {
@@ -109,8 +106,8 @@
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
 
-    nixarr = {
-      url = "github:rasmus-kirk/nixarr";
+    nixflix = {
+      url = "github:kiriwalawren/nixflix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

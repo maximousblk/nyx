@@ -12,27 +12,30 @@ in
 {
   imports = [
     modx.nixos.tailscale-services
-    ./transmission.nix
+    ./qbittorrent.nix
     ./prowlarr.nix
     ./radarr.nix
     ./sonarr.nix
-    ./bazarr.nix
     ./jellyfin.nix
     ./seerr.nix
+    ./dashbrr.nix
+    ./cleanuparr.nix
   ];
 
   _module.args.servarr = { inherit persist media_dir state_dir; };
 
-  nixarr = {
+  nixflix = {
     enable = true;
-    mediaDir = media_dir;
+    mediaDir = "${media_dir}/library";
+    downloadsDir = "${media_dir}/torrents";
     stateDir = state_dir;
+    postgres.enable = false;
+    vpn.enable = false;
+    theme.enable = false;
+    nginx.enable = false;
+    caddy.enable = false;
+    recyclarr.enable = true;
   };
-
-  systemd.tmpfiles.rules = [
-    # Recursively set permissions to 0775 for the entire torrents directory
-    "Z '${media_dir}/torrents' 0775 transmission media - -"
-  ];
 
   systemd.tmpfiles.settings."10-servarr" = {
     "${persist}".d = {

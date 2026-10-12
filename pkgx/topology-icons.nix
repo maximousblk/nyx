@@ -7,6 +7,10 @@ let
     '';
 in
 {
+  dashbrr = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/autobrr/dashbrr/v0.7.0/.github/assets/logo.png";
+    sha256 = "027ybg4cwjs00vq4qhw114v6jw4x0gv1fw54hgyapg1pc0fl3cay";
+  };
   bazarr = builtins.fetchurl {
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/bazarr.svg";
     sha256 = "06chv4sr3bnz6jbj9h2a0d8s8lx8lp6b5rjd83scg3nbjqfyipa3";
@@ -86,6 +90,10 @@ in
   proxy = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/SagerNet/sing-box/testing/docs/assets/icon.svg";
     sha256 = "0jsp5kis87cdg141gaff1jsbxfimw117qd0yimy5ygkrnhmli6z5";
+  };
+  qbittorrent = builtins.fetchurl {
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/qbittorrent.svg";
+    sha256 = "0w82af08lnzbnpq8203wzyigqbzhsfacdppcykmjh2zm4pp5kpxk";
   };
   radar = builtins.fetchurl {
     url = "https://radarhq.io/radar/icon-512.png";
