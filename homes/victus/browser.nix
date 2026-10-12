@@ -1,6 +1,31 @@
-{ pkgs, inputs, ... }: {
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
   imports = [ inputs.zen-browser.homeModules.default ];
   config = {
+    # Soft aggregate memory target; allow swap and avoid a browser-specific OOM cap.
+    systemd.user.slices.browser = {
+      Unit.Description = "Browser memory management";
+      Slice = {
+        MemoryAccounting = true;
+        MemoryHigh = "5G";
+        MemoryMax = "infinity";
+        MemorySwapMax = "infinity";
+      };
+    };
+
+    # Preserve the flake's desktop metadata and actions, wrapping every Exec line.
+    xdg.dataFile."applications/zen-beta.desktop".source = pkgs.runCommand "zen-beta-memory-managed.desktop" { } ''
+      cp ${config.programs.zen-browser.package}/share/applications/zen-beta.desktop "$out"
+      chmod u+w "$out"
+      substituteInPlace "$out" --replace-fail 'Exec=' \
+        'Exec=${pkgs.systemd}/bin/systemd-run --user --scope --collect --slice=browser.slice --expand-environment=no '
+    '';
+
     programs.zen-browser = {
       enable = true;
       nativeMessagingHosts = [ pkgs.firefoxpwa ];
