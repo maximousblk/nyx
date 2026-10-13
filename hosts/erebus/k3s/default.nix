@@ -9,9 +9,7 @@
   imports = [
     modx.nixos.opentelemetry-agent
     ./tailscale.nix
-    ./flux.nix
     ./headlamp.nix
-    ./radar.nix
     ./openbao.nix
 
   ];

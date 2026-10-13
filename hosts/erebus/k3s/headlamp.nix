@@ -17,48 +17,11 @@
         config = {
           enableHelm = true;
           unsafeUseServiceAccountToken = true;
-          pluginsDir = "/build/plugins";
         };
         clusterRoleBinding = {
           create = true;
           clusterRoleName = "cluster-admin";
         };
-        initContainers = [
-          {
-            name = "flux-plugin";
-            image = "ghcr.io/headlamp-k8s/headlamp-plugin-flux:v0.7.0";
-            command = [
-              "/bin/sh"
-              "-c"
-              "mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/ && chown -R 100:101 /build"
-            ];
-            securityContext = {
-              allowPrivilegeEscalation = false;
-              privileged = false;
-              runAsGroup = 0;
-              runAsNonRoot = false;
-              runAsUser = 0;
-            };
-            volumeMounts = [
-              {
-                name = "plugins";
-                mountPath = "/build/plugins";
-              }
-            ];
-          }
-        ];
-        volumeMounts = [
-          {
-            name = "plugins";
-            mountPath = "/build/plugins";
-          }
-        ];
-        volumes = [
-          {
-            name = "plugins";
-            emptyDir = { };
-          }
-        ];
       };
     };
 

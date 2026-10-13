@@ -31,12 +31,6 @@ in
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/immich.svg";
     sha256 = "sha256-pdSkOJnmP/x+lyRgNPf2PN/cQQqoA8VxPVRSkGAcTYk=";
   };
-  flux = stripSvgMetadata "flux-icon.svg" (
-    builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/fluxcd/website/main/static/img/flux-icon.svg";
-      sha256 = "1w4r7k1l642skjpyybr56nc90l4nlwd0v8bqk9d873c8pd6jmgzi";
-    }
-  );
   headlamp = builtins.fetchurl {
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/headlamp.svg";
     sha256 = "1lz262r09lvgprk8s02kj2mcrxc5qyvgr9qw0xhha8vz03gl8ivq";
@@ -94,10 +88,6 @@ in
   qbittorrent = builtins.fetchurl {
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/qbittorrent.svg";
     sha256 = "0w82af08lnzbnpq8203wzyigqbzhsfacdppcykmjh2zm4pp5kpxk";
-  };
-  radar = builtins.fetchurl {
-    url = "https://radarhq.io/radar/icon-512.png";
-    sha256 = "0qb2n2g5f3v5bzj7c3qiphd53ihqj208f6agh002fhaf5b3l1q43";
   };
   rustfs = builtins.fetchurl {
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/rustfs.svg";
