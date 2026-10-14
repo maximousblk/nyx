@@ -75,6 +75,7 @@
     enable = true;
     useWindowsDriver = true;
     defaultUser = "ashwin_y";
+    interop.register = true;
 
     wslConf = {
       automount = {
