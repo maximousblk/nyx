@@ -16,6 +16,56 @@ let
     mkdir -p $out/herdr
     cp ${pkgs.herdr.src}/skills/herdr/SKILL.md $out/herdr/SKILL.md
   '';
+  modelPresets = {
+    aperture = {
+      modelRoles = {
+        advisor = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
+        commit = "aperture-responses/openai-codex/gpt-6-luna:medium";
+        default = "aperture-responses/openai-codex/gpt-5.6-luna:medium";
+        designer = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
+        frontier = "aperture-responses/openai-codex/gpt-6-astra:medium";
+        plan = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
+        slow = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
+        smol = "aperture-responses/openai-codex/gpt-6-luna:medium";
+        task = "aperture-responses/openai-codex/gpt-6-luna:medium";
+        tiny = "aperture-responses/openai-codex/gpt-6-luna:medium";
+        vision = "aperture-responses/openai-codex/gpt-6-luna:medium";
+      };
+      defaultThinkingLevel = "medium";
+    };
+    codex = {
+      modelRoles = {
+        advisor = "openai-codex/gpt-6.1-sol:medium";
+        commit = "openai-codex/gpt-6-luna:medium";
+        default = "openai-codex/gpt-5.6-luna:medium";
+        designer = "openai-codex/gpt-6.1-sol:medium";
+        frontier = "openai-codex/gpt-6-astra:medium";
+        plan = "openai-codex/gpt-6.1-sol:medium";
+        slow = "openai-codex/gpt-6.1-sol:medium";
+        smol = "openai-codex/gpt-6-luna:medium";
+        task = "openai-codex/gpt-6-luna:medium";
+        tiny = "openai-codex/gpt-6-luna:medium";
+        vision = "openai-codex/gpt-6-luna:medium";
+      };
+      defaultThinkingLevel = "medium";
+    };
+    claude = {
+      modelRoles = {
+        advisor = "anthropic/claude-sonnet-5-5:medium";
+        commit = "anthropic/claude-haiku-5-5:medium";
+        default = "anthropic/claude-haiku-5-5:medium";
+        designer = "anthropic/claude-sonnet-5-5:medium";
+        frontier = "anthropic/claude-opus-5-5:medium";
+        plan = "anthropic/claude-sonnet-5-5:medium";
+        slow = "anthropic/claude-sonnet-5-5:medium";
+        smol = "anthropic/claude-haiku-5-5:medium";
+        task = "anthropic/claude-haiku-5-5:medium";
+        tiny = "anthropic/claude-haiku-5-5:medium";
+        vision = "anthropic/claude-haiku-5-5:medium";
+      };
+      defaultThinkingLevel = "medium";
+    };
+  };
 in
 {
   options.optx.clanker.omp = {
@@ -35,10 +85,10 @@ in
         description = "Hindsight API URL when using the Hindsight memory backend.";
       };
     };
-    modelRoles = lib.mkOption {
-      type = lib.types.nullOr (lib.types.attrsOf lib.types.str);
-      default = null;
-      description = "Model selectors assigned to OMP roles, if any.";
+    defaultPreset = lib.mkOption {
+      type = lib.types.enum (builtins.attrNames modelPresets);
+      default = "aperture";
+      description = "Name of the model preset applied as the active OMP roles.";
     };
   };
 
@@ -165,7 +215,11 @@ in
               ];
               extensions = [ "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts" ];
             }
-            // lib.optionalAttrs (cfg.modelRoles != null) { inherit (cfg) modelRoles; }
+            // {
+              modelPresets = modelPresets;
+              modelRoles = modelPresets.${cfg.defaultPreset}.modelRoles;
+              defaultThinkingLevel = modelPresets.${cfg.defaultPreset}.defaultThinkingLevel;
+            }
             // lib.optionalAttrs (cfg.memory.backend == "mnemopi") { mnemopi.scoping = "global"; }
             // lib.optionalAttrs (cfg.memory.backend == "hindsight") {
               hindsight.apiUrl = cfg.memory.hindsightApiUrl;

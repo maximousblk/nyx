@@ -38,18 +38,7 @@ in
     optx.clanker.omp = {
       enable = true;
       memory.backend = "mnemopi";
-      modelRoles = {
-        advisor = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        commit = "aperture-responses/openai-codex/gpt-5.6-luna:low";
-        default = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        designer = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        plan = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        slow = "aperture-responses/openai-codex/gpt-5.6-sol:low";
-        smol = "aperture-responses/openai-codex/gpt-5.6-luna:low";
-        task = "aperture-responses/openai-codex/gpt-5.6-terra:low";
-        tiny = "aperture-responses/openai-codex/gpt-5.6-luna:low";
-        vision = "aperture-responses/openai-codex/gpt-5.6-luna:low";
-      };
+      defaultPreset = "aperture";
     };
   };
 
