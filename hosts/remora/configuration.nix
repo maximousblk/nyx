@@ -135,6 +135,8 @@
 
   # GPU/Vulkan support via WSL2 GPU paravirtualization
   hardware.graphics.enable = true;
+  services.gnome.at-spi2-core.enable = true;
+  systemd.user.services.at-spi-dbus-bus.wantedBy = [ "default.target" ];
   environment.sessionVariables = {
     LD_LIBRARY_PATH = [
       "/run/opengl-driver/lib"

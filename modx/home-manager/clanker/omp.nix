@@ -118,6 +118,10 @@ in
               browser.cmux = false;
               browser.enabled = true;
               browser.headless = true;
+              computer.enabled = true;
+              computer.display = "all";
+              computer.maxWidth = 3840;
+              computer.maxHeight = 2400;
               commands.enableClaudeProject = false;
               commands.enableClaudeUser = false;
               commands.enableOpencodeProject = false;
