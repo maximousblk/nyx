@@ -2,6 +2,7 @@
   inputs = {
     systems.url = "github:nix-systems/default";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    niri.url = "github:sodiboo/niri-flake";
 
     flake-compat = {
       url = "github:NixOS/flake-compat";

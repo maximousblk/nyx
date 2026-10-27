@@ -17,6 +17,7 @@ let
     "https://hyprland.cachix.org/?priority=41" = "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc=";
     "https://noctalia.cachix.org/?priority=41" = "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=";
     "https://nix-community.cachix.org/?priority=41" = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
+    "https://niri.cachix.org/?priority=41" = "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=";
   };
 in
 {
@@ -24,6 +25,10 @@ in
     nixpkgs = {
       config.allowUnfree = true;
       overlays = [
+        (_final: prev: {
+          # Use upstream's own nixpkgs pin to preserve its binary-cache identity.
+          niri = inputs.niri.packages.${prev.stdenv.hostPlatform.system}.niri-unstable;
+        })
         inputs.nur.overlays.default
         (
           final: prev:
