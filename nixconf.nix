@@ -73,6 +73,16 @@ in
           }
         )
         (_final: prev: {
+          # Reserve `fx` for the coding agent; expose the file manager as `felix`.
+          felix-fm = prev.symlinkJoin {
+            name = "felix-fm-renamed";
+            paths = [ prev.felix-fm ];
+            postBuild = ''
+              mv "$out/bin/fx" "$out/bin/felix"
+            '';
+          };
+        })
+        (_final: prev: {
           herdr = prev.herdr.overrideAttrs (old: {
             nativeBuildInputs = (old.nativeBuildInputs or [ ]) ++ [
               prev.clang

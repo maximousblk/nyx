@@ -20,6 +20,7 @@
   optx.clanker = {
     opencode.enable = true;
     claude.enable = true;
+    fx.enable = true;
     omp = {
       enable = true;
       defaultPreset = "aperture";
