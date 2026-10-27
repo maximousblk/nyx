@@ -1,7 +1,7 @@
 { pkgx, ... }: {
   virtualisation.oci-containers.containers.flaresolverr = {
     serviceName = "flaresolverr";
-    image = "ghcr.io/flaresolverr/flaresolverr:v3.4.6";
+    image = "ghcr.io/flaresolverr/flaresolverr:v3.5.2";
     pull = "always";
     ports = [ "8191:8191" ];
     environment.LOG_LEVEL = "info";
