@@ -6,13 +6,7 @@
   ...
 }:
 {
-  flake = {
-    secretFiles = [
-      ".secrets/erebus/manual/tailscale-operator-k8s.age"
-      ".secrets/erebus/manual/openbao-static-seal.age"
-    ];
-  }
-  // withSystem "aarch64-linux" (
+  flake = withSystem "aarch64-linux" (
     { system, ... }: {
       nixosConfigurations.erebus = mkNixos {
         inherit system;

@@ -13,8 +13,13 @@
     ./hardware.nix
     ./incus.nix
     ./network.nix
-    ./k3s
+    modx.nixos.opentelemetry-agent
   ];
+
+  optx.opentelemetry.agent = {
+    enable = true;
+    endpoint = "otlp.pony-clownfish.ts.net:4317";
+  };
 
   users.users = {
     root.openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
