@@ -188,7 +188,7 @@ in
   };
 
   virtualisation.oci-containers.containers.zerobyte = {
-    image = "ghcr.io/nicotsx/zerobyte:v0.41.0";
+    image = "ghcr.io/nicotsx/zerobyte:v0.43.2";
     autoStart = true;
 
     environmentFiles = [
@@ -197,6 +197,8 @@ in
     ];
     environment = common.env // {
       BASE_URL = "https://zerobyte.pony-clownfish.ts.net";
+      # Tailscale Serve terminates HTTPS; honor its forwarded protocol for OIDC.
+      TRUST_PROXY = "true";
       TRUSTED_ORIGINS = "https://idp.pony-clownfish.ts.net";
       PROVISIONING_PATH = containerProvisioningPath;
       ZEROBYTE_DATABASE_URL = "/var/lib/zerobyte/data/zerobyte.db";
