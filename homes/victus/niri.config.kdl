@@ -19,6 +19,10 @@ input {
 output "eDP-1" {
 }
 
+output "LG Electronics 19M35 403INZY2W405" {
+    scale 0.75
+}
+
 
 // Layout
 prefer-no-csd
@@ -71,7 +75,7 @@ workspace "chat"
 
 // Environment Variables
 environment {
-    ELECTRON_OZONE_PLATFORM_HINT "auto"
+    ELECTRON_OZONE_PLATFORM_HINT "x11"
     QT_QPA_PLATFORM "wayland"
     QT_QPA_PLATFORMTHEME "kvantum"
     QT_WAYLAND_DISABLE_WINDOWDECORATION "1"
@@ -238,5 +242,7 @@ binds {
 }
 
 debug {
+  // Avoid corruption when transferring the desktop from Intel to NVIDIA HDMI.
+  render-drm-device "/dev/dri/by-path/pci-0000:01:00.0-render"
   honor-xdg-activation-with-invalid-serial // Allows notification actions and window activation from Noctalia.
 }
