@@ -9,13 +9,13 @@
   templ,
 }:
 let
-  version = "3.0.0-beta.3";
+  version = "3.0.0-beta.4";
 
   src = fetchFromGitHub {
     owner = "almeidapaulopt";
     repo = "tsdproxy";
     rev = "v${version}";
-    hash = "sha256-GWwhqvzHp3BmejiHkfmo/NswL5/QsDBd2PfqQJk5OTo=";
+    hash = "sha256-XPr3vAhczHSABOrWJE9F1RqnJ57zYpvhGOnf8o44vS0=";
   };
 
   frontend = stdenv.mkDerivation {
@@ -27,8 +27,8 @@ let
     outputHashMode = "recursive";
     outputHash =
       {
-        aarch64-linux = "sha256-/b5bqebFDPmvDn4iKMb7oRcFYURsT1UpEMWP5nrIxxQ=";
-        x86_64-linux = "sha256-/b5bqebFDPmvDn4iKMb7oRcFYURsT1UpEMWP5nrIxxQ=";
+        aarch64-linux = "sha256-RSZbn1rosRzcQDHemrH7CtaqNwPitGtbMTdNNIEtBEM=";
+        x86_64-linux = "sha256-RSZbn1rosRzcQDHemrH7CtaqNwPitGtbMTdNNIEtBEM=";
       }
       .${stdenv.hostPlatform.system};
 
@@ -49,11 +49,11 @@ in
   pname = "tsdproxy";
   inherit version src;
 
-  vendorHash = "sha256-8yem7cV8BU5qNBBKsGeZm54ti1r8qYBY4L3pS6oRRaQ=";
+  vendorHash = "sha256-j6HUuwI8t3G9yB4teF+pbEb+2fAUPx3huZckQYFyHd8=";
   subPackages = [ "cmd/server" ];
   nativeBuildInputs = [ templ ];
 
-  preBuild = ''
+  postPatch = ''
     cp -r ${frontend} web/dist
     templ generate
   '';
