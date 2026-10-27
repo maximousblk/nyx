@@ -233,6 +233,18 @@ fix(victus/nixos): use displayManager autoLogin instead of custom PAM service in
 [2]: https://github.com/NixOS/nixpkgs/pull/420889
 ```
 
+## 2.6 Flake lockfile diff attachment
+
+Every commit whose staged diff changes `flake.lock` MUST append a `Flake lock file updates:` section containing the verbatim output of `flake-lock-diff OLD.lock NEW.lock` after the normal body and any footnotes. This generated section is an exception to the body-bullets-only rule.
+
+- Compare the parent commit's lockfile with the staged lockfile, not the working-tree copy or the final lockfile from the entire split.
+- Extract those exact versions with `git show HEAD:flake.lock` and `git show :flake.lock` into temporary files, then run `flake-lock-diff` on them.
+- For lockfile creation or deletion, use an empty version-7 lock graph for the missing side: `{"nodes":{"root":{}},"root":"root","version":7}`.
+- Preserve the tool's complete output, including input paths, references, dates, and `follows` changes. Do not summarize, truncate, or reconstruct it manually.
+- If the tool succeeds with empty output, write `No semantic input changes.` under the section heading.
+- If the tool is unavailable or fails, resolve that before committing; do not silently omit the attachment. The implementation is `pkgx/flake-lock-diff.nix`.
+- Remove temporary lockfile copies after generating the attachment. Never run `nix flake update` merely to generate a message.
+
 ---
 
 # Step 3: Plan the commit split
@@ -301,6 +313,7 @@ Requirements for the plan:
 - `Body bullets` must be near-final and specific.
 - If footnotes will be used, include the markers in the bullets and list the footnotes below that commit's bullets.
 - Explicitly mention when a file must be split by hunk.
+- For each commit changing `flake.lock`, note that its message will include the native lockfile diff attachment described in section 2.6.
 - If there is any judgment call about whether to group or split, say so briefly.
 - If a broader scope was considered and rejected, prefer the narrower one and do not surface the broad one unless the user asks.
 
@@ -342,6 +355,8 @@ git diff --cached --stat
 git diff --cached -- <file>
 ```
 
+For a staged `flake.lock` change, generate and append its exact commit-local diff attachment as required by section 2.6 before constructing the commit message.
+
 6. Commit using exact multiline heredoc format:
 
 ```bash
@@ -375,6 +390,7 @@ Before creating each commit, confirm all of the following are true:
 - the subject is concrete and not vague
 - the body bullets describe only staged changes
 - footnotes are formatted correctly if references are present
+- every staged `flake.lock` change has the complete native diff attachment for its parent-to-index transition
 - no unrelated formatting churn was accidentally included
 - no second scope slipped into the commit
 
