@@ -17,13 +17,21 @@
 
   virtualisation.oci-containers.containers.crafty = {
     serviceName = "crafty";
-    image = "registry.gitlab.com/crafty-controller/crafty-4:latest";
+    image = "registry.gitlab.com/crafty-controller/crafty-4:4.11.0";
     pull = "always";
     ports = [
       "8443:8443"
       "25565:25565"
     ];
-    volumes = [ "crafty:/crafty" ];
+    # Persist only the five state paths documented by Crafty's Docker guide.
+    # https://docs.craftycontrol.com/pages/getting-started/installation/docker/#mount-locations
+    volumes = [
+      "crafty-backups:/crafty/backups"
+      "crafty-logs:/crafty/logs"
+      "crafty-servers:/crafty/servers"
+      "crafty-config:/crafty/app/config"
+      "crafty-import:/crafty/import"
+    ];
   };
 
   optx.tailscale = {
