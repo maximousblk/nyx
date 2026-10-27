@@ -72,16 +72,16 @@ in
       karakeep-chrome = {
         autoStart = true;
         containerConfig = {
-          image = "gcr.io/zenika-hub/alpine-chrome:124";
+          image = "ghcr.io/karakeep-app/karakeep-chrome:release";
           pull = "newer";
+          runInit = true;
 
           exec = [
-            "--no-sandbox"
             "--disable-gpu"
             "--disable-dev-shm-usage"
-            "--remote-debugging-address=0.0.0.0"
-            "--remote-debugging-port=9222"
             "--hide-scrollbars"
+            "--disable-blink-features=AutomationControlled"
+            "--window-size=1440,900"
           ];
 
           networks = [ net.ref ];
@@ -118,7 +118,7 @@ in
       karakeep = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/karakeep-app/karakeep:0.33.1";
+          image = "ghcr.io/karakeep-app/karakeep:0.34.1";
           pull = "newer";
           publishPorts = [ "127.0.0.1:3000:3000" ];
 
@@ -138,6 +138,8 @@ in
             MEILI_ADDR = "http://karakeep-meilisearch:7700";
             BROWSER_WEB_URL = "http://karakeep-chrome:9222";
             NEXTAUTH_URL = "https://karakeep.pony-clownfish.ts.net";
+            # Restrict authentication to the service's public origin.
+            AUTH_TRUSTED_ORIGINS = "https://karakeep.pony-clownfish.ts.net";
 
             # Disable AI tagging explicitly
             INFERENCE_ENABLE_AUTO_TAGGING = "false";
