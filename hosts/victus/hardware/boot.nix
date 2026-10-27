@@ -10,10 +10,7 @@
   # Kernel
   boot.kernelPackages = pkgs.cachyosKernels.linuxPackages-cachyos-bore-lto-x86_64-v4;
 
-  boot.kernelParams = [
-    "intel_idle.max_cstate=4"
-    "video=eDP-1:1920x1072M@144e"
-  ];
+  boot.kernelParams = [ "intel_idle.max_cstate=4" ];
 
   boot.kernelModules = [ "ntfs" ];
   boot.initrd.kernelModules = [ ];
