@@ -193,7 +193,119 @@
       };
     };
 
+    wireplumber.extraScripts."studio-input-policy.lua" = ''
+      local linking = require ("linking-utils")
+
+      -- Earlier entries have higher priority; no match keeps WirePlumber's target.
+      local preferred_inputs = {
+        "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic2__source",
+        "alsa_input.usb-TTGK_Technology_Co._Ltd_Audiocular_Spark-00.mono-fallback",
+        "alsa_input.usb-Yichip_USB-Audio-00.mono-fallback",
+        "bluez_input.00:A4:1C:A0:D1:88",
+        "alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Mic1__source",
+      }
+
+      -- Native rescans handle device and route availability changes.
+      SimpleEventHook {
+        name = "linking/studio-input-preference",
+        after = "linking/find-best-target",
+        before = "linking/prepare-link",
+
+        interests = {
+          EventInterest {
+            Constraint { "event.type", "=", "select-target" },
+          },
+        },
+
+        execute = function (event)
+          local source, object_manager, stream, properties, flags =
+              linking:unwrap_select_target_event (event)
+
+          if properties ["node.name"] ~= "capture.studio_sink" then
+            return
+          end
+
+          for _, name in ipairs (preferred_inputs) do
+            local candidate = object_manager:lookup {
+              type = "SiLinkable",
+              Constraint { "item.node.type", "=", "device" },
+              Constraint { "item.node.direction", "=", "output" },
+              Constraint { "media.type", "=", "Audio" },
+              Constraint { "node.name", "=", name },
+            }
+
+            if candidate and linking.haveAvailableRoutes (candidate.properties) then
+              flags.can_passthrough = false
+              event:set_data ("target", candidate)
+              break
+            end
+          end
+        end,
+      }:register ()
+    '';
+
+    wireplumber.extraScripts."output-preference.lua" = ''
+      -- Earlier entries have higher priority; no match keeps WirePlumber's selection.
+      local preferred_outputs = {
+        "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Headphones__sink",
+        "alsa_output.usb-TTGK_Technology_Co._Ltd_Audiocular_Spark-00.analog-stereo",
+        "alsa_output.usb-Yichip_USB-Audio-00.analog-stereo",
+        "bluez_output.00_A4_1C_A0_D1_88.1",
+        "alsa_output.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.HiFi__Speaker__sink",
+      }
+
+      SimpleEventHook {
+        name = "default-nodes/output-preference",
+        after = "default-nodes/find-best-default-node",
+        before = "default-nodes/apply-default-node",
+
+        interests = {
+          EventInterest {
+            Constraint { "event.type", "=", "select-default-node" },
+          },
+        },
+
+        execute = function (event)
+          local properties = event:get_properties ()
+
+          if properties ["default-node.type"] ~= "audio.sink" then
+            return
+          end
+
+          -- WirePlumber has already filtered disconnected routes from this list.
+          local available = {}
+          for _, node in ipairs (event:get_data ("available-nodes"):parse ()) do
+            available [node ["node.name"]] = true
+          end
+
+          for _, name in ipairs (preferred_outputs) do
+            if available [name] then
+              event:set_data ("selected-node", name)
+              break
+            end
+          end
+        end,
+      }:register ()
+    '';
+
     wireplumber.extraConfig = {
+      "20-studio-input-policy" = {
+        "wireplumber.components" = [
+          {
+            name = "studio-input-policy.lua";
+            type = "script/lua";
+            provides = "hooks.studio-input-policy";
+          }
+          {
+            name = "output-preference.lua";
+            type = "script/lua";
+            provides = "hooks.output-preference";
+          }
+        ];
+        "wireplumber.profiles".main."hooks.studio-input-policy" = "required";
+        "wireplumber.profiles".main."hooks.output-preference" = "required";
+      };
+
       "10-bluez" = {
         "monitor.bluez.properties" = {
           "bluez5.enable-sbc-xq" = true;
@@ -242,4 +354,5 @@
       };
     };
   };
+
 }
