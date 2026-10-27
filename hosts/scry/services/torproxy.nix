@@ -1,7 +1,7 @@
 { ... }: {
   virtualisation.oci-containers.containers.torproxy = {
     serviceName = "torproxy";
-    image = "docker.io/dockurr/tor:0.4.9";
+    image = "docker.io/dockurr/tor:0.4.9.14";
     pull = "always";
     ports = [
       "9050:9050"
