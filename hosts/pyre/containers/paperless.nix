@@ -95,7 +95,7 @@ in
       paperless-tika = {
         autoStart = true;
         containerConfig = {
-          image = "docker.io/apache/tika:3.3.1.0-full";
+          image = "docker.io/apache/tika:4.1.0-2-full";
           pull = "newer";
 
           networks = [ net.ref ];
@@ -109,7 +109,7 @@ in
       paperless-gotenberg = {
         autoStart = true;
         containerConfig = {
-          image = "docker.io/gotenberg/gotenberg:8.25";
+          image = "docker.io/gotenberg/gotenberg:8.38.1";
           pull = "newer";
 
           exec = [
@@ -129,7 +129,7 @@ in
       paperless = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/paperless-ngx/paperless-ngx:3.0";
+          image = "ghcr.io/paperless-ngx/paperless-ngx:3.3.4";
           pull = "newer";
           publishPorts = [
             "127.0.0.1:8000:8000"
