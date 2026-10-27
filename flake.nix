@@ -78,6 +78,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-parts.follows = "flake-parts";
       inputs.treefmt-nix.follows = "treefmt-nix";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     fenix = {
@@ -102,6 +103,7 @@
       inputs.vicinae.follows = "vicinae";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.systems.follows = "systems";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     quadlet-nix.url = "github:SEIAROTg/quadlet-nix";
@@ -119,6 +121,7 @@
     git-hooks = {
       url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-compat.follows = "flake-compat";
     };
 
     files = {
