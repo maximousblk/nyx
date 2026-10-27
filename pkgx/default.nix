@@ -8,4 +8,5 @@
   topology-icons = pkgs.callPackage ./topology-icons.nix { };
   dashbrr = pkgs.callPackage ./dashbrr.nix { };
   tsdproxy = pkgs.callPackage ./tsdproxy.nix { };
+  flake-lock-diff = pkgs.callPackage ./flake-lock-diff.nix { };
 }
