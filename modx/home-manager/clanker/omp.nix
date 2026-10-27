@@ -101,9 +101,13 @@ in
       }
     ];
 
-    home.packages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp ];
+    home.packages = [
+      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp
+      pkgs.brave-origin
+    ];
 
-    home.sessionVariables.PUPPETEER_EXECUTABLE_PATH = lib.getExe pkgs.brave-origin;
+    # Keep long-running agents valid across upgrades and store garbage collection.
+    home.sessionVariables.PUPPETEER_EXECUTABLE_PATH = "${config.home.profileDirectory}/bin/brave-origin";
 
     home.file = lib.mkMerge (
       map (lib.mapAttrs (_: file: file // { force = true; })) [
