@@ -141,8 +141,14 @@ in
             # Restrict authentication to the service's public origin.
             AUTH_TRUSTED_ORIGINS = "https://karakeep.pony-clownfish.ts.net";
 
-            # Disable AI tagging explicitly
-            INFERENCE_ENABLE_AUTO_TAGGING = "false";
+            # Aperture routes inference through the same OMP broker used by OMP.
+            OPENAI_BASE_URL = "https://aperture.pony-clownfish.ts.net/v1";
+            OPENAI_API_KEY = "tailnet"; # Non-secret placeholder; endpoint uses tailnet access.
+            INFERENCE_TEXT_MODEL = "openai-codex/gpt-6-luna";
+            INFERENCE_IMAGE_MODEL = "openai-codex/gpt-6-luna";
+            INFERENCE_USE_MAX_COMPLETION_TOKENS = "true";
+            INFERENCE_ENABLE_AUTO_TAGGING = "true";
+            INFERENCE_ENABLE_AUTO_SUMMARIZATION = "true";
 
             # Aggressive archival options
             CRAWLER_FULL_PAGE_ARCHIVE = "true";
