@@ -7,7 +7,10 @@
 
     networking.firewall = {
       enable = true;
-      trustedInterfaces = [ "tailscale0" ];
+      trustedInterfaces = [
+        "tailscale0"
+        "docker0"
+      ];
       interfaces.enp0s31f6.allowedTCPPorts = [ 22 ];
     };
 
