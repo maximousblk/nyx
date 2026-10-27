@@ -33,7 +33,7 @@ in
         (
           final: prev:
           lib.optionalAttrs prev.stdenv.hostPlatform.isAarch64 {
-            # Override NUR's stale ARM release asset hash.
+            # Use the ARM release asset's verified content hash.
             nur = prev.nur // {
               repos = prev.nur.repos // {
                 xddxdd = prev.nur.repos.xddxdd // {
