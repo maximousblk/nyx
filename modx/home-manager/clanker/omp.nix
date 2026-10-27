@@ -11,7 +11,6 @@ let
   yamlFormat = pkgs.formats.yaml { };
   skillsDir = ./skills;
   paseoSkills = "${inputs.paseo}/skills";
-  orcaSkills = "${inputs.orca}/skills";
   herdrSkills = pkgs.runCommand "herdr-omp-skills" { } ''
     mkdir -p $out/herdr
     cp ${pkgs.herdr.src}/skills/herdr/SKILL.md $out/herdr/SKILL.md
@@ -219,7 +218,6 @@ in
                 "${skillsDir}"
                 "${herdrSkills}"
                 paseoSkills
-                orcaSkills
               ];
               extensions = [ "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts" ];
             }

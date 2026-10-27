@@ -98,6 +98,33 @@ in
             '';
           });
         })
+        (_final: prev: {
+          # Skip upstream's build-time and installed-package test suites.
+          pi-pocket = (prev.callPackage "${inputs.pi-pocket}/nix/package.nix" { }).overrideAttrs (old: {
+            doCheck = false;
+            doInstallCheck = false;
+            # importNpmLock rewrites direct dependencies to store URLs; keep npm's
+            # transitive pin tied to that same direct dependency specification.
+            npmDeps = prev.importNpmLock {
+              npmRoot = inputs.pi-pocket;
+              package =
+                let
+                  p = lib.importJSON "${inputs.pi-pocket}/package.json";
+                in
+                p
+                // {
+                  overrides = (p.overrides or { }) // {
+                    undici = "$undici";
+                  };
+                };
+            };
+            # Wisp uses Tailscale; omit the optional Cloudflare tunnel executable.
+            nativeCheckInputs = builtins.filter (p: p != prev.cloudflared) old.nativeCheckInputs;
+            installPhase = builtins.appendContext (builtins.unsafeDiscardStringContext (
+              builtins.replaceStrings [ ":${lib.makeBinPath [ prev.cloudflared ]}" ] [ "" ] old.installPhase
+            )) (builtins.removeAttrs (builtins.getContext old.installPhase) [ (builtins.unsafeDiscardStringContext prev.cloudflared.drvPath) ]);
+          });
+        })
       ];
     };
 

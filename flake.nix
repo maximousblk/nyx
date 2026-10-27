@@ -158,8 +158,8 @@
 
     paseo.url = "github:getpaseo/paseo";
 
-    orca = {
-      url = "github:stablyai/orca";
+    pi-pocket = {
+      url = "github:TannerMidd/pi-pocket";
       flake = false;
     };
 

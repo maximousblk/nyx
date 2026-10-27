@@ -69,10 +69,6 @@ in
     url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/opentelemetry.svg";
     sha256 = "14pv7hpvi93amki5iq37592qkkhxypcgfqfqscw2qyiiyk9273jz";
   };
-  orca = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/stablyai/orca/main/resources/icon.png";
-    sha256 = "1ky40i3zlcjs6qfw959q047kjrs7rahcvy5hf1xs5dcmsrbabqvg";
-  };
   paseo = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/getpaseo/paseo/main/packages/website/public/logo.svg";
     sha256 = "1i3y03rij884bvfv972il7dc45gikhq4bngxzmgn62322a8kf0ps";

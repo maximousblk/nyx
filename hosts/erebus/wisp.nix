@@ -13,7 +13,7 @@
       type = "custom";
     }
     {
-      name = "wisp-orca";
+      name = "wisp-projects";
       pool = "default";
       project = "default";
       type = "custom";

@@ -880,22 +880,6 @@
         "type": "github"
       }
     },
-    "orca": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1791781250,
-        "narHash": "sha256-1pcAj2STUTj0vtUPofLirk30d1slunZPTMUjWv6RRNM=",
-        "owner": "stablyai",
-        "repo": "orca",
-        "rev": "411d5c24cbc2223f86273ed8ae149734a2e217b9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "stablyai",
-        "repo": "orca",
-        "type": "github"
-      }
-    },
     "paseo": {
       "inputs": {
         "nixpkgs": "nixpkgs_6"
@@ -911,6 +895,22 @@
       "original": {
         "owner": "getpaseo",
         "repo": "paseo",
+        "type": "github"
+      }
+    },
+    "pi-pocket": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792894711,
+        "narHash": "sha256-Y9dolEZNjFRmSNxs6RvhPKY9B/8oxzCrKZwk9hR9UC0=",
+        "owner": "TannerMidd",
+        "repo": "pi-pocket",
+        "rev": "bac44669fe7b42405a7788b3b007d4a31cfd794d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "TannerMidd",
+        "repo": "pi-pocket",
         "type": "github"
       }
     },
@@ -999,8 +999,8 @@
         "noctalia": "noctalia",
         "noctalia-community-plugins": "noctalia-community-plugins",
         "nur": "nur",
-        "orca": "orca",
         "paseo": "paseo",
+        "pi-pocket": "pi-pocket",
         "pinecone": "pinecone",
         "quadlet-nix": "quadlet-nix",
         "ssh-keys-maximousblk": "ssh-keys-maximousblk",

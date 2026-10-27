@@ -8,12 +8,13 @@
   imports = [
     ./incus.nix
     ./network.nix
-    ./orca.nix
+    ./pi-pocket.nix
   ];
 
   environment.defaultPackages = lib.mkForce [ ];
   environment.systemPackages = [
     pkgs.bashInteractive
+    pkgs.gh
     pkgs.uutils-coreutils
   ];
 
@@ -24,6 +25,12 @@
     users.root = {
       hashedPassword = "!";
       shell = pkgs.bashInteractive;
+      openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
+    };
+    users.maximousblk = {
+      isNormalUser = true;
+      extraGroups = [ "wheel" ];
+      hashedPassword = "!";
       openssh.authorizedKeys.keyFiles = [ inputs.ssh-keys-maximousblk ];
     };
 

@@ -73,11 +73,11 @@
               source = "wisp-tailscale";
               path = "/var/lib/tailscale";
             };
-            orca = {
+            projects = {
               type = "disk";
               pool = "default";
-              source = "wisp-orca";
-              path = "/var/lib/orca";
+              source = "wisp-projects";
+              path = "/home/maximousblk/Projects";
             };
             tun = {
               type = "unix-char";
