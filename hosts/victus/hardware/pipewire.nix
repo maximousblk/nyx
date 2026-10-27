@@ -89,7 +89,7 @@
                     plugin = "libdeep_filter_ladspa";
                     label = "deep_filter_mono";
                     control = {
-                      "Attenuation Limit (dB)" = 100;
+                      "Attenuation Limit (dB)" = 30;
                       "Min processing threshold (dB)" = -8;
                       "Max ERB processing threshold (dB)" = 30;
                       "Max DF processing threshold (dB)" = 20;
@@ -113,13 +113,13 @@
                       "Low-pass filter mode" = 0;
                       "Low-pass filter frequency (Hz)" = 20000;
                       "Hysteresis" = 0;
-                      "Curve threshold (G)" = 0.08;
-                      "Curve zone size (G)" = 0.04;
+                      "Curve threshold (G)" = 0.005;
+                      "Curve zone size (G)" = 0.0025;
                       "Hysteresis threshold (G)" = 0.001;
                       "Hysteresis zone size (G)" = 0.001;
                       "Attack (ms)" = 12;
-                      "Release (ms)" = 100;
-                      "Hold time (ms)" = 80;
+                      "Release (ms)" = 180;
+                      "Hold time (ms)" = 150;
                       "Reduction (G)" = 0.00025119;
                       "Makeup gain (G)" = 1;
                       "Dry gain (G)" = 0;
