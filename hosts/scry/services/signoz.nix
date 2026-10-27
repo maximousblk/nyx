@@ -18,8 +18,8 @@ let
 
   # Version tags
   clickhouseVersion = "25.12.5";
-  signozVersion = "v0.136.1";
-  otelcolVersion = "v0.144.7";
+  signozVersion = "v0.147.0";
+  otelcolVersion = "v0.144.15";
   zookeeperVersion = "3.7.1";
 
   clickhouseConfig = xml.generate "clickhouse-config.xml" {
@@ -239,6 +239,24 @@ let
         timeout = "2s";
         override = false;
       };
+      signozspanmapper.groups = [ ];
+      signozllmpricing = {
+        attrs = {
+          model = "gen_ai.request.model";
+          "in" = "gen_ai.usage.input_tokens";
+          out = "gen_ai.usage.output_tokens";
+          cache_read = "gen_ai.usage.cache_read.input_tokens";
+          cache_write = "gen_ai.usage.cache_creation.input_tokens";
+        };
+        default_pricing.rules = [ ];
+        output_attrs = {
+          "in" = "signoz.gen_ai.usage.input_tokens.cost";
+          out = "signoz.gen_ai.usage.output_tokens.cost";
+          cache_read = "signoz.gen_ai.usage.cache_read.input_tokens.cost";
+          cache_write = "signoz.gen_ai.usage.cache_write.input_tokens.cost";
+          total = "signoz.gen_ai.usage.tokens.cost";
+        };
+      };
       "signozspanmetrics/delta" = {
         metrics_exporter = "signozclickhousemetrics";
         metrics_flush_interval = "60s";
@@ -328,6 +346,8 @@ let
           receivers = [ "otlp" ];
           processors = [
             "signozspanmetrics/delta"
+            "signozspanmapper"
+            "signozllmpricing"
             "batch"
           ];
           exporters = [

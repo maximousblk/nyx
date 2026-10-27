@@ -62,11 +62,9 @@ in
         message = ''optx.opentelemetry.agent.containerStats includes "docker", but virtualisation.docker.enable is false'';
       }
     ];
-
     services.opentelemetry-collector = {
       enable = true;
       package = pkgs.opentelemetry-collector-contrib;
-
       settings = {
         extensions = {
           health_check.endpoint = "0.0.0.0:13133";
