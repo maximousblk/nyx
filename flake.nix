@@ -247,6 +247,7 @@
                 ''
               );
             };
+            packages.split-commit = pkgx.split-commit.package;
             packages.deploy-rs = inputs.deploy-rs.packages.${system}.default;
             packages.home-manager = inputs.home-manager.packages.${system}.default;
           }

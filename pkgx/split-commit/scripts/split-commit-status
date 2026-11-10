@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+fail() { printf 'split-commit-status: %s\n' "$*" >&2; exit 2; }
+git rev-parse --git-dir >/dev/null 2>&1 || fail 'not inside a Git repository'
+git status --short
+printf '\n--- staged ---\n'
+git diff --cached --
+printf '\n--- unstaged ---\n'
+git diff --
+printf '\n--- recent commit messages ---\n'
+git log -40 --format='%H%n%s%n%b%n---END---'

@@ -3,13 +3,13 @@
   pkgs,
   config,
   inputs,
+  pkgx,
   ...
 }:
 let
   cfg = config.optx.clanker.omp;
   jsonFormat = pkgs.formats.json { };
   yamlFormat = pkgs.formats.yaml { };
-  skillsDir = ./skills;
   paseoSkills = "${inputs.paseo}/skills";
   herdrSkills = pkgs.runCommand "herdr-omp-skills" { } ''
     mkdir -p $out/herdr
@@ -103,6 +103,7 @@ in
     home.packages = [
       inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp
       inputs.brave.packages.${pkgs.stdenv.hostPlatform.system}.brave-origin
+      pkgx.split-commit.package
     ];
 
     # Keep long-running agents valid across upgrades and store garbage collection.
@@ -215,7 +216,7 @@ in
               worktree.base = "~/projects";
 
               skills.customDirectories = [
-                "${skillsDir}"
+                pkgx.split-commit.skills
                 "${herdrSkills}"
                 paseoSkills
               ];

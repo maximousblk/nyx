@@ -3,6 +3,7 @@
   pkgs,
   config,
   inputs,
+  pkgx,
   ...
 }:
 let
@@ -13,7 +14,10 @@ in
   options.optx.clanker.opencode.enable = lib.mkEnableOption "opencode with MCP integration";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ opencode2 ];
+    home.packages = [
+      opencode2
+      pkgx.split-commit.package
+    ];
 
     programs.opencode = {
       enable = true;

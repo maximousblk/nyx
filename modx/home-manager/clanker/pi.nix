@@ -17,7 +17,10 @@ in
 
   config = lib.mkIf cfg.enable {
 
-    home.packages = [ inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi ];
+    home.packages = [
+      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi
+      pkgx.split-commit.package
+    ];
 
     home.sessionVariables = {
       PI_TELEMETRY = "0";
@@ -38,6 +41,7 @@ in
           "opencode-zen/deepseek-v4-flash-free"
         ];
         enableInstallTelemetry = false;
+        skills = [ pkgx.split-commit.skills ];
         extensions = [
           "${pkgs.herdr.src}/src/integration/assets/pi/herdr-agent-state.ts"
           pkgx.pi-mcp-adapter.extension

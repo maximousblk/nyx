@@ -2,6 +2,7 @@
   lib,
   pkgs,
   config,
+  pkgx,
   inputs,
   ...
 }:
@@ -14,7 +15,10 @@ in
   options.optx.clanker.prime-agent.enable = lib.mkEnableOption "Prime Agent coding agent";
 
   config = lib.mkIf cfg.enable {
-    home.packages = [ primeAgent ];
+    home.packages = [
+      primeAgent
+      pkgx.split-commit.package
+    ];
 
     home.sessionVariables = {
       # Prime Agent inherits these controls from Pi.
@@ -36,6 +40,7 @@ in
 
         "opencode-zen/deepseek-v4-flash-free"
       ];
+      skills = [ pkgx.split-commit.skills ];
       mcpServers = lib.mapAttrs (_: server: {
         type = "http";
         inherit (server) url;

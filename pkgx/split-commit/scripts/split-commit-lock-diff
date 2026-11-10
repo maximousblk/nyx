@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+fail() { printf 'split-commit-lock-diff: %s\n' "$*" >&2; exit 2; }
+git rev-parse --git-dir >/dev/null 2>&1 || fail 'not inside a Git repository'
+(($# == 0)) || fail 'lock-diff takes no arguments'
+command -v flake-lock-diff >/dev/null 2>&1 || fail 'flake-lock-diff is not available on PATH'
+tmp=$(mktemp -d "${TMPDIR:-/tmp}/split-commit-git.XXXXXXXX")
+trap 'rm -rf -- "$tmp"' EXIT HUP INT TERM
+empty='{"nodes":{"root":{}},"root":"root","version":7}'
+if git cat-file -e HEAD:flake.lock 2>/dev/null; then git show HEAD:flake.lock >"$tmp/old.lock"; else printf '%s\n' "$empty" >"$tmp/old.lock"; fi
+if git cat-file -e :flake.lock 2>/dev/null; then git show :flake.lock >"$tmp/new.lock"; else printf '%s\n' "$empty" >"$tmp/new.lock"; fi
+flake-lock-diff "$tmp/old.lock" "$tmp/new.lock"

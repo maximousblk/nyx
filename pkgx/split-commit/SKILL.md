@@ -26,23 +26,30 @@ You must optimize for **clear reviewable history**, not for the fewest commits a
 
 # Step 1: Inspect the full state
 
-Run all of these before proposing anything:
+Run `split-commit-status` before proposing anything. It shows the working-tree status, staged and unstaged diffs, and the last 40 commit messages with full bodies.
 
-1. `git status --short`
-2. `git diff --cached --stat`
-3. `git diff --stat`
-4. For every changed file:
-   - `git diff --cached -- <file>` for staged changes
-   - `git diff -- <file>` for unstaged changes
-5. Read the recent commit history with full bodies and derive the exact style used in this repo.
+For every changed file, inspect both diffs explicitly:
+
+```bash
+git diff --cached -- <file>
+git diff -- <file>
+```
 
 Use the last 20 relevant commits, with full bodies, and skip flake update auto-commits while studying style.
 
-Use something equivalent to:
+## Git operation rules
 
-```bash
-git log --format="%H%n%s%n%b%n---END---" -40
-```
+- Before user approval, do not mutate the index or stash.
+- After approval, stage named files with `git add -- <file>` or select hunks with `git add -p -- <file>`. Inspect hunks with `git diff --unified=0 -- <file>`.
+- For a patch, inspect it with `cat -- <patch>`, then run:
+
+  ```bash
+  git apply --cached --check -- <patch>
+  git apply --cached -- <patch>
+  ```
+
+- For an explicitly approved stash workflow, use `git stash push -- <file>`, `git stash list`, `git stash show <ref>`, and `git stash apply <ref>`. Applying retains the stash; only use `git stash drop <ref>` when explicitly approved.
+- Never commit or perform automatic stash cleanup before approval.
 
 While studying style, ignore commits whose purpose is just flake update automation, such as:
 
@@ -235,15 +242,14 @@ fix(victus/nixos): use displayManager autoLogin instead of custom PAM service in
 
 ## 2.6 Flake lockfile diff attachment
 
-Every commit whose staged diff changes `flake.lock` MUST append a `Flake lock file updates:` section containing the verbatim output of `flake-lock-diff OLD.lock NEW.lock` after the normal body and any footnotes. This generated section is an exception to the body-bullets-only rule.
+Every commit whose staged diff changes `flake.lock` MUST append a `Flake lock file updates:` section containing the verbatim output of `split-commit-lock-diff` after the normal body and any footnotes. This generated section is an exception to the body-bullets-only rule.
 
-- Compare the parent commit's lockfile with the staged lockfile, not the working-tree copy or the final lockfile from the entire split.
-- Extract those exact versions with `git show HEAD:flake.lock` and `git show :flake.lock` into temporary files, then run `flake-lock-diff` on them.
-- For lockfile creation or deletion, use an empty version-7 lock graph for the missing side: `{"nodes":{"root":{}},"root":"root","version":7}`.
+- The helper compares the parent commit's lockfile with the index lockfile, not the working-tree copy or the final lockfile from the entire split.
+- It handles lockfile creation or deletion using an empty version-7 lock graph and removes its temporary files.
 - Preserve the tool's complete output, including input paths, references, dates, and `follows` changes. Do not summarize, truncate, or reconstruct it manually.
 - If the tool succeeds with empty output, write `No semantic input changes.` under the section heading.
-- If the tool is unavailable or fails, resolve that before committing; do not silently omit the attachment. The implementation is `pkgx/flake-lock-diff.nix`.
-- Remove temporary lockfile copies after generating the attachment. Never run `nix flake update` merely to generate a message.
+- If the helper or packaged `flake-lock-diff` is unavailable or fails, resolve that before committing; do not silently omit the attachment.
+- Never run `nix flake update` merely to generate a message.
 
 ---
 
@@ -329,11 +335,7 @@ Wait for user approval or corrections.
 
 After the user approves the plan:
 
-1. Unstage everything first:
-
-```bash
-git reset HEAD -- .
-```
+1. Unstage only approved paths that belong to later commits using `git restore --staged -- <file>`. Do not unstage unrelated index changes. If other staged changes cannot be separated safely, stop rather than include them in a commit.
 
 2. Create commits in the approved order.
 
@@ -341,19 +343,12 @@ git reset HEAD -- .
 
 Allowed staging approach:
 
-- use `git add <file1> <file2> ...` for whole-file commits
-- use patch/hunk staging when one file belongs to multiple commits
+- use `git add -- <file1> <file2> ...` for whole-file staging
+- inspect hunks with `git diff --unified=0 -- <file>`, then use `git add -p -- <file>` or explicitly supplied patch files with `git apply --cached -- <patch>`
 
 4. If a file must be split by hunk, isolate only the approved hunks.
 
-5. Before each commit, verify the staged diff matches the plan.
-
-Recommended checks:
-
-```bash
-git diff --cached --stat
-git diff --cached -- <file>
-```
+5. Before each commit, verify the staged diff matches the plan using `git diff --cached` and `git diff --cached -- <file>`.
 
 For a staged `flake.lock` change, generate and append its exact commit-local diff attachment as required by section 2.6 before constructing the commit message.
 
