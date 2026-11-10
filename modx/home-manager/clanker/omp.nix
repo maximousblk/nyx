@@ -103,6 +103,7 @@ in
     home.packages = [
       inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp
       inputs.brave.packages.${pkgs.stdenv.hostPlatform.system}.brave-origin
+      pkgx.omp-claude-connectors-bridge.cli
       pkgx.split-commit.package
     ];
 
@@ -217,10 +218,14 @@ in
 
               skills.customDirectories = [
                 pkgx.split-commit.skills
+                pkgx.omp-claude-connectors-bridge.skills
                 "${herdrSkills}"
                 paseoSkills
               ];
-              extensions = [ "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts" ];
+              extensions = [
+                "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts"
+                pkgx.omp-claude-connectors-bridge.extension
+              ];
             }
             // {
               modelPresets = modelPresets;

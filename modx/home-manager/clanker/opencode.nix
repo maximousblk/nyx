@@ -16,6 +16,7 @@ in
   config = lib.mkIf cfg.enable {
     home.packages = [
       opencode2
+      pkgx.omp-claude-connectors-bridge.cli
       pkgx.split-commit.package
     ];
 

@@ -19,6 +19,7 @@ in
 
     home.packages = [
       inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.pi
+      pkgx.omp-claude-connectors-bridge.cli
       pkgx.split-commit.package
     ];
 
@@ -41,12 +42,16 @@ in
           "opencode-zen/deepseek-v4-flash-free"
         ];
         enableInstallTelemetry = false;
-        skills = [ pkgx.split-commit.skills ];
+        skills = [
+          pkgx.split-commit.skills
+          pkgx.omp-claude-connectors-bridge.skills
+        ];
         extensions = [
           "${pkgs.herdr.src}/src/integration/assets/pi/herdr-agent-state.ts"
           pkgx.pi-mcp-adapter.extension
           pkgx.pi-web-access.extension
           pkgx.pi-context-mode.extension
+          pkgx.omp-claude-connectors-bridge.extension
         ];
       };
 

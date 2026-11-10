@@ -9,4 +9,5 @@
   dashbrr = pkgs.callPackage ./dashbrr.nix { };
   tsdproxy = pkgs.callPackage ./tsdproxy.nix { };
   split-commit = pkgs.callPackage ./split-commit { };
+  omp-claude-connectors-bridge = pkgs.callPackage ./omp-claude-connectors-bridge { };
 }
