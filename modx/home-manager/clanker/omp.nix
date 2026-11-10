@@ -10,11 +10,21 @@ let
   cfg = config.optx.clanker.omp;
   jsonFormat = pkgs.formats.json { };
   yamlFormat = pkgs.formats.yaml { };
-  paseoSkills = "${inputs.paseo}/skills";
-  herdrSkills = pkgs.runCommand "herdr-omp-skills" { } ''
-    mkdir -p $out/herdr
-    cp ${pkgs.herdr.src}/skills/herdr/SKILL.md $out/herdr/SKILL.md
-  '';
+  # The paseo source root is not a loadable package, so expose only its skills directory.
+  paseoSkills = pkgs.linkFarm "paseo-omp-skills" { skills = "${inputs.paseo}/skills"; };
+  ompPackage = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp;
+  # Herdr panes set HERDR_ENV=1; Paseo sets PASEO_AGENT_ID on every agent it launches.
+  omp = pkgs.symlinkJoin {
+    inherit (ompPackage) name meta;
+    paths = [ ompPackage ];
+    nativeBuildInputs = [ pkgs.makeWrapper ];
+    postBuild = ''
+      wrapProgram $out/bin/omp \
+        --run 'if [ "''${HERDR_ENV:-}" = 1 ]; then set -- -e ${pkgs.herdr.src} "$@"; fi' \
+        --run 'if [ "''${HERDR_ENV:-}" = 1 ]; then set -- -e ${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts "$@"; fi' \
+        --run 'if [ -n "''${PASEO_AGENT_ID:-}" ]; then set -- -e ${paseoSkills} "$@"; fi'
+    '';
+  };
   modelPresets = {
     aperture = {
       modelRoles = {
@@ -101,7 +111,7 @@ in
     ];
 
     home.packages = [
-      inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp
+      omp
       inputs.brave.packages.${pkgs.stdenv.hostPlatform.system}.brave-origin
       pkgx.omp-claude-connectors-bridge.cli
       pkgx.split-commit.package
@@ -219,13 +229,8 @@ in
               skills.customDirectories = [
                 pkgx.split-commit.skills
                 pkgx.omp-claude-connectors-bridge.skills
-                "${herdrSkills}"
-                paseoSkills
               ];
-              extensions = [
-                "${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts"
-                pkgx.omp-claude-connectors-bridge.extension
-              ];
+              extensions = [ pkgx.omp-claude-connectors-bridge.extension ];
             }
             // {
               modelPresets = modelPresets;
