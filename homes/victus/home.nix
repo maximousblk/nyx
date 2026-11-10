@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   pkgx,
   modx,
@@ -16,6 +17,19 @@
     modx.hm.clanker
     modx.hm.wallpaper
   ];
+
+  programs.mcp = {
+    enable = true;
+    servers = {
+      aperture.url = "https://aperture.pony-clownfish.ts.net/v1/mcp";
+      gh_grep.url = "https://mcp.grep.app";
+      context7.url = "https://mcp.context7.com/mcp";
+      lightpanda = {
+        command = lib.getExe pkgs.nur.repos.xddxdd.lightpanda;
+        args = [ "mcp" ];
+      };
+    };
+  };
 
   optx.clanker = {
     opencode.enable = true;
