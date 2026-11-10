@@ -54,8 +54,6 @@ in
           pkgx.omp-claude-connectors-bridge.extension
         ];
       };
-
-      ".pi/agent/extensions".source = ./pi-extensions;
     };
   };
 }
