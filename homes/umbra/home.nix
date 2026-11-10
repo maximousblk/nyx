@@ -22,10 +22,7 @@
       omp = {
         enable = true;
         defaultPreset = "codex";
-        memory = {
-          backend = "hindsight";
-          hindsightApiUrl = "http://heimdall-dev:8888";
-        };
+        memory.backend = "mnemopi";
       };
       pi.enable = true;
       omp-auth.enable = true;
