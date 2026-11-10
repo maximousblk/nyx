@@ -30,7 +30,7 @@ let
       modelRoles = {
         advisor = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
         commit = "aperture-responses/openai-codex/gpt-6-luna:medium";
-        default = "aperture-responses/openai-codex/gpt-5.6-luna:medium";
+        default = "aperture-responses/openai-codex/gpt-6.1-terra:medium";
         designer = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
         frontier = "aperture-responses/openai-codex/gpt-6-astra:medium";
         plan = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
@@ -46,7 +46,7 @@ let
       modelRoles = {
         advisor = "openai-codex/gpt-6.1-sol:medium";
         commit = "openai-codex/gpt-6-luna:medium";
-        default = "openai-codex/gpt-5.6-luna:medium";
+        default = "openai-codex/gpt-6.1-terra:medium";
         designer = "openai-codex/gpt-6.1-sol:medium";
         frontier = "openai-codex/gpt-6-astra:medium";
         plan = "openai-codex/gpt-6.1-sol:medium";
