@@ -16,6 +16,11 @@
 
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
 
+    brave = {
+      url = "git+https://codeberg.org/buckley310/brave-browser-nix?ref=main";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nur = {
       url = "github:nix-community/NUR";
       inputs.nixpkgs.follows = "nixpkgs";

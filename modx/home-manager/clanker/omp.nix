@@ -102,7 +102,7 @@ in
 
     home.packages = [
       inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp
-      pkgs.brave-origin
+      inputs.brave.packages.${pkgs.stdenv.hostPlatform.system}.brave-origin
     ];
 
     # Keep long-running agents valid across upgrades and store garbage collection.
