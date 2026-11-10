@@ -80,7 +80,7 @@
     "L+ /home/maximousblk/.pi/agent/settings.json - - - - ${
       (pkgs.formats.json { }).generate "pi-pocket-settings.json" {
         defaultProvider = "aperture";
-        defaultModel = "openai-codex/gpt-5.6-luna";
+        defaultModel = "openai-codex/gpt-6.1-terra";
         defaultThinkingLevel = "medium";
       }
     }"
