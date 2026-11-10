@@ -16,10 +16,10 @@
     configPath = "desktop";
   };
 
-  services.scx = {
-    scheduler = "scx_bpfland";
+  services.scx-loader = {
     enable = true;
-    package = pkgs.scx.full;
+    schedsPackages = [ pkgs.scx.full ];
+    config.default_sched = "scx_bpfland";
   };
 
   services.tailscale = {
