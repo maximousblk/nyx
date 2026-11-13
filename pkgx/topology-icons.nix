@@ -12,101 +12,105 @@ in
     sha256 = "027ybg4cwjs00vq4qhw114v6jw4x0gv1fw54hgyapg1pc0fl3cay";
   };
   bazarr = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/bazarr.svg";
-    sha256 = "06chv4sr3bnz6jbj9h2a0d8s8lx8lp6b5rjd83scg3nbjqfyipa3";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/bazarr.svg";
+    sha256 = "0d4rh8z8g3jgrrcq7dnm2569i6gkigwnx7dmn5802mrzvwxzgvgb";
   };
   dnscrypt-proxy = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-proxy/master/logo.svg";
-    sha256 = "sha256-kGZNNa5HqJqI1y1cqDL85PO4t3ip62n5RtyBDt+eE2w=";
+    url = "https://raw.githubusercontent.com/DNSCrypt/dnscrypt-proxy/9c73f44fec9952347a8fe123cc1554f84cc44a5f/logo.svg";
+    sha256 = "0v0kkvghx0fw8vwnksx9g2vviwz4zhrahp1dsy49ma27mqslsrlh";
   };
   crafty = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/crafty-controller.svg";
-    sha256 = "0sfn9dzmzvr2kzwa35b1vxli85ad7kbljyg5s06r91mcd16x1rxn";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/crafty-controller.svg";
+    sha256 = "1c11cxd86y3snj1a2zmbqny7fzzwwmp062z0iq36nw6b129kw1wd";
   };
   flaresolverr = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/flaresolverr.svg";
-    sha256 = "1cvv2iybfyc9zcpvcphzp347gpv28fk5wnylwcf6z7bfrqdjij4z";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/flaresolverr.svg";
+    sha256 = "18dwvs8z3l7jiga49n8vim0sw14lx2isaqdinyfsn9p8fscl2kfb";
   };
   immich = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/immich.svg";
-    sha256 = "sha256-pdSkOJnmP/x+lyRgNPf2PN/cQQqoA8VxPVRSkGAcTYk=";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/immich.svg";
+    sha256 = "0p54gb03wn7z4ijgbd0h46hfnjn97ly6ap20vsqg7wjx8i5sjl5m";
   };
   headlamp = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/headlamp.svg";
-    sha256 = "1lz262r09lvgprk8s02kj2mcrxc5qyvgr9qw0xhha8vz03gl8ivq";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/headlamp.svg";
+    sha256 = "14pr5yavhx2qpks5h9wvrxj3r4rbh22zryhzc6imk6cjd2p15b1n";
   };
   incus = builtins.fetchurl {
     url = "https://raw.githubusercontent.com/zabbly/incus-ui-canonical/incus-0.21.6/public/assets/img/incus-logo.svg";
     sha256 = "1jp1wsw5sh42wsz1vg9wdn245qzm7ppp5726shbfc4f69zfv9zjn";
   };
   jellyfin = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/jellyfin.svg";
-    sha256 = "sha256-m/uHU9mDEDiJqNwkhzi/0FbgP1JzTi1u60pcWSUUjBA=";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/jellyfin.svg";
+    sha256 = "07zkim8yniggkk8l8lzdg78zgqch9w293l7fxd7jb0kgpd743j0j";
   };
   k3s = stripSvgMetadata "k3s-icon.svg" (
     builtins.fetchurl {
-      url = "https://raw.githubusercontent.com/cncf/artwork/master/projects/k3s/icon/color/k3s-icon-color.svg";
+      url = "https://raw.githubusercontent.com/cncf/artwork/bffd512a8b625f15cf5f8e0427469380b5768e90/projects/k3s/icon/color/k3s-icon-color.svg";
       sha256 = "02dgp0c8rspicgrdbahrv1p44vsvhwkyc0qpf011qmv5md0i68y6";
     }
   );
   karakeep = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/karakeep-light.svg";
-    sha256 = "06mic8gs6ca36rkwh20sq3ykw5dlqj2nsz760j78pfg5g2krhrrg";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/karakeep-light.svg";
+    sha256 = "0lk1yspsrw8a9ycscjrdnn2l6j36bncjpvg19an4rhw6854n1sd5";
   };
   nfs = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/linux.svg";
-    sha256 = "sha256-SYq0Rw2xZsiqdUGu5BXLwdjtv7Ym0hYbPoHUqxghmPQ=";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/linux.svg";
+    sha256 = "0hl8y92qly7jg92j2hp24ymnvmczk3hn1mih4m64s5zhnbs67kq2";
   };
   omp = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/can1357/oh-my-pi/main/packages/collab-web/public/favicon.svg";
+    url = "https://raw.githubusercontent.com/can1357/oh-my-pi/aa5f045f98a90f5c7bbc6b091f1e97e42263194d/packages/collab-web/public/favicon.svg";
     sha256 = "01gyd4vlx9ydja7pcdx0kyc6mcixf0cfqk0w490i75i41id9f6cl";
   };
   openbao = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/openbao.svg";
-    sha256 = "1r1hd4m1vb37jj10cfij1sqiq3ydfvdfa5wgdkwzj8608b2rd10y";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/openbao.svg";
+    sha256 = "0g40lfbj6iyxx3ys6hz22ldqfsz72mfmr095j144bddlikjkd7bb";
   };
   opentelemetry = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/opentelemetry.svg";
-    sha256 = "14pv7hpvi93amki5iq37592qkkhxypcgfqfqscw2qyiiyk9273jz";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/opentelemetry.svg";
+    sha256 = "1c97mbhapzjc1h7ab5k2gjx780rmgibxd265l3yahcs2iaj5k4n8";
   };
   paseo = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/getpaseo/paseo/main/packages/website/public/logo.svg";
+    url = "https://raw.githubusercontent.com/getpaseo/paseo/d13438ba50ed74c0d9057370b5f5c781aee0f687/packages/website/public/logo.svg";
     sha256 = "1i3y03rij884bvfv972il7dc45gikhq4bngxzmgn62322a8kf0ps";
   };
   paperless = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/paperless-ngx.svg";
-    sha256 = "sha256-mkjYejHZOsodNNUqUQ+3rdWRn0nTEntZWhA159XK6/Q=";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/paperless-ngx.svg";
+    sha256 = "1f1diysvmjvvl526w0j4hdb4lpzxmjq4nrxagi3pl9n34f1nlnk6";
+  };
+  pi-pocket = builtins.fetchurl {
+    url = "https://raw.githubusercontent.com/TannerMidd/pi-pocket/5d009fa4d1e2b69db54f05e04f750a6f2e591bb1/web/icon-512.png";
+    sha256 = "0mpmvwj8lhqb3p4zq06giw4l08cj3h28jl4qdz7kmam5dmvi0z6h";
   };
   proxy = builtins.fetchurl {
-    url = "https://raw.githubusercontent.com/SagerNet/sing-box/testing/docs/assets/icon.svg";
+    url = "https://raw.githubusercontent.com/SagerNet/sing-box/a13dbe1f785f66c86acbf3985c33fdafea0cbfd6/docs/assets/icon.svg";
     sha256 = "0jsp5kis87cdg141gaff1jsbxfimw117qd0yimy5ygkrnhmli6z5";
   };
   qbittorrent = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/qbittorrent.svg";
-    sha256 = "0w82af08lnzbnpq8203wzyigqbzhsfacdppcykmjh2zm4pp5kpxk";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/qbittorrent.svg";
+    sha256 = "121h5zz7f7wz39cl302m1rfsmvv26m7akcpig0l2hwzz7g8m0sks";
   };
   rustfs = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/rustfs.svg";
-    sha256 = "0fwadkbgkax2gj0vzsv6pw5l5in73sglaxl05vkqvpa73rz2kaqg";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/rustfs.svg";
+    sha256 = "0sd4kr563d8p5fgmzkyzygs464a6knq312shvymr48y37028fabs";
   };
   signoz = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/signoz.svg";
-    sha256 = "1k60vdiwd8gifag1rfany9bkrip73q3a76rcx4dpyz8qx7ry3m3a";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/signoz.svg";
+    sha256 = "13g82fkily1plkxd25am63sbks26fn1sjnxvsa44ng9m2gndj4yz";
   };
   scrutiny = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/scrutiny.svg";
-    sha256 = "0hl55xplhkwjj8xd84r7h08vbz6if5mf7is1nxsz5a86xbkccm32";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/scrutiny.svg";
+    sha256 = "0apzhi3irgcflzkswb20nl1i3pqzc0x0ah3nczqr3yyiqbfklwlb";
   };
   sunshine = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/sunshine.svg";
-    sha256 = "0fhg4vx9x8b4ayn7micc6v3bc8a3kcz1pc4ld3v8qn3dgcmlqyqv";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/sunshine.svg";
+    sha256 = "0r7mab8lqi5p73lfww18k660k67hafd8ggbxzrcw3s0jzvh80z5x";
   };
   tailscale = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/tailscale-light.svg";
-    sha256 = "1sas4cg0rk0phgdabs70jx5kg332p9lf94qdki5n7vg6asxkziqz";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/tailscale-light.svg";
+    sha256 = "0ihb9rxjl3zl4ibb1cs5y8y8jf4bbbvrmcd8mm17bjcia0073rc6";
   };
   zerobyte = builtins.fetchurl {
-    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@main/svg/zerobyte.svg";
-    sha256 = "1pn9shc37fv0dxnv5bsk1va799z0ax389n56p6ayj4li2yv1jiys";
+    url = "https://cdn.jsdelivr.net/gh/selfhst/icons@9b7e0f8b76d5e9542d181c914c897beb695de402/svg/zerobyte.svg";
+    sha256 = "0p7qnp363w6ch8gcrqikzcmkv1bdcm0s3vbjwri63kwgs715xj5c";
   };
 }

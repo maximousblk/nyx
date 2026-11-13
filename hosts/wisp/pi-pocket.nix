@@ -4,6 +4,7 @@
   lib,
   modx,
   pkgs,
+  pkgx,
   ...
 }:
 {
@@ -15,6 +16,7 @@
   topology.self.services.pi-pocket = {
     name = "Pi Pocket";
     info = "Mobile coding-agent workspace";
+    icon = pkgx.topology-icons.pi-pocket;
   };
 
   services.pi-pocket = {
