@@ -13,6 +13,7 @@
     ./browser.nix
     ./vicinae.nix
     ./noctalia.nix
+    ./artcraft.nix
 
     modx.hm.clanker
     modx.hm.wallpaper

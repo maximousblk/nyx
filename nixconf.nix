@@ -18,6 +18,7 @@ let
     "https://noctalia.cachix.org/?priority=41" = "noctalia.cachix.org-1:pCOR47nnMEo5thcxNDtzWpOxNFQsBRglJzxWPp3dkU4=";
     "https://nix-community.cachix.org/?priority=41" = "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=";
     "https://niri.cachix.org/?priority=41" = "niri.cachix.org-1:Wv0OmO7PsuocRKzfDoJ3mulSl7Z6oezYhGhR+3W2964=";
+    "https://applicative-systems.cachix.org/?priority=41" = "applicative-systems.cachix.org-1:ND41hRBh0ST2abuI/oee3yWVf3n0FsAftyJJ/Tb7KDE=";
   };
 in
 {

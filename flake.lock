@@ -51,6 +51,21 @@
         "type": "github"
       }
     },
+    "artcraft": {
+      "locked": {
+        "lastModified": 1793739651,
+        "narHash": "sha256-29PgkXSyQmCh5rybU8oDewQ6Ffrp/Mni/DAxEN4TcgI=",
+        "owner": "applicative-systems",
+        "repo": "artcraft-nix",
+        "rev": "398b22b9a6a8516a1e10c3642f0cc02d2db30a91",
+        "type": "github"
+      },
+      "original": {
+        "owner": "applicative-systems",
+        "repo": "artcraft-nix",
+        "type": "github"
+      }
+    },
     "bun2nix": {
       "inputs": {
         "flake-parts": [
@@ -556,6 +571,26 @@
         "type": "github"
       }
     },
+    "nix-craftapps": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1794461005,
+        "narHash": "sha256-pxoEENKNS7cJF8i/CJvRPkOBCnGL8aZRGZl8onkigbM=",
+        "owner": "olafkfreund",
+        "repo": "nix-craftapps",
+        "rev": "62d5dd900f46e22f99dc9a5dcab3acd486c1a8da",
+        "type": "github"
+      },
+      "original": {
+        "owner": "olafkfreund",
+        "repo": "nix-craftapps",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -977,6 +1012,7 @@
       "inputs": {
         "agenix": "agenix",
         "agenix-rekey": "agenix-rekey",
+        "artcraft": "artcraft",
         "deploy-rs": "deploy-rs",
         "disko": "disko",
         "fenix": "fenix",
@@ -990,6 +1026,7 @@
         "llm-agents": "llm-agents",
         "niri": "niri",
         "nix-cachyos-kernel": "nix-cachyos-kernel",
+        "nix-craftapps": "nix-craftapps",
         "nix-index-database": "nix-index-database",
         "nix-topology": "nix-topology",
         "nixflix": "nixflix",
