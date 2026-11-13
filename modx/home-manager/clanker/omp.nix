@@ -112,7 +112,7 @@ in
 
     home.packages = [
       omp
-      inputs.brave.packages.${pkgs.stdenv.hostPlatform.system}.brave-origin
+      pkgs.brave-origin
       pkgx.omp-claude-connectors-bridge.cli
       pkgx.split-commit.package
     ];
