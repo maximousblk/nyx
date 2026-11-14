@@ -34,7 +34,7 @@ let
         designer = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
         frontier = "aperture-responses/openai-codex/gpt-6-astra:medium";
         plan = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
-        slow = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
+        slow = "aperture-responses/openai-codex/gpt-6.1-terra:medium";
         smol = "aperture-responses/openai-codex/gpt-6-luna:medium";
         task = "aperture-responses/openai-codex/gpt-6-luna:medium";
         tiny = "aperture-responses/openai-codex/gpt-6-luna:medium";
@@ -50,7 +50,7 @@ let
         designer = "openai-codex/gpt-6.1-sol:medium";
         frontier = "openai-codex/gpt-6-astra:medium";
         plan = "openai-codex/gpt-6.1-sol:medium";
-        slow = "openai-codex/gpt-6.1-sol:medium";
+        slow = "openai-codex/gpt-6.1-terra:medium";
         smol = "openai-codex/gpt-6-luna:medium";
         task = "openai-codex/gpt-6-luna:medium";
         tiny = "openai-codex/gpt-6-luna:medium";
