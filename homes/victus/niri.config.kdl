@@ -23,6 +23,11 @@ output "LG Electronics 19M35 403INZY2W405" {
     scale 0.75
 }
 
+output "PNP(BNQ) BenQ EX271Q ETF6T00390SL0" {
+    mode "2560x1440@144.006"
+    scale 1
+}
+
 
 // Layout
 prefer-no-csd
