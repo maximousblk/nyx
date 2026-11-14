@@ -26,8 +26,7 @@
     group = "users";
     cwd = "/home/maximousblk";
     access = "local";
-    browser = "${pkgs.chromium}/bin/chromium";
-    browserArgs = [ "--no-sandbox" ];
+    browser = "${pkgs.brave-origin}/bin/brave-origin";
     extraPackages = [
       pkgs.git
       pkgs.openssh
@@ -37,6 +36,8 @@
 
   # Merge declarative NixOS variables; retain upstream service-specific values.
   systemd.services.pi-pocket = {
+    requires = [ "tailscale-online.target" ];
+    after = [ "tailscale-online.target" ];
     environment = lib.mapAttrs (_: value: lib.mkDefault (if builtins.isList value then lib.concatStringsSep ":" value else toString value)) (
       builtins.removeAttrs (config.environment.variables // config.environment.sessionVariables) [ "PATH" ]
     );
@@ -61,15 +62,16 @@
     ${pkgs.curl}/bin/curl --fail --silent --show-error --max-time 30 \
       https://aperture.pony-clownfish.ts.net/v1/models > "$catalog"
     ${pkgs.jq}/bin/jq -e '{providers: {aperture: {
+      name: "Aperture",
       baseUrl: "https://aperture.pony-clownfish.ts.net/v1",
-      api: "openai-responses",
+      api: "openai-completions",
       apiKey: "tailnet",
-      models: [.data[] | select(.supported_endpoints | index("/v1/responses")) | {
+      models: [.data[] | select(.supported_endpoints | index("/v1/chat/completions")) | {
         id, name: (.display_name // .id),
         contextWindow: .context_window_tokens,
         maxTokens: .max_output_tokens,
         reasoning: true, input: ["text", "image"]
-      }]
+      } | with_entries(select(.value != null))]
     }}} | select(.providers.aperture.models | length > 0)' "$catalog" > "$generated"
     chmod 600 "$generated"
     mv -f "$generated" "$registry"
