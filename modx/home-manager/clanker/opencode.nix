@@ -8,6 +8,8 @@
 }:
 let
   cfg = config.optx.clanker.opencode;
+  useAperture = config.optx.clanker.omp.defaultPreset == "aperture";
+  modelProvider = if useAperture then "aperture" else "openai";
   herdrAssets = "${pkgs.herdr.src}/src/integration/assets/opencode";
 in
 {
@@ -36,11 +38,46 @@ in
         update = "disable";
         snapshots = false;
         default_agent = "plan";
-        model = "openai/gpt-6.1-terra";
+        model = "${modelProvider}/gpt-6.1-terra";
         agents = {
-          plan.model = "openai/gpt-6.1-sol";
-          general.model = "openai/gpt-6-luna";
-          explore.model = "openai/gpt-6-luna";
+          plan.model = "${modelProvider}/gpt-6.1-sol";
+          general.model = "${modelProvider}/gpt-6-luna";
+          explore.model = "${modelProvider}/gpt-6-luna";
+        };
+        providers = lib.optionalAttrs useAperture {
+          aperture = {
+            name = "Aperture";
+            package = "@opencode/ai/providers/openai-compatible/responses";
+            settings = {
+              baseURL = "https://aperture.pony-clownfish.ts.net/v1";
+              apiKey = "tailnet";
+            };
+            # OpenCode 2 has no generic /v1/models discovery; declare the supported routes.
+            models = lib.genAttrs [ "gpt-5.6-luna" "gpt-5.6-terra" "gpt-6-luna" "gpt-6.1-sol" "gpt-6.1-terra" ] (model: {
+              modelID = "openai-codex/${model}";
+              limit = {
+                context = 1050000;
+                output = 128000;
+              };
+              capabilities = {
+                tools = true;
+                input = [
+                  "text"
+                  "image"
+                ];
+                output = [ "text" ];
+                reasoning = {
+                  supported = true;
+                  effort = [
+                    "low"
+                    "medium"
+                    "high"
+                  ];
+                };
+              };
+              settings.reasoningEffort = "medium";
+            });
+          };
         };
         watcher.ignore = [
           "node_modules/**"
