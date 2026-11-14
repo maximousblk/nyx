@@ -32,6 +32,17 @@
     };
   };
 
+  programs.opencode.web = {
+    enable = true;
+    extraArgs = [
+      "--service"
+      "--hostname"
+      "100.100.1.1"
+      "--port"
+      "49374"
+    ];
+  };
+
   optx.clanker = {
     opencode.enable = true;
     claude.enable = true;
