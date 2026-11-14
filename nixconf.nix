@@ -82,6 +82,14 @@ in
             }).otelcol-contrib;
         })
         (_final: prev: {
+          # https://github.com/NixOS/nixpkgs/pull/587280
+          felix-fm = prev.felix-fm.overrideAttrs (old: {
+            preBuild = (old.preBuild or "") + ''
+              export LIBGIT2_NO_VENDOR=0
+            '';
+          });
+        })
+        (_final: prev: {
           # Reserve `fx` for the coding agent; expose the file manager as `felix`.
           felix-fm = prev.symlinkJoin {
             name = "felix-fm-renamed";
