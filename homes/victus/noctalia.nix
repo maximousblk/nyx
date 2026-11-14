@@ -167,9 +167,10 @@
 
       theme = {
         mode = "dark";
+        shell_mode = "follow";
         source = "wallpaper";
         builtin = "Rosé Pine";
-        wallpaper_scheme = "m3-content";
+        wallpaper_scheme = "m3-rainbow";
         templates = {
           enable_builtin_templates = true;
           builtin_ids = [
@@ -285,7 +286,7 @@
         reserve_space = true;
         background_opacity = 0.9;
         border_width = 0.0;
-        border = "outline";
+        border = "outline_variant";
         shadow = false;
         margin_edge = 4;
         margin_ends = 4;
@@ -296,7 +297,7 @@
         scale = 1.0;
         font_weight = 600;
         capsule = true;
-        capsule_fill = "surface_variant";
+        capsule_fill = "surface_container";
         capsule_thickness = 0.76;
         capsule_opacity = 0.0;
         capsule_padding = 4.0;
@@ -374,7 +375,7 @@
         smart_auto_hide = true;
         reserve_space = false;
         background_opacity = 0.9;
-        border = "outline";
+        border = "outline_variant";
         border_width = 0.0;
         margin_edge = 4;
         margin_ends = 4;
