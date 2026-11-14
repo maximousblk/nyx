@@ -10,4 +10,5 @@
   tsdproxy = pkgs.callPackage ./tsdproxy.nix { };
   split-commit = pkgs.callPackage ./split-commit { };
   omp-claude-connectors-bridge = pkgs.callPackage ./omp-claude-connectors-bridge { };
+  oh-my-cpa = pkgs.callPackage ./oh-my-cpa.nix { };
 }
