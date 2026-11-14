@@ -74,6 +74,14 @@ in
           }
         )
         (_final: prev: {
+          # https://github.com/NixOS/nixpkgs/pull/581121
+          opentelemetry-collector-contrib =
+            (prev.opentelemetry-collector-releases.override {
+              go = prev.go_1_26;
+              buildGoModule = prev.buildGoModule.override { go = prev.go_1_26; };
+            }).otelcol-contrib;
+        })
+        (_final: prev: {
           # Reserve `fx` for the coding agent; expose the file manager as `felix`.
           felix-fm = prev.symlinkJoin {
             name = "felix-fm-renamed";
