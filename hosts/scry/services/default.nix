@@ -33,6 +33,7 @@ in
     ./ssh.nix
     ./tailscale.nix
     ./omp-auth.nix
+    ./cliproxyapi.nix
     ./proxy.nix
     ./torproxy.nix
   ];
