@@ -172,11 +172,14 @@ Do not write vague subjects like:
 When a body is warranted, it must follow this format:
 
 - no prose paragraph before the bullets
-- one bullet per concrete change
+- give every concrete change its own bullet, even when several changes belong in the same commit
+- never join distinct changes with “and”, a semicolon, or a comma-separated list just to keep the body short; there is no bullet limit
 - every bullet starts with `- `
 - each bullet describes an actual staged change
 - bullets should be specific, not generic
 - wording should stay concise and literal
+
+For example, write `- Disable task isolation` and `- Disable the Bash Git guard` as two separate lines, not `- Disable task isolation and the Bash Git guard`.
 
 Preferred bullet verbs in this repo include:
 
@@ -287,6 +290,12 @@ Use this balancing test for every proposed split:
 - serve one clear purpose,
 - and would require awkward duplicated commit messages or arbitrary hunk separation if split.
 
+## Commit ordering
+
+- List small, low-impact, self-contained commits first when their position does not affect correctness. After approval, land them in that order before starting the larger changes.
+- Put real prerequisites before their consumers. Keep required lockfile changes, generated artifacts, and coupled edits together so each intermediate commit remains usable.
+- Use the latest valid position for large or consequential changes that build on earlier commits. Only move them earlier when a later commit needs them; size or a shared file alone does not establish a dependency.
+
 ## Planning requirements
 
 Each planned commit must satisfy all of these:
@@ -316,11 +325,12 @@ Requirements for the plan:
 - `Scope` must reflect the final chosen scope.
 - `Files` must list all files involved in that commit.
 - `Commit message` must already be written in final `type(scope): subject` form.
-- `Body bullets` must be near-final and specific.
+- `Body bullets` must be near-final and follow section 2.4: one bullet per concrete change, with no bundled changes.
 - If footnotes will be used, include the markers in the bullets and list the footnotes below that commit's bullets.
 - Explicitly mention when a file must be split by hunk.
 - For each commit changing `flake.lock`, note that its message will include the native lockfile diff attachment described in section 2.6.
 - If there is any judgment call about whether to group or split, say so briefly.
+- List commits in execution order and briefly explain any dependency that overrides the small, self-contained changes first rule.
 - If a broader scope was considered and rejected, prefer the narrower one and do not surface the broad one unless the user asks.
 
 Then stop.
@@ -383,7 +393,8 @@ Before creating each commit, confirm all of the following are true:
 - the scope is not a banned broad/generic scope unless the user explicitly approved it
 - the title line matches this repo's style
 - the subject is concrete and not vague
-- the body bullets describe only staged changes
+- every concrete staged change has its own bullet when a body is warranted
+- no bullet bundles distinct changes or describes an unstaged change
 - footnotes are formatted correctly if references are present
 - every staged `flake.lock` change has the complete native diff attachment for its parent-to-index transition
 - no unrelated formatting churn was accidentally included
