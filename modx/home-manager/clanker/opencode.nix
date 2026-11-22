@@ -8,8 +8,6 @@
 }:
 let
   cfg = config.optx.clanker.opencode;
-  useAperture = config.optx.clanker.omp.defaultPreset == "aperture";
-  modelProvider = if useAperture then "aperture" else "openai";
   herdrAssets = "${pkgs.herdr.src}/src/integration/assets/opencode";
 in
 {
@@ -38,13 +36,13 @@ in
         update = "disable";
         snapshots = false;
         default_agent = "plan";
-        model = "${modelProvider}/gpt-6.1-terra";
+        model = "aperture/openai-codex/gpt-6.1-terra";
         agents = {
-          plan.model = "${modelProvider}/gpt-6.1-sol";
-          general.model = "${modelProvider}/gpt-6-luna";
-          explore.model = "${modelProvider}/gpt-6-luna";
+          plan.model = "aperture/openai-codex/gpt-6.2-sol";
+          general.model = "aperture/openai-codex/gpt-6-luna";
+          explore.model = "aperture/openai-codex/gpt-6-luna";
         };
-        providers = lib.optionalAttrs useAperture {
+        providers = {
           aperture = {
             name = "Aperture";
             package = "@opencode/ai/providers/openai-compatible/responses";
@@ -53,30 +51,32 @@ in
               apiKey = "tailnet";
             };
             # OpenCode 2 has no generic /v1/models discovery; declare the supported routes.
-            models = lib.genAttrs [ "gpt-5.6-luna" "gpt-5.6-terra" "gpt-6-luna" "gpt-6.1-sol" "gpt-6.1-terra" ] (model: {
-              modelID = "openai-codex/${model}";
-              limit = {
-                context = 1050000;
-                output = 128000;
-              };
-              capabilities = {
-                tools = true;
-                input = [
-                  "text"
-                  "image"
-                ];
-                output = [ "text" ];
-                reasoning = {
-                  supported = true;
-                  effort = [
-                    "low"
-                    "medium"
-                    "high"
-                  ];
-                };
-              };
-              settings.reasoningEffort = "medium";
-            });
+            models =
+              lib.genAttrs [ "openai-codex/gpt-5.6-luna" "openai-codex/gpt-5.6-terra" "openai-codex/gpt-6-luna" "openai-codex/gpt-6.2-sol" "openai-codex/gpt-6.1-terra" ]
+                (model: {
+                  modelID = model;
+                  limit = {
+                    context = 1050000;
+                    output = 128000;
+                  };
+                  capabilities = {
+                    tools = true;
+                    input = [
+                      "text"
+                      "image"
+                    ];
+                    output = [ "text" ];
+                    reasoning = {
+                      supported = true;
+                      effort = [
+                        "low"
+                        "medium"
+                        "high"
+                      ];
+                    };
+                  };
+                  settings.reasoningEffort = "medium";
+                });
           };
         };
         watcher.ignore = [
