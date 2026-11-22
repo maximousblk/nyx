@@ -243,6 +243,9 @@
                     ]
                   }:$PATH
 
+                  git_dir="$(${pkgs.lib.getExe pkgs.git} rev-parse --path-format=absolute --git-common-dir)" &&
+                    nix-store --realise --indirect --add-root "$git_dir/nix-pre-commit" ${config.pre-commit.settings.package} >/dev/null || exit 1
+
                   ${config.pre-commit.installationScript}
                 ''
               );
