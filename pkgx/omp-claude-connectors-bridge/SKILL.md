@@ -11,7 +11,7 @@ Use the `omp-claude-connectors-bridge` extension to access server-side Claude ac
 
 In Pi or OMP, discover connectors with `claude_connectors` and `{}`, inspect the upstream tool names and input schemas with `claude_connectors_tools` and `{"server":"Slack"}`, then call `claude_connectors_call` with the exact server, tool, and schema-conforming arguments. An inventory entry does not guarantee connectivity or grant authorization.
 
-OMP additionally exposes these tools through `xd://`: inspect the mounted names, read `xd://claude_connectors_call` for its schema, and write a JSON argument object there to execute it. The same dispatch works for active top-level tools. The REPL examples below use OMP's Eval bridge; Pi exposes the same three tools directly.
+In OMP 19.1, with `tools.commands` enabled, these tools are shell commands. Run `claude_connectors --help`, `claude_connectors_tools --help`, and `claude_connectors_call --help` before using them. For example, `claude_connectors` lists servers and `claude_connectors_tools Slack` discovers Slack tools. Pass nested call arguments as one JSON object with `-j`. The Eval examples below call the same session tools directly; Pi exposes the three tools directly.
 
 `server` accepts an exact display name, discovered ID, or upstream URL. Ambiguous selectors and unknown tool names fail. Do not invent a proxy URL or assume Claude-prefixed names are upstream tool names.
 
@@ -20,23 +20,16 @@ OMP additionally exposes these tools through `xd://`: inspect the mounted names,
 These examples use OMP's tool bridge; first discover, then inspect Slack's tool schema:
 
 ```js
-async function connectorTool(name, args) {
-  return await tool.write({
-    path: `xd://${name}`,
-    content: JSON.stringify(args),
-  });
-}
-
-const servers = await connectorTool("claude_connectors", {});
+const servers = await tool.claude_connectors({});
 console.log(servers);
-const schema = await connectorTool("claude_connectors_tools", { server: "Slack" });
+const schema = await tool.claude_connectors_tools({ server: "Slack" });
 console.log(schema);
 ```
 
 After inspecting the schema and confirming the operation is read-only, search for a generic emoji name. For example, if the schema lists `slack_search_emojis` with a `query` field:
 
 ```js
-const result = await connectorTool("claude_connectors_call", {
+const result = await tool.claude_connectors_call({
   server: "Slack",
   tool: "slack_search_emojis",
   arguments: { query: "smile" },
@@ -47,24 +40,16 @@ console.log(result);
 ## Python Eval
 
 ```python
-import json
-
-async def connector_tool(name, arguments):
-    return await tool.write({
-        "path": "xd://" + name,
-        "content": json.dumps(arguments),
-    })
-
-servers = await connector_tool("claude_connectors", {})
+servers = await tool.claude_connectors({})
 print(servers)
-schema = await connector_tool("claude_connectors_tools", {"server": "Slack"})
+schema = await tool.claude_connectors_tools({"server": "Slack"})
 print(schema)
 ```
 
 After inspecting the schema and confirming the operation is read-only, search for a generic emoji name. For example, if the schema lists `slack_search_emojis` with a `query` field:
 
 ```python
-result = await connector_tool("claude_connectors_call", {
+result = await tool.claude_connectors_call({
     "server": "Slack",
     "tool": "slack_search_emojis",
     "arguments": {"query": "smile"},
@@ -72,7 +57,7 @@ result = await connector_tool("claude_connectors_call", {
 print(result)
 ```
 
-Both Eval examples assume OMP's `tool.write` bridge is available in the respective Eval kernel. Results are OMP tool results, not bare MCP payloads: the full MCP result is rendered as JSON text and kept in details. Transport, RPC, and MCP `isError` failures surface as tool errors; inspect failures before continuing a batch.
+Both Eval examples assume the named session tools are available through OMP's `tool` bridge. Inspect errors before continuing a batch; transport, RPC, and MCP `isError` failures must not be silently ignored.
 
 ## Standalone CLI
 

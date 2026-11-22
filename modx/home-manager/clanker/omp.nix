@@ -10,6 +10,7 @@ let
   cfg = config.optx.clanker.omp;
   jsonFormat = pkgs.formats.json { };
   yamlFormat = pkgs.formats.yaml { };
+  ghidraPython = pkgs.python3.withPackages (ps: [ ps.pyghidra ]);
   # The paseo source root is not a loadable package, so expose only its skills directory.
   paseoSkills = pkgs.linkFarm "paseo-omp-skills" { skills = "${inputs.paseo}/skills"; };
   ompPackage = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}.omp;
@@ -20,6 +21,10 @@ let
     nativeBuildInputs = [ pkgs.makeWrapper ];
     postBuild = ''
       wrapProgram $out/bin/omp \
+        --set PUPPETEER_EXECUTABLE_PATH ${pkgs.brave-origin}/bin/brave-origin \
+        --set PI_BROWSER_WEBKIT 0 \
+        --set JAVA_HOME ${pkgs.openjdk25} \
+        --set PI_FORCE_IMAGE_PROTOCOL kitty \
         --run 'if [ "''${HERDR_ENV:-}" = 1 ]; then set -- -e ${pkgs.herdr.src} "$@"; fi' \
         --run 'if [ "''${HERDR_ENV:-}" = 1 ]; then set -- -e ${pkgs.herdr.src}/src/integration/assets/omp/herdr-agent-state.ts "$@"; fi' \
         --run 'if [ -n "''${PASEO_AGENT_ID:-}" ]; then set -- -e ${paseoSkills} "$@"; fi'
@@ -28,49 +33,58 @@ let
   modelPresets = {
     aperture = {
       modelRoles = {
-        advisor = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
-        commit = "aperture-responses/openai-codex/gpt-6-luna:medium";
-        default = "aperture-responses/openai-codex/gpt-6.1-terra:medium";
-        designer = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
-        frontier = "aperture-responses/openai-codex/gpt-6-astra:medium";
-        plan = "aperture-responses/openai-codex/gpt-6.1-sol:medium";
-        slow = "aperture-responses/openai-codex/gpt-6.1-terra:medium";
-        smol = "aperture-responses/openai-codex/gpt-6-luna:medium";
-        task = "aperture-responses/openai-codex/gpt-6-luna:medium";
-        tiny = "aperture-responses/openai-codex/gpt-6-luna:medium";
-        vision = "aperture-responses/openai-codex/gpt-6-luna:medium";
+        smol = "aperture/openai-codex/gpt-6-luna:medium";
+        default = "aperture/openai-codex/gpt-6.1-terra:medium";
+        slow = "aperture/openai-codex/gpt-6.2-sol:medium";
+        frontier = "aperture/openai-codex/gpt-6.2-astra:medium";
+
+        advisor = "@slow";
+        commit = "@smol";
+        judge = "@smol";
+        memory = "@tiny";
+        plan = "@slow";
+        task = "@smol";
+        tiny = "@smol";
+        vision = "@smol";
+        widget = "@smol";
       };
       defaultThinkingLevel = "medium";
     };
     codex = {
       modelRoles = {
-        advisor = "openai-codex/gpt-6.1-sol:medium";
-        commit = "openai-codex/gpt-6-luna:medium";
-        default = "openai-codex/gpt-6.1-terra:medium";
-        designer = "openai-codex/gpt-6.1-sol:medium";
-        frontier = "openai-codex/gpt-6-astra:medium";
-        plan = "openai-codex/gpt-6.1-sol:medium";
-        slow = "openai-codex/gpt-6.1-terra:medium";
         smol = "openai-codex/gpt-6-luna:medium";
-        task = "openai-codex/gpt-6-luna:medium";
-        tiny = "openai-codex/gpt-6-luna:medium";
-        vision = "openai-codex/gpt-6-luna:medium";
+        default = "openai-codex/gpt-6.1-terra:medium";
+        slow = "openai-codex/gpt-6.2-sol:medium";
+        frontier = "openai-codex/gpt-6.2-astra:medium";
+
+        advisor = "@slow";
+        commit = "@smol";
+        judge = "@smol";
+        memory = "@tiny";
+        plan = "@slow";
+        task = "@smol";
+        tiny = "@smol";
+        vision = "@smol";
+        widget = "@smol";
       };
       defaultThinkingLevel = "medium";
     };
     claude = {
       modelRoles = {
-        advisor = "anthropic/claude-sonnet-5-5:medium";
-        commit = "anthropic/claude-haiku-5-5:medium";
-        default = "anthropic/claude-haiku-5-5:medium";
-        designer = "anthropic/claude-sonnet-5-5:medium";
-        frontier = "anthropic/claude-opus-5-5:medium";
-        plan = "anthropic/claude-sonnet-5-5:medium";
-        slow = "anthropic/claude-sonnet-5-5:medium";
         smol = "anthropic/claude-haiku-5-5:medium";
-        task = "anthropic/claude-haiku-5-5:medium";
-        tiny = "anthropic/claude-haiku-5-5:medium";
-        vision = "anthropic/claude-haiku-5-5:medium";
+        default = "anthropic/claude-haiku-5-5:medium";
+        slow = "anthropic/claude-sonnet-5-5:medium";
+        frontier = "anthropic/claude-opus-5-5:medium";
+
+        advisor = "@slow";
+        commit = "@smol";
+        judge = "@smol";
+        memory = "@tiny";
+        plan = "@slow";
+        task = "@smol";
+        tiny = "@smol";
+        vision = "@smol";
+        widget = "@smol";
       };
       defaultThinkingLevel = "medium";
     };
@@ -88,10 +102,15 @@ in
         default = "mnemopi";
         description = "Memory backend for OMP.";
       };
-      hindsightApiUrl = lib.mkOption {
-        type = lib.types.nullOr lib.types.str;
-        default = null;
-        description = "Hindsight API URL when using the Hindsight memory backend.";
+      mnemopi = lib.mkOption {
+        type = lib.types.attrsOf yamlFormat.type;
+        default = { };
+        description = "Overrides for OMP's Mnemopi settings.";
+      };
+      hindsight = lib.mkOption {
+        type = lib.types.attrsOf yamlFormat.type;
+        default = { };
+        description = "Overrides for OMP's Hindsight settings.";
       };
     };
     defaultPreset = lib.mkOption {
@@ -105,8 +124,8 @@ in
 
     assertions = [
       {
-        assertion = cfg.memory.backend != "hindsight" || cfg.memory.hindsightApiUrl != null;
-        message = "optx.clanker.omp.memory.hindsightApiUrl must be set for the Hindsight backend.";
+        assertion = cfg.memory.backend != "hindsight" || (cfg.memory.hindsight.apiUrl or null) != null;
+        message = "optx.clanker.omp.memory.hindsight.apiUrl must be set for the Hindsight backend.";
       }
     ];
 
@@ -125,80 +144,287 @@ in
         {
           ".omp/agent/config.yml".source = yamlFormat.generate "omp-config.yml" (
             {
+              # bash
               async.enabled = true;
-              async.pollWaitDuration = "10m";
-              autolearn.enabled = true;
+              async.printWake = false;
+              async.widgets = true;
+              bash.enabled = true;
+              bash.allowCompoundCommands = false;
+              bash.allowedEnvVars = [ ];
+              bash.gitGuard = false;
+              shellMinimizer.enabled = true;
               bash.autoBackground.enabled = true;
+              bash.direnv = "off";
               bashInterceptor.enabled = true;
-              browser.cmux = false;
+              launch.enabled = true;
+              launch.persist = false;
+
+              # subagents and delegation
+              advisor.enabled = false;
+              plan.enabled = false;
+              task.isolation.enabled = false;
+              task.eager = "default";
+              task.autoParallel = "off";
+              task.batch = true;
+              task.steps = true;
+              task.structured = true;
+              task.enableEffort = true;
+              task.perCallModel = "on";
+              task.maxConcurrency = 4;
+              task.workerThreads = 4;
+              task.enableLsp = false;
+              task.crossInstance = false;
+              task.maxRecursionDepth = 1;
+              task.maxRuntimeMs = 0;
+              task.completionProbe = true;
+              task.maxEffort = "high";
+              task.prewalk = false;
+              task.showResolvedModelBadge = true;
+              todo.enabled = true;
+              todo.reminders = true;
+              todo.remindersMax = 2;
+              todo.midRunNudges = "capped";
+              todo.eager = "preferred";
+
+              # context
+              personality = "pragmatic";
+              extendedContext = true;
+              encourageEdits = true;
+              recap.enabled = true;
+              model.loopGuard.enabled = true;
+              magicKeywords.enabled = false;
+              compaction.enabled = true;
+              compaction.experimentalContextManagement = true;
+              compaction.midTurnEnabled = true;
+              compaction.methodOrder = [
+                "shake"
+                "snapcompact"
+                "remote"
+                "soft"
+                "handoff"
+              ];
+              compaction.modelThresholdsEnabled = true;
+              compaction.handoffSaveToDisk = false;
+              compaction.remoteStreamingV2Enabled = true;
+              compaction.asyncEnabled = false;
+              compaction.idleEnabled = false;
+              compaction.supersedeReads = true;
+              compaction.dropUseless = true;
+              contextPromotion.enabled = false;
+              ttsr.enabled = true;
+              ttsr.judge = "on";
+              ttsr.contextMode = "discard";
+              ttsr.interruptMode = "always";
+              ttsr.repeatMode = "once";
+              ttsr.builtinRules = true;
+              ttsr.disabledRules = [ ];
+              steeringMode = "one-at-a-time";
+              followUpMode = "one-at-a-time";
+              interruptMode = "immediate";
+              btw.inject = false;
+
+              # tools
+              tools.format = "auto";
+              tools.maxTimeout = 0;
+              tools.abortOnFabricatedResult = true;
+              tools.speculativeExecution.enabled = false;
+              tools.commands = true;
+              tools.commandDocs = "catalog";
+              tools.commandNotices = false;
+              tools.approvalMode = "yolo";
+              archive.enabled = true;
+              astEdit.enabled = true;
+              astGrep.enabled = true;
+              checkpoint.enabled = false;
+              commit.enabled = false;
+              debug.enabled = true;
+              glob.enabled = true;
+              git.enabled = true;
+              security.enabled = true;
+              vault.enabled = false;
+              disassembler.backend = "ghidra";
+              ghidra.installDir = "${pkgs.ghidra}/lib/ghidra";
+              ghidra.python = "${ghidraPython}/bin/python3";
+              edit.mode = "hashline";
+              edit.fuzzyMatch = false;
+              edit.streamingAbort = true;
+              edit.recoverInlineEdits = true;
+              edit.blockAutoGenerated = true;
+              edit.enforceSeenLines = true;
+              readLineNumbers = true;
+              read.renderMarkdown = false;
+              read.toolResultPreview = false;
+              read.summarize.enabled = true;
+              read.summarize.prose = false;
+              grep.enabled = true;
+              grep.contextBefore = 5;
+              grep.contextAfter = 5;
+              find.enabled = "on";
+              fetch.enabled = true;
+              web_search.enabled = true;
+              providers.webKeyless = true;
+              exa.enabled = true;
+              images.autoResize = true;
+              images.describeForTextModels = false;
+              images.urls.enabled = false;
+              generate_image.enabled = false;
+              eval.py = true;
+              eval.js = true;
+              eval.tools.enabled = true;
+              eval.autoBackground.enabled = true;
+              python.interpreter = lib.getExe pkgs.python3;
+              lsp.enabled = false;
+              lsp.lazy = false;
+              lsp.diagnosticsOnWrite = false;
+              github.enabled = true;
+              github.cache.enabled = true;
+
+              # browser and computer
               browser.enabled = true;
               browser.headless = true;
+              browser.relay = false;
+              browser.cmux = false;
+              browser.tern = false;
+              browser.webkit = false;
+              browser.freezeOnTurnEnd = true;
               computer.enabled = true;
               computer.display = "all";
-              computer.maxWidth = 3840;
-              computer.maxHeight = 2400;
+              computer.backgroundFallback = "takeover";
+
+              # integrations
               commands.enableClaudeProject = false;
               commands.enableClaudeUser = false;
               commands.enableOpencodeProject = false;
               commands.enableOpencodeUser = false;
-              compaction.handoffSaveToDisk = true;
-              compaction.strategy = "snapcompact";
+              contextFiles.extra = [ ];
+              disabledProviders = [ "skillshare" ];
+              marketplace.autoUpdate = "off";
+              mcp.enableProjectConfig = false;
+              mcp.startupTimeoutMs = 250;
+              mcp.shared = true;
+              mcp.idleStopMinutes = 5;
+              mcp.evalNamespaces = false;
+              mcp.builtinTransforms = true;
+              mcp.renderMarkdownResults = true;
+              mcp.notifications = false;
+              mcp.notificationDebounceMs = 500;
+              skills.enabled = true;
+              skills.enableSkillCommands = true;
+              skills.registryUrl = "http://0.0.0.0:0";
+              skills.enableClaudeProject = false;
+              skills.enableClaudeUser = false;
+              skills.enableCodexUser = false;
+              skills.enableAgentsProject = true;
+              skills.enableAgentsUser = true;
+              skills.enablePiProject = false;
+              skills.enablePiUser = false;
+              skills.customDirectories = [
+                pkgx.split-commit.skills
+                pkgx.omp-claude-connectors-bridge.skills
+              ];
+              extensions = [ pkgx.omp-claude-connectors-bridge.extension ];
+
+              # models
+              modelPresets = modelPresets;
+              modelRoles = modelPresets.${cfg.defaultPreset}.modelRoles;
+              defaultThinkingLevel = modelPresets.${cfg.defaultPreset}.defaultThinkingLevel;
               cycleOrder = [
                 "smol"
                 "default"
                 "slow"
                 "frontier"
               ];
-              contextPromotion.enabled = false;
+              includeModelInPrompt = true;
+              prewalk.enabled = false;
+              prewalk.auto = "off";
+              provider.appendOnlyContext = "on";
+              providers.anthropic.slowMode = "auto";
+              providers.fetch = "auto";
+              providers.cacheRetention = "long";
+              tier.openai = "none";
+              tier.anthropic = "none";
+              tier.google = "none";
+              tier.subagent = "inherit";
+              retry.usageAwareFallback = false;
+              codexResets.autoRedeem5h = "no";
+              codexResets.autoRedeemWeekly = "no";
+              claudeResets.autoRedeem5h = "no";
+              claudeResets.autoRedeemWeekly = "no";
+              claudeResets.autoRedeemFable = "no";
+              features.unexpectedStopDetection = "smart";
+              retry.enabled = true;
+              retry.maxRetries = 10;
+              retry.waitForUsageReset = true;
+              retry.modelFallback = false;
+
+              # security
+              secrets.enabled = true;
               dev.autoqa = false;
               dev.autoqaConsent = "denied";
+              telemetry.otlpExportEnabled = false;
+              providers.openai-codex.daybreak = false;
+              providers.muse-code.storeResponses = false;
+              spotlight.experiment.enabled = false;
+              collab.autoStart = "off";
+              collab.relayUrl = "wss://0.0.0.0:0";
+              collab.webUrl = "https://0.0.0.0:0";
+              share.serverUrl = "http://0.0.0.0:0";
+              share.store = "blob";
+              share.redactSecrets = true;
+              stream.serverUrl = "http://0.0.0.0:0";
+
+              # session
+              session.worktreeScope = "repo";
+              worktree.base = "~/projects";
+              worktree.clone = true;
+              worktree.cleanSource = false;
+              worktree.onStart = "off";
+              worktree.onExit = "keep";
+
+              # speech
+              speech.enabled = false;
+              speechgen.enabled = false;
+              stt.enabled = false;
+              live.endpoint = "http://0.0.0.0:0/v1";
+
+              # tui
+              ask.enabled = true;
+              ask.timeout = 0;
+              ask.notify = "on";
+              completion.notify = "on";
+              error.notify = "off";
+              startup.quiet = false;
+              startup.showSplash = false;
+              startup.setupWizard = false;
+              startup.checkUpdate = false;
+              startup.changelogMode = "summary";
+              update.auto = false;
+              doubleEscapeAction = "tree";
+              composer.shape = "pi";
+              composer.recallClearedDrafts = true;
+              composer.predictionAlternatives = true;
+              composer.predictions = true;
               display.cacheMissMarker = true;
               display.shimmer = "kitt";
-              edit.fuzzyMatch = false;
-              edit.fuzzyThreshold = 0.98;
-              edit.mode = "hashline";
-              eval.jl = true;
-              eval.js = true;
-              eval.py = true;
-              eval.rb = true;
-              features.unexpectedStopDetection = true;
-              grep.contextAfter = 5;
-              grep.contextBefore = 5;
-              github.enabled = true;
+              display.pinnedAgents = "collapsed";
+              display.subagentLivePreview = true;
+              display.smoothStreaming = true;
+              display.hideToolActivity = false;
+              display.showTokenUsage = false;
+              display.showTurnTime = false;
+              display.shellVisualization = true;
+              display.collapseCompacted = true;
               hideThinkingBlock = true;
-              images.autoResize = true;
-              includeModelInPrompt = false;
-              inspect_image.mode = "auto";
-              lsp.diagnosticsOnWrite = false;
-              lsp.enabled = false;
-              lsp.lazy = false;
-              marketplace.autoUpdate = "off";
-              mcp.enableProjectConfig = false;
-              tools.xdev = true;
-              tools.xdevDocs = "catalog";
-              memory.backend = cfg.memory.backend;
-              advisor.enabled = false;
-              advisor.syncBacklog = "5";
-              personality = "pragmatic";
-              plan.defaultOnStartup = false;
-              plan.enabled = false;
-              readLineNumbers = true;
-              secrets.enabled = true;
               showHardwareCursor = true;
-              skills.enableClaudeProject = false;
-              skills.enableClaudeUser = false;
-              skills.enableCodexUser = false;
-              skills.enableAgentsProject = false;
-              skills.enableAgentsUser = false;
-              skills.enablePiProject = false;
-              skills.enablePiUser = false;
-              skills.includeSkills = [ ];
-              startup.checkUpdate = false;
-              startup.setupWizard = false;
               symbolPreset = "nerd";
               statusLine.preset = "custom";
               statusLine.separator = "powerline-thin";
               statusLine.compactThinkingLevel = true;
+              statusLine.contextLine = "embedded";
+              statusLine.sessionAccent = true;
+              statusLine.transparent = false;
+              statusLine.showHookStatus = true;
+              statusLine.segmentOptions = { };
               statusLine.leftSegments = [
                 "pi"
                 "model"
@@ -213,49 +439,80 @@ in
                 "cost"
                 "context_pct"
               ];
-              task.eager = "default";
-              task.enableLsp = false;
-              task.maxConcurrency = 4;
-              task.maxRecursionDepth = 1;
-              task.showResolvedModelBadge = true;
               terminal.showProgress = true;
               terminal.showImages = true;
-              todo.eager = "preferred";
+              terminal.programStatus = true;
+              pty.notify = "on";
+              tui.maxInlineImageColumns = 100;
+              tui.maxInlineImageRows = 20;
+              tui.maxInlineImages = 8;
+              tui.resizeScrollback = "rebuild";
+              tui.textSizing = true;
+              tui.colorfulMarkdown = true;
+              tui.renderMermaid = true;
+              tui.renderSvg = true;
+              tui.renderEmbeds = true;
+              tui.reactions = true;
+              tui.codexResetFireworks = false;
+              tui.titleState = true;
+              tui.titleSpinner = "braille";
+              tui.maxFps = 30;
+              tui.mouse = false;
+              tui.motion = "full";
+              tui.imeSafeCursor = false;
+              tui.vimMode = false;
+              input.bareExitOnEmptySession = true;
+              input.bareSlashCommands = false;
               treeFilterMode = "no-tools";
+              tui.autoGraph = "smart";
               tui.hyperlinks = "always";
               tui.tight = true;
-              worktree.base = "~/projects";
-
-              skills.customDirectories = [
-                pkgx.split-commit.skills
-                pkgx.omp-claude-connectors-bridge.skills
-              ];
-              extensions = [ pkgx.omp-claude-connectors-bridge.extension ];
             }
+            # memory
             // {
-              modelPresets = modelPresets;
-              modelRoles = modelPresets.${cfg.defaultPreset}.modelRoles;
-              defaultThinkingLevel = modelPresets.${cfg.defaultPreset}.defaultThinkingLevel;
+              autolearn.enabled = true;
+              autolearn.autoContinue = true;
+              memory.backend = cfg.memory.backend;
             }
-            // lib.optionalAttrs (cfg.memory.backend == "mnemopi") { mnemopi.scoping = "global"; }
+            // lib.optionalAttrs (cfg.memory.backend == "mnemopi") {
+              mnemopi = {
+                scoping = "global";
+                embeddingVariant = "en";
+                autoRecall = true;
+                recallRelevance = "off";
+                autoRetain = true;
+                polyphonicRecall = true;
+                proactiveLinking = true;
+                noEmbeddings = false;
+                embeddingInputType = false;
+                llmMode = "smol";
+                retainEveryNTurns = 4;
+                recallLimit = 12;
+                recallContextTurns = 4;
+              }
+              // cfg.memory.mnemopi;
+            }
             // lib.optionalAttrs (cfg.memory.backend == "hindsight") {
-              hindsight.apiUrl = cfg.memory.hindsightApiUrl;
-              hindsight.apiToken = "";
-              hindsight.bankId = "aftershoot";
-              hindsight.scoping = "global";
-              hindsight.autoRecall = true;
-              hindsight.autoRetain = true;
-              hindsight.retainEveryNTurns = 3;
-              hindsight.retainMode = "last-turn";
-              hindsight.recallBudget = "mid";
-              hindsight.recallContextTurns = 3;
-              hindsight.recallTypes = [
-                "world"
-                "experience"
-                "observation"
-              ];
-              hindsight.mentalModelsEnabled = true;
-              hindsight.mentalModelAutoSeed = true;
+              hindsight = {
+                scoping = "global";
+                globalScope = true;
+                autoRecall = true;
+                autoRetain = true;
+                retainEveryNTurns = 4;
+                retainMode = "last-turn";
+                retainOverlapTurns = 2;
+                retainContext = "omp";
+                recallBudget = "mid";
+                recallContextTurns = 4;
+                recallTypes = [
+                  "world"
+                  "experience"
+                  "observation"
+                ];
+                mentalModelsEnabled = true;
+                mentalModelAutoSeed = true;
+              }
+              // cfg.memory.hindsight;
             }
           );
         }
@@ -273,7 +530,7 @@ in
           };
 
           ".omp/agent/models.yml".source = yamlFormat.generate "omp-models.yml" {
-            providers.aperture-responses = {
+            providers.aperture = {
               baseUrl = "https://aperture.pony-clownfish.ts.net/v1";
               auth = "none";
               api = "openai-responses";
