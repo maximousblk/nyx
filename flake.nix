@@ -164,7 +164,7 @@
     paseo.url = "github:getpaseo/paseo";
 
     pi-pocket = {
-      url = "github:TannerMidd/pi-pocket";
+      url = "github:TannerMidd/pi-pocket/v0.30.1";
       flake = false;
     };
 
