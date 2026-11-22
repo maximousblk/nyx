@@ -21,7 +21,7 @@
       claude.enable = true;
       omp = {
         enable = true;
-        defaultPreset = "codex";
+        defaultPreset = "claude";
         memory.backend = "mnemopi";
       };
       pi.enable = true;
