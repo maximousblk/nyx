@@ -83,7 +83,6 @@
 
     adwaita-icon-theme
     bitwarden-cli
-    bitwarden-desktop
     btop-cuda
     chafa
     chameleos
