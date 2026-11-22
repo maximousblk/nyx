@@ -6,7 +6,6 @@
   services.openssh.enable = true;
   services.printing.enable = false;
   services.udisks2.enable = true;
-  services.gnome.gnome-keyring.enable = true;
   services.upower.enable = true;
   services.fstrim.enable = true;
   services.hdapsd.enable = false;
@@ -43,7 +42,7 @@
 
   services.sunshine = {
     enable = true;
-    autoStart = false;
+    autoStart = true;
     capSysAdmin = true;
     openFirewall = true;
 
@@ -53,11 +52,6 @@
     name = "Sunshine";
     info = "Game streaming host";
     icon = pkgx.topology-icons.sunshine;
-  };
-  systemd.user.services.sunshine = {
-    after = [ "niri-session.target" ];
-    wants = [ "niri-session.target" ];
-    wantedBy = [ "niri-session.target" ];
   };
 
   services.flatpak.enable = true;

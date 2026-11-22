@@ -6,7 +6,7 @@
     systemd = {
       enable = true;
       autoStart = true;
-      target = "niri-session.target";
+      target = "graphical-session.target";
     };
 
     extensions = with inputs.vicinae-extensions.packages.${pkgs.stdenv.hostPlatform.system}; [

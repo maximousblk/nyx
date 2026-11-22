@@ -292,11 +292,11 @@
       Description = "AirPlay Unix mirroring server";
       After = [
         "network.target"
-        "niri-session.target"
+        "graphical-session.target"
       ];
-      Wants = [ "niri-session.target" ];
+      PartOf = [ "graphical-session.target" ];
     };
-    Install.WantedBy = [ "niri-session.target" ];
+    Install.WantedBy = [ "graphical-session.target" ];
     Service = {
       ExecStart = "${pkgs.uxplay}/bin/uxplay";
       Restart = "on-failure";
@@ -306,10 +306,10 @@
   systemd.user.services.chameleos = {
     Unit = {
       Description = "Chameleos screen annotation daemon";
-      After = [ "niri-session.target" ];
-      Wants = [ "niri-session.target" ];
+      After = [ "graphical-session.target" ];
+      PartOf = [ "graphical-session.target" ];
     };
-    Install.WantedBy = [ "niri-session.target" ];
+    Install.WantedBy = [ "graphical-session.target" ];
     Service = {
       ExecStart = "${pkgs.chameleos}/bin/chameleos";
       Restart = "on-failure";

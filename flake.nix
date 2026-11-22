@@ -2,7 +2,7 @@
   inputs = {
     systems.url = "github:nix-systems/default";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    niri.url = "github:sodiboo/niri-flake";
+    niri.url = "github:epireyn/niri-flake";
     artcraft.url = "github:applicative-systems/artcraft-nix";
     nix-craftapps = {
       url = "github:olafkfreund/nix-craftapps";

@@ -1,5 +1,8 @@
-{ pkgs, ... }: {
-  services.displayManager.sessionPackages = [ pkgs.niri ];
+{ lib, pkgs, ... }: {
+  programs.niri = {
+    enable = true;
+    useNautilus = false;
+  };
   programs.xwayland.enable = true;
 
   services.gnome.at-spi2-core.enable = true;
@@ -14,31 +17,18 @@
 
   environment.systemPackages = with pkgs; [
     bitwarden-desktop
-    niri
     xwayland-satellite
-    gnome-keyring
     kdePackages.dolphin
   ];
 
   xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [
-      xdg-desktop-portal-gtk
-      xdg-desktop-portal-gnome
-      kdePackages.xdg-desktop-portal-kde
-    ];
+    extraPortals = [ pkgs.kdePackages.xdg-desktop-portal-kde ];
     config.niri = {
-      default = [
-        "kde"
-        "gnome"
-        "gtk"
-      ];
-      "org.freedesktop.impl.portal.FileChooser" = [
+      "org.freedesktop.impl.portal.FileChooser" = lib.mkForce [
         "kde"
         "gtk"
       ];
       "org.freedesktop.impl.portal.ScreenCast" = [ "gnome" ];
-      "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
     };
   };
 }

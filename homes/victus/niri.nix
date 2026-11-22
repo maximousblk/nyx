@@ -1,24 +1,13 @@
-{ pkgs, ... }: {
+{ ... }: {
 
-  services.gnome-keyring.enable = true;
-  services.polkit-gnome.enable = true;
   services.udiskie.enable = true;
 
-  systemd.user.targets.niri-session = {
-    Unit = {
-      Description = "Niri Session";
-      BindsTo = [ "graphical-session.target" ];
-      Requires = [ "graphical-session.target" ];
-      After = [ "graphical-session.target" ];
-      Wants = [ "graphical-session.target" ];
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
+  wayland.windowManager.niri = {
+    enable = true;
+    extraConfig = builtins.readFile ./niri.config.kdl;
+    # NixOS owns the session units, Xwayland, and portals.
+    systemd.enable = false;
+    xwaylandSatellitePackage = null;
+    portalPackage = null;
   };
-
-  xdg.configFile."niri/config.kdl".text = builtins.readFile ./niri.config.kdl + ''
-    // Notify all dependencies that Niri has started
-    spawn-sh-at-startup "${pkgs.dbus}/bin/dbus-update-activation-environment --systemd --all && ${pkgs.systemd}/bin/systemctl --user start niri-session.target"
-  '';
 }
