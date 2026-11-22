@@ -91,6 +91,7 @@
     felix-fm
     freecad
     gh
+    herdr-core
     hicolor-icon-theme
     hyprpwcenter
     ioskeley-mono.nf
