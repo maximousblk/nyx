@@ -1,5 +1,9 @@
 include optional=true "noctalia.kdl"
 
+hotkey-overlay {
+    skip-at-startup
+}
+
 // Input Devices
 input {
     keyboard {
@@ -16,16 +20,10 @@ input {
 
 
 // Display Outputs
-output "eDP-1" {
-}
-
-output "LG Electronics 19M35 403INZY2W405" {
-    scale 0.75
-}
-
 output "PNP(BNQ) BenQ EX271Q ETF6T00390SL0" {
-    mode "2560x1440@144.006"
+    mode "2560x1440" // Use the highest advertised refresh rate at native resolution.
     scale 1
+    focus-at-startup
 }
 
 
@@ -247,7 +245,7 @@ binds {
 }
 
 debug {
-  // Avoid corruption when transferring the desktop from Intel to NVIDIA HDMI.
-  render-drm-device "/dev/dri/by-path/pci-0000:01:00.0-render"
+  // Intel iGPU.
+  render-drm-device "/dev/dri/by-path/pci-0000:00:02.0-render"
   honor-xdg-activation-with-invalid-serial // Allows notification actions and window activation from Noctalia.
 }
