@@ -1,0 +1,95 @@
+diff --git a/src/main.zig b/src/main.zig
+--- a/src/main.zig
++++ b/src/main.zig
+@@ -82,6 +82,7 @@
+     io: std.Io,
+     auth_fails: u64,
+     is_autologin: bool,
++    autologin_deadline: ?std.Io.Timestamp,
+     use_kmscon_vt: bool,
+     active_tty: u8,
+     buffer: TerminalBuffer,
+@@ -918,6 +919,7 @@
+     defer state.version_label.deinit();
+ 
+     state.is_autologin = false;
++    state.autologin_deadline = null;
+ 
+     check_autologin: {
+         const auto_user = state.config.auto_login_user orelse break :check_autologin;
+@@ -1307,7 +1309,9 @@
+         );
+     }
+ 
+-    if (state.is_autologin) _ = try authenticate(&state);
++    if (state.is_autologin) {
++        state.autologin_deadline = std.Io.Clock.awake.now(state.io).addDuration(.fromSeconds(5));
++    }
+ 
+     const active_widget = switch (default_input) {
+         .info_line => info_line_widget,
+@@ -1328,10 +1332,32 @@
+         state.config.inactivity_delay,
+         positionWidgets,
+         handleInactivity,
++        autologinTimeout,
++        cancelAutologin,
+         &state,
+     );
+ }
+ 
++fn autologinTimeout(ptr: *anyopaque) !?usize {
++    const state: *UiState = @ptrCast(@alignCast(ptr));
++    const deadline = state.autologin_deadline orelse return null;
++    const remaining = std.Io.Clock.awake.now(state.io).durationTo(deadline).toMilliseconds();
++    if (remaining > 0) return @intCast(remaining);
++
++    state.autologin_deadline = null;
++    _ = try authenticate(state);
++    return 0;
++}
++
++fn cancelAutologin(ptr: *anyopaque) bool {
++    const state: *UiState = @ptrCast(@alignCast(ptr));
++    if (state.autologin_deadline == null) return false;
++
++    state.autologin_deadline = null;
++    state.is_autologin = false;
++    return true;
++}
++
+ fn maxWidths(labels: [][]const u8) usize {
+     var max_width: usize = 0;
+ 
+diff --git a/ly-ui/src/TerminalBuffer.zig b/ly-ui/src/TerminalBuffer.zig
+--- a/ly-ui/src/TerminalBuffer.zig
++++ b/ly-ui/src/TerminalBuffer.zig
+@@ -207,6 +207,8 @@
+     inactivity_delay: u16,
+     position_widgets_fn: *const fn (*anyopaque) anyerror!void,
+     inactivity_event_fn: ?*const fn (*anyopaque) anyerror!void,
++    timeout_fn: *const fn (*anyopaque) anyerror!?usize,
++    key_event_fn: *const fn (*anyopaque) bool,
+     context: *anyopaque,
+ ) !void {
+     try self.registerGlobalKeybind(io, "Ctrl+K", &moveCursorUp, self);
+@@ -282,6 +284,10 @@
+             }
+         }
+ 
++        if (try timeout_fn(context)) |timeout| {
++            maybe_timeout = @min(maybe_timeout orelse timeout, timeout);
++        }
++
+         const event_error = if (maybe_timeout) |timeout| termbox.tb_peek_event(&event, @intCast(timeout)) else termbox.tb_poll_event(&event);
+ 
+         self.update = maybe_timeout != null or event_error >= 0;
+@@ -291,6 +297,8 @@
+         // Input of some kind was detected, so reset the inactivity timer
+         inactivity_time_start = try interop.getTimeOfDay();
+ 
++        if (event.type == termbox.TB_EVENT_KEY and key_event_fn(context)) continue;
++
+         if (event.type == termbox.TB_EVENT_RESIZE) {
+             self.width = TerminalBuffer.getWidth();
+             self.height = TerminalBuffer.getHeight();

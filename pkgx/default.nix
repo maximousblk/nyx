@@ -1,4 +1,5 @@
 { pkgs }: {
+  ly = import ./ly { inherit (pkgs) ly; };
   dharmx-walls = pkgs.callPackage ./dharmx-walls.nix { inherit pkgs; };
   mermaid-ascii = pkgs.callPackage ./mermaid-ascii.nix { inherit pkgs; };
   polycat = pkgs.callPackage ./polycat.nix { inherit pkgs; };

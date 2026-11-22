@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgx, ... }: {
   services.displayManager = {
     defaultSession = "niri";
     autoLogin = {
@@ -7,6 +7,7 @@
     };
     ly = {
       enable = true;
+      package = pkgx.ly;
       settings = {
         animation = "colormix";
         battery_id = "BAT0";
