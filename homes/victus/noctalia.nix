@@ -1,10 +1,4 @@
-{
-  config,
-  inputs,
-  pkgs,
-  ...
-}:
-{
+{ config, inputs, ... }: {
 
   home.file."wallpapers" = {
     enable = true;
@@ -205,13 +199,12 @@
           screen-off = {
             enabled = true;
             timeout = 300;
-            command = "${pkgs.brightnessctl}/bin/brightnessctl -s set 10%";
-            resume_command = "${pkgs.brightnessctl}/bin/brightnessctl -r";
+            action = "screen_off";
           };
           lock = {
             enabled = true;
             timeout = 600;
-            command = "noctalia:session lock";
+            action = "lock";
           };
         };
       };
