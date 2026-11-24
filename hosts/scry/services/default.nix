@@ -7,10 +7,10 @@
 let
   collector = pkgs.stdenvNoCC.mkDerivation {
     pname = "opentelemetry-collector-contrib";
-    version = "0.163.2";
+    version = "0.165.0";
     src = pkgs.fetchurl {
-      url = "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.163.2/otelcol-contrib_0.163.2_linux_arm64.tar.gz";
-      hash = "sha256-0jniGc+BmTIT/aL9befcH5Ip0yaYxF0t177DG2nBwAQ=";
+      url = "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.165.0/otelcol-contrib_0.165.0_linux_arm64.tar.gz";
+      hash = "sha256-N2QgcpyGIjCAe8iYEdB9EAMerso/ZIH+Nxor3O/SyPo=";
     };
     dontUnpack = true;
     installPhase = ''
