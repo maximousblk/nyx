@@ -95,8 +95,8 @@ in
   services.caddy = {
     enable = true;
     package = pkgs.caddy.withPlugins {
-      plugins = [ "github.com/relvacode/caddy-oidc@v0.4.3" ];
-      hash = "sha256-c7DZ6hTD2rjOKpZR+Lu2Nu91O5RZ3sTnedgQMaHJSOI=";
+      plugins = [ "github.com/relvacode/caddy-oidc@v0.4.5" ];
+      hash = "sha256-h1aYG8E2NUlGPkRYU92ruxK0ZPPHkOxNdMpTs/Bymh0=";
     };
     enableReload = false;
     globalConfig = ''
