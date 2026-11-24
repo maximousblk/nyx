@@ -17,7 +17,7 @@
 
   virtualisation.oci-containers.containers.crafty = {
     serviceName = "crafty";
-    image = "registry.gitlab.com/crafty-controller/crafty-4:4.11.0";
+    image = "registry.gitlab.com/crafty-controller/crafty-4:4.11.1";
     pull = "always";
     ports = [
       "8443:8443"
