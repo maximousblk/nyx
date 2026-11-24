@@ -5,10 +5,10 @@
 }:
 stdenvNoCC.mkDerivation {
   pname = "oh-my-cpa";
-  version = "0.3.25";
+  version = "0.4.13";
   src = fetchurl {
-    url = "https://github.com/WizisCool/oh-my-cpa/releases/download/v0.3.25/oh-my-cpa_0.3.25_linux_arm64.tar.gz";
-    hash = "sha256-T31o02wsbXF/C1xH16eFz7UUNLVcbjpC8k3D/nOdLRA=";
+    url = "https://github.com/WizisCool/oh-my-cpa/releases/download/v0.4.13/oh-my-cpa_0.4.13_linux_arm64.tar.gz";
+    hash = "sha256-Y9ktpyAxem0B+lGzxgxScN6mJa/hcJegHntpfxONe3s=";
   };
   sourceRoot = ".";
   installPhase = ''
