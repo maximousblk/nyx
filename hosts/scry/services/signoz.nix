@@ -17,10 +17,11 @@ let
   yaml = pkgs.formats.yaml { };
 
   # Version tags
+  # Keep ClickHouse aligned with SigNoz Foundry's Docker Compose stack.
   clickhouseVersion = "25.12.5";
-  signozVersion = "v0.147.0";
-  otelcolVersion = "v0.144.15";
-  zookeeperVersion = "3.7.1";
+  signozVersion = "v0.151.0";
+  otelcolVersion = "v0.144.18";
+  zookeeperVersion = "3.9.3";
 
   clickhouseConfig = xml.generate "clickhouse-config.xml" {
     clickhouse = {
