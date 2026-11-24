@@ -1,4 +1,13 @@
-{ config, inputs, ... }: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}:
+let
+  onBattery = ''[ "$(${pkgs.systemd}/bin/busctl --system get-property org.freedesktop.UPower /org/freedesktop/UPower org.freedesktop.UPower OnBattery)" = "b true" ]'';
+in
+{
 
   home.file."wallpapers" = {
     enable = true;
@@ -194,17 +203,21 @@
       };
 
       idle = {
-        pre_action_fade_seconds = 5.0;
+        # Noctalia fades before the command can check the power source.
+        pre_action_fade_seconds = 0.0;
         behavior = {
           screen-off = {
             enabled = true;
             timeout = 300;
-            action = "screen_off";
+            action = "command";
+            command = "${onBattery} && noctalia msg dpms-off";
+            resume_command = "noctalia msg dpms-on";
           };
           lock = {
             enabled = true;
             timeout = 600;
-            action = "lock";
+            action = "command";
+            command = "${onBattery} && noctalia msg session lock";
           };
         };
       };
