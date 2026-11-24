@@ -188,7 +188,7 @@ in
   };
 
   virtualisation.oci-containers.containers.zerobyte = {
-    image = "ghcr.io/nicotsx/zerobyte:v0.43.2";
+    image = "ghcr.io/nicotsx/zerobyte:v0.44.2";
     autoStart = true;
 
     environmentFiles = [
