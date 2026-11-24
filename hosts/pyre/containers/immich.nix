@@ -110,7 +110,7 @@ in
       immich-ml = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/immich-app/immich-machine-learning:v3.3.5-openvino";
+          image = "ghcr.io/immich-app/immich-machine-learning:v3.4.1-openvino";
           pull = "newer";
 
           networks = [ net.ref ];
@@ -140,7 +140,7 @@ in
       immich = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/immich-app/immich-server:v3.3.5";
+          image = "ghcr.io/immich-app/immich-server:v3.4.1";
           pull = "newer";
           publishPorts = [ "127.0.0.1:2283:2283" ];
 
