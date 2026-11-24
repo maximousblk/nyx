@@ -31,6 +31,7 @@ in
         WorkingDirectory = "/var/lib/omp-auth";
         Environment = [ "PI_CONFIG_DIR=/var/lib/omp-auth" ];
         ExecStart = "${omp}/bin/omp auth-broker serve --bind=127.0.0.1:8765";
+        ExecStartPost = "${pkgs.wait4x}/bin/wait4x tcp 127.0.0.1:8765 --timeout 20s";
         Restart = "on-failure";
         RestartSec = 5;
       };
