@@ -95,7 +95,7 @@ in
       karakeep-meilisearch = {
         autoStart = true;
         containerConfig = {
-          image = "getmeili/meilisearch:v1.41.0";
+          image = "getmeili/meilisearch:v1.55.0";
           pull = "newer";
 
           networks = [ net.ref ];
@@ -118,7 +118,7 @@ in
       karakeep = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/karakeep-app/karakeep:0.34.1";
+          image = "ghcr.io/karakeep-app/karakeep:0.35.0";
           pull = "newer";
           publishPorts = [ "127.0.0.1:3000:3000" ];
 
