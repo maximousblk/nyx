@@ -1,6 +1,6 @@
 { servarr, ... }: {
   virtualisation.oci-containers.containers.cleanuparr = {
-    image = "ghcr.io/cleanuparr/cleanuparr:2.10.12";
+    image = "ghcr.io/cleanuparr/cleanuparr:2.11.1";
     volumes = [ "${servarr.state_dir}/cleanuparr:/config" ];
     # OIDC issuer is a MagicDNS name; localhost DNS cannot resolve it.
     extraOptions = [
