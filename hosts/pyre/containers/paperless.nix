@@ -95,7 +95,8 @@ in
       paperless-tika = {
         autoStart = true;
         containerConfig = {
-          image = "docker.io/apache/tika:4.1.0-2-full";
+          # Paperless 3.5 uses Tika 3's multipart text endpoint.
+          image = "docker.io/apache/tika:3.3.1.0";
           pull = "newer";
 
           networks = [ net.ref ];
@@ -129,7 +130,7 @@ in
       paperless = {
         autoStart = true;
         containerConfig = {
-          image = "ghcr.io/paperless-ngx/paperless-ngx:3.3.4";
+          image = "ghcr.io/paperless-ngx/paperless-ngx:3.5.1";
           pull = "newer";
           publishPorts = [
             "127.0.0.1:8000:8000"
